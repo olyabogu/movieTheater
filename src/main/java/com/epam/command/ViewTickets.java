@@ -1,6 +1,5 @@
 package com.epam.command;
 
-import com.epam.Command;
 import com.epam.domain.Event;
 import com.epam.domain.User;
 import com.epam.services.BookingService;

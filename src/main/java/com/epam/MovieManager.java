@@ -1,5 +1,6 @@
 package com.epam;
 
+import com.epam.command.Command;
 import com.epam.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

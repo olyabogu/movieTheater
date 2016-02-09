@@ -1,6 +1,5 @@
 package com.epam.command;
 
-import com.epam.Command;
 import com.epam.domain.User;
 import com.epam.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
