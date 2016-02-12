@@ -6,7 +6,6 @@ import com.epam.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.inject.Inject;
 import java.io.*;
 
 /**
@@ -16,7 +15,7 @@ import java.io.*;
 public class Login implements Command {
     @Autowired
     private SecurityContext securityContext;
-    @Inject
+    @Autowired
     private UserService userService;
 
     @Override

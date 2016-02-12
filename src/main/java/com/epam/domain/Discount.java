@@ -5,7 +5,17 @@ package com.epam.domain;
  */
 public class Discount {
 
-    enum DiscountStrategy {
+	private DiscountStrategy discountStrategy;
+
+	public Discount(DiscountStrategy discountStrategy) {
+		this.discountStrategy = discountStrategy;
+	}
+
+	public DiscountStrategy getDiscountStrategy() {
+		return discountStrategy;
+	}
+
+	public enum DiscountStrategy {
         BIRTHDAY("user has birthday", 5.0),
         TICKET("Every 10th ticket", 50.0);
 

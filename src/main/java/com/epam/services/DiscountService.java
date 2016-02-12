@@ -1,15 +1,25 @@
 package com.epam.services;
 
 import com.epam.domain.Discount;
-import com.epam.domain.Event;
 import com.epam.domain.User;
+
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 
 @Service
 public class DiscountService {
-    public Discount getDiscount(User user, Event event, Date date){
-        return null;
-    }
+
+	public Discount getDiscount(User user, boolean isTodayUserBirthday) {
+
+		int ticketsNumber = user.getBookedTickets().size();
+		if (ticketsNumber % 10 == 0) {
+			return new Discount(Discount.DiscountStrategy.TICKET);
+		}
+
+		if (isTodayUserBirthday) {
+			return new Discount(Discount.DiscountStrategy.BIRTHDAY);
+		}
+
+		return null;
+	}
 }

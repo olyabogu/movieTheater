@@ -3,8 +3,6 @@ package com.epam.command;
 import com.epam.domain.User;
 
 import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.PrintStream;
 
 /**
@@ -18,5 +16,5 @@ public interface Command {
 
     User.UserRole getAllowedRole();
 
-    void apply(BufferedReader reader, PrintStream outputStream);
+    void apply(BufferedReader reader, PrintStream out);
 }
