@@ -44,7 +44,7 @@ public class AddEvent implements Command {
 	@Override
 	public void apply(BufferedReader reader, PrintStream out) {
 		out.println("Enter new event name :");
-		String name, eventDate, price;
+		String name, eventDate, price, rating;
 
 		try {
 			name = reader.readLine();
@@ -62,7 +62,10 @@ public class AddEvent implements Command {
 
 			price = reader.readLine();
 
-			Event event = new Event(dates, Double.valueOf(price), name);
+			out.println("Enter event rating : HIGH, MID, LOW");
+			rating = reader.readLine();
+
+			Event event = new Event(dates, Double.valueOf(price), name, Event.Rating.valueOf(rating));
 
 			eventService.createEvent(event);
 			out.println("Event " + name + " added successfully!");

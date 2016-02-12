@@ -26,5 +26,13 @@ public class Discount {
             this.name = name;
             this.percent = percent;
         }
-    }
+
+		public String getName() {
+			return name;
+		}
+
+		public Double getPercent() {
+			return percent;
+		}
+	}
 }

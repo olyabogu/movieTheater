@@ -21,8 +21,8 @@ public class EventDao {
         events = new ArrayList<>();
         List<Date> dates = new ArrayList<>();
         dates.add(new Date());
-        events.add(new Event(dates, 15.2, "movie 1"));
-        events.add(new Event(dates, 20.0, "movie 2"));
+        events.add(new Event(dates, 15.2, "movie 1", Event.Rating.HIGH));
+        events.add(new Event(dates, 20.0, "movie 2", Event.Rating.MID));
     }
 
     public void createEvent(Event event) {
