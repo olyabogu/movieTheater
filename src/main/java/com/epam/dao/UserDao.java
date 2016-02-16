@@ -5,6 +5,9 @@ import com.epam.domain.User;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,10 +20,10 @@ public class UserDao {
     private static Map<Integer, User> users;
 
     @PostConstruct
-    public void init(){
-        users = new HashMap<Integer, User>();
-        users.put(1, new User("Olga", User.UserRole.ADMIN, "olga_bogu@mail.com"));
-        users.put(2, new User("John", User.UserRole.CLIENT, "john_smith@mail.com"));
+    public void init() throws ParseException {
+        users = new HashMap<>();
+        users.put(1, new User("Olga", new SimpleDateFormat("dd-MM-yy").parse("25-06-87"), User.UserRole.ADMIN, "olga_bogu@mail.com"));
+        users.put(2, new User("John", new SimpleDateFormat("dd-MM-yy").parse("16-02-78"), User.UserRole.CLIENT, "john_smith@mail.com"));
     }
 
     public User getById(int id) {
@@ -54,8 +57,9 @@ public class UserDao {
     }
 
     public void remove(User user) {
-        if (users.containsValue(user)) {
-            users.remove(user);
+	    int id = user.getId();
+        if (users.containsKey(id)) {
+            users.remove(id);
         } else {
             System.out.println("user with email " + user.toString() + " not registered");
         }

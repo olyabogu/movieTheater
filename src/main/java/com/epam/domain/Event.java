@@ -9,7 +9,7 @@ import java.util.List;
 public class Event {
 
 	private String name;
-	private Double ticketPrice;
+	private Double basePrice;
 	private List<Date> dates;
 	private List<Ticket> tickets;
 	private Rating rating;
@@ -18,9 +18,9 @@ public class Event {
 		HIGH, MID, LOW
 	}
 
-	public Event(List<Date> dates, Double ticketPrice, String name, Rating rating) {
+	public Event(List<Date> dates, Double basePrice, String name, Rating rating) {
 		this.dates = dates;
-		this.ticketPrice = ticketPrice;
+		this.basePrice = basePrice;
 		this.name = name;
 		this.rating = rating;
 	}
@@ -33,12 +33,12 @@ public class Event {
 		this.name = name;
 	}
 
-	public Double getTicketPrice() {
-		return ticketPrice;
+	public Double getBasePrice() {
+		return basePrice;
 	}
 
-	public void setTicketPrice(Double ticketPrice) {
-		this.ticketPrice = ticketPrice;
+	public void setBasePrice(Double basePrice) {
+		this.basePrice = basePrice;
 	}
 
 	public List<Date> getDates() {
@@ -69,7 +69,7 @@ public class Event {
 	public String toString() {
 		return "Event{" +
 				"name='" + name + '\'' +
-				", ticketPrice=" + ticketPrice +
+				", basePrice=" + basePrice +
 				", dates=" + dates +
 				'}';
 	}

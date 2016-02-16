@@ -9,6 +9,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by Olga Bogutska on 09.02.2016.
@@ -51,7 +55,13 @@ public class RegisterNewUser implements Command {
                     outputStream.println("Enter user email: ");
                     reader = new BufferedReader(new InputStreamReader(System.in));
                     String email = reader.readLine();
-                    User user = new User(name, User.UserRole.valueOf(role), email);
+	                outputStream.println("Enter user birth date (dd-MM-yy):");
+
+	                String date = reader.readLine();
+	                DateFormat formatter = new SimpleDateFormat("dd-MM-yy");
+
+	                Date birthDate = formatter.parse(date);
+                    User user = new User(name, birthDate, User.UserRole.valueOf(role), email);
                     userService.register(user);
                     outputStream.println("User registered successfully ");
                     break;
@@ -59,7 +69,9 @@ public class RegisterNewUser implements Command {
                     break;
             }
         } catch (IOException e) {
-            outputStream.println("Register user produce an error");
+            outputStream.println("Register new user produce an error" + e.getMessage());
+        } catch (ParseException e) {
+	        e.printStackTrace();
         }
     }
 }

@@ -16,7 +16,7 @@ public class Discount {
 	}
 
 	public enum DiscountStrategy {
-        BIRTHDAY("user has birthday", 5.0),
+        BIRTHDAY("User has birthday", 5.0),
         TICKET("Every 10th ticket", 50.0);
 
         private String name;

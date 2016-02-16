@@ -1,5 +1,7 @@
 package com.epam.domain;
 
+import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -9,19 +11,22 @@ import java.util.List;
 public class User {
     private int id;
     private String name;
+	private Date birthDate;
     private UserRole role;
     private String email;
     private List<Ticket> bookedTickets;
 
-    public enum UserRole{
-        ADMIN, CLIENT, ANONYM
-    }
+	public enum UserRole {
+		ADMIN, CLIENT, ANONYM
+	}
 
-    public User(String name, UserRole role, String email) {
-        this.id = id++;
+    public User(String name, Date birthDate, UserRole role, String email) {
+	    this.birthDate = birthDate;
+	    this.id = id++;
         this.name = name;
         this.role = role;
         this.email = email;
+	    bookedTickets = new LinkedList<>();
     }
 
     public int getId() {
@@ -63,6 +68,14 @@ public class User {
     public void setBookedTickets(List<Ticket> bookedTickets) {
         this.bookedTickets = bookedTickets;
     }
+
+	public Date getBirthDate() {
+		return birthDate;
+	}
+
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
+	}
 
     @Override
     public String toString() {
