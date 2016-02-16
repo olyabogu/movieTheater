@@ -55,7 +55,7 @@ public class ViewTickets implements Command {
         } catch (IOException e) {
             out.println("No such event");
         }
-        Event chosenEvent = null;
+        Event chosenEvent = new Event();
         for (Event event : events) {
             if (event.getName().equals(eventName)) {
                 chosenEvent = event;

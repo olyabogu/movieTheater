@@ -3,6 +3,8 @@ package com.epam.services;
 import com.epam.dao.EventDao;
 import com.epam.domain.Auditorium;
 import com.epam.domain.Event;
+import com.epam.exception.MovieException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +20,11 @@ public class EventService {
         dao.createEvent(event);
     }
 
-    public void remove(Event event) {
+    public void remove(Event event) throws MovieException {
         dao.remove(event);
     }
 
-    public Event getEventByName(String name) {
+    public Event getEventByName(String name) throws MovieException {
         return dao.getEventByName(name);
     }
 

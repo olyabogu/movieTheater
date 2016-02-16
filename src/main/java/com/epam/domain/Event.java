@@ -1,6 +1,7 @@
 package com.epam.domain;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -18,11 +19,17 @@ public class Event {
 		HIGH, MID, LOW
 	}
 
+	public Event() {
+		this.dates = new LinkedList<>();
+		this.tickets = new LinkedList<>();
+	}
+
 	public Event(List<Date> dates, Double basePrice, String name, Rating rating) {
 		this.dates = dates;
 		this.basePrice = basePrice;
 		this.name = name;
 		this.rating = rating;
+		this.tickets = new LinkedList<>();
 	}
 
 	public String getName() {

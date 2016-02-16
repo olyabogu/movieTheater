@@ -2,6 +2,8 @@ package com.epam.dao;
 
 import com.epam.domain.Ticket;
 import com.epam.domain.User;
+import com.epam.exception.MovieException;
+
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
@@ -30,22 +32,22 @@ public class UserDao {
         return users.get(id);
     }
 
-    public User getUserByEmail(String email) {
+    public User getUserByEmail(String email) throws MovieException {
         for (User user : users.values()) {
             if (user.getEmail().equals(email)) {
                 return user;
             }
         }
-        return null;
+	    throw new MovieException("User with email " + email + " not exist");
     }
 
-    public User getUsersByName(String name) {
+    public User getUsersByName(String name) throws MovieException {
         for (User user : users.values()) {
             if (user.getName().equals(name)) {
                 return user;
             }
         }
-        return null;
+	    throw new MovieException("User with name " + name + " not exist");
     }
 
     public List<Ticket> getBookedTickets(User user) {
@@ -56,12 +58,12 @@ public class UserDao {
         users.put(user.getId(), user);
     }
 
-    public void remove(User user) {
+    public void remove(User user) throws MovieException {
 	    int id = user.getId();
         if (users.containsKey(id)) {
             users.remove(id);
         } else {
-            System.out.println("user with email " + user.toString() + " not registered");
+            throw new MovieException(user.toString() + " not exist");
         }
     }
 }

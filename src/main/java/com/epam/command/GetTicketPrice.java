@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import com.epam.SecurityContext;
 import com.epam.domain.Event;
 import com.epam.domain.User;
+import com.epam.exception.MovieException;
 import com.epam.services.BookingService;
 import com.epam.services.EventService;
 
@@ -54,10 +55,6 @@ public class GetTicketPrice implements Command {
 		try {
 			name = reader.readLine();
 			Event event = eventService.getEventByName(name);
-			if (event == null) {
-				out.println("No such event with name " + name);
-				return;
-			}
 
 			out.println("Please choose seats (normal/VIP):");
 			String seats = reader.readLine();
@@ -75,7 +72,7 @@ public class GetTicketPrice implements Command {
 			String price = bookingService.getTicketPrice(event, date, isVipSeats, user);
 			out.println("Price for event " + name + " is " + price + "$");
 
-		} catch (IOException | ParseException e) {
+		} catch (IOException | ParseException | MovieException e) {
 			out.println("Getting ticket price for event " + name + " produced an error " + e.getMessage());
 		}
 	}

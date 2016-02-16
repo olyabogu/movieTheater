@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -43,8 +44,18 @@ public class BookingService {
 		return true;
 	}
 
+	/**
+	 * 	Get all purchased tickets for event for specific date
+	 */
 	public List<Ticket> getTicketsForEvent(Event event, Date date) {
-		return event.getTickets();
+		List<Ticket> tickets = event.getTickets();
+		List<Ticket> purchasedTickets = new LinkedList<>();
+		for (Ticket ticket : tickets) {
+			if (ticket.isPurchased()) {
+				purchasedTickets.add(ticket);
+			}
+		}
+		return purchasedTickets;
 	}
 
 	private Discount calculateDiscount(Date date, User user) {

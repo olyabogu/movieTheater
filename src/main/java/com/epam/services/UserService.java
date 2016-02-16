@@ -3,6 +3,7 @@ package com.epam.services;
 import com.epam.domain.Ticket;
 import com.epam.domain.User;
 import com.epam.dao.UserDao;
+import com.epam.exception.MovieException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,11 +19,11 @@ public class UserService {
         return userDao.getById(id);
     }
 
-    public User getUserByEmail(String email) {
+    public User getUserByEmail(String email) throws MovieException {
         return userDao.getUserByEmail(email);
     }
 
-    public User getUserByName(String name) {
+    public User getUserByName(String name) throws MovieException {
        return userDao.getUsersByName(name);
     }
 
@@ -34,7 +35,7 @@ public class UserService {
         userDao.register(user);
     }
 
-    public void remove(User user) {
+    public void remove(User user) throws MovieException {
        userDao.remove(user);
     }
 }

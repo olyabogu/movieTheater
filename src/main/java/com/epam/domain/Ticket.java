@@ -4,13 +4,13 @@ package com.epam.domain;
  * Created by Olga Bogutska on 08.02.2016.
  */
 public class Ticket {
-    private Double price;
+    private boolean isPurchased;
 
-    public Double getPrice() {
-        return price;
-    }
+	public boolean isPurchased() {
+		return isPurchased;
+	}
 
-    public void setPrice(Double price) {
-        this.price = price;
-    }
+	public void setPurchased(boolean isPurchased) {
+		this.isPurchased = isPurchased;
+	}
 }
