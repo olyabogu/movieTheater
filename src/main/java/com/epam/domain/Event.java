@@ -9,11 +9,16 @@ import java.util.List;
  */
 public class Event {
 
+	private int id;
 	private String name;
 	private Double basePrice;
 	private List<Date> dates;
 	private List<Ticket> tickets;
 	private Rating rating;
+
+	public int getId() {
+		return id;
+	}
 
 	public enum Rating {
 		HIGH, MID, LOW

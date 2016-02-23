@@ -20,9 +20,11 @@ public class User {
 		ADMIN, CLIENT, ANONYM
 	}
 
+    public User() {
+    }
+
     public User(String name, Date birthDate, UserRole role, String email) {
-	    this.birthDate = birthDate;
-	    this.id = id++;
+        this.birthDate = birthDate;
         this.name = name;
         this.role = role;
         this.email = email;

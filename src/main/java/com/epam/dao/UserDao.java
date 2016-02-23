@@ -4,10 +4,14 @@ import com.epam.domain.Ticket;
 import com.epam.domain.User;
 import com.epam.exception.MovieException;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
-
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -21,15 +25,16 @@ import java.util.Map;
 public class UserDao {
     private static Map<Integer, User> users;
 
-    @PostConstruct
-    public void init() throws ParseException {
-        users = new HashMap<>();
-        users.put(1, new User("Olga", new SimpleDateFormat("dd-MM-yy").parse("25-06-87"), User.UserRole.ADMIN, "olga_bogu@mail.com"));
-        users.put(2, new User("John", new SimpleDateFormat("dd-MM-yy").parse("16-02-78"), User.UserRole.CLIENT, "john_smith@mail.com"));
+    private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     public User getById(int id) {
-        return users.get(id);
+        String SQL = "SELECT * FROM User WHERE id = ?";
+        return jdbcTemplate.queryForObject(SQL, new Object[]{id}, new UserMapper());
     }
 
     public User getUserByEmail(String email) throws MovieException {
@@ -38,7 +43,7 @@ public class UserDao {
                 return user;
             }
         }
-	    throw new MovieException("User with email " + email + " not exist");
+        throw new MovieException("User with email " + email + " not exist");
     }
 
     public User getUsersByName(String name) throws MovieException {
@@ -47,7 +52,7 @@ public class UserDao {
                 return user;
             }
         }
-	    throw new MovieException("User with name " + name + " not exist");
+        throw new MovieException("User with name " + name + " not exist");
     }
 
     public List<Ticket> getBookedTickets(User user) {
@@ -55,17 +60,29 @@ public class UserDao {
     }
 
     public void register(User user) {
-        users.put(user.getId(), user);
+        String SQL = "INSERT INTO USER (NAME, BIRTHDATE, USER_ROLE, EMAIL) VALUES (?, ?, ?)";
+        jdbcTemplate.update(SQL, user.getName(), user.getBirthDate(), user.getRole().toString(), user.getEmail());
     }
 
     public void remove(User user) throws MovieException {
-	    int id = user.getId();
+        int id = user.getId();
         if (users.containsKey(id)) {
             users.remove(id);
         } else {
             throw new MovieException(user.toString() + " not exist");
         }
     }
-}
 
+    private class UserMapper implements RowMapper<User> {
+        public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+            User user = new User();
+            user.setId(rs.getInt("id"));
+            user.setName(rs.getString("name"));
+            user.setRole(User.UserRole.valueOf(rs.getString("user_role")));
+//            user.setBirthDate(new SimpleDateFormat("dd-MM-yy").parse((rs.getString("birthdate"))));
+            user.setEmail(rs.getString("email"));
+            return user;
+        }
+    }
+}
 
