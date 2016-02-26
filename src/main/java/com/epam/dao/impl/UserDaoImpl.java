@@ -46,7 +46,6 @@ public class UserDaoImpl implements UserDao, Dao<User> {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public List<Ticket> getBookedTickets(User user) {
         int id = user.getId();
         String sql = "SELECT * FROM TICKET INNER JOIN USER_TICKET_MP WHERE USER_TICKET_MP.USER_ID = ?";
