@@ -16,10 +16,6 @@ public class Event {
 	private List<Ticket> tickets;
 	private Rating rating;
 
-	public int getId() {
-		return id;
-	}
-
 	public enum Rating {
 		HIGH, MID, LOW
 	}
@@ -35,6 +31,14 @@ public class Event {
 		this.name = name;
 		this.rating = rating;
 		this.tickets = new LinkedList<>();
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getName() {

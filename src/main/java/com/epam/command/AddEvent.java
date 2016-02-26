@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.epam.exception.MovieException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -70,7 +71,7 @@ public class AddEvent implements Command {
 			eventService.createEvent(event);
 			out.println("Event " + name + " added successfully!");
 
-		} catch (IOException | ParseException e) {
+		} catch (IOException | ParseException | MovieException e) {
 			out.println("Adding new event failed! Caused by " + e.getMessage());
 		}
 	}

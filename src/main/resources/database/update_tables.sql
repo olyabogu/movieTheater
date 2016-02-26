@@ -1,7 +1,7 @@
---create users
-INSERT INTO USER (NAME, BIRTHDATE, USER_ROLE, EMAIL) VALUES ('Olga', '25-06-87', 'ADMIN', 'olga_bogu@mail.com');
-INSERT INTO USER (NAME, BIRTHDATE, USER_ROLE, EMAIL) VALUES ('John', '16-02-78', 'CLIENT', 'john_smith@mail.com');
---create events
+--create table users
+INSERT INTO USER (NAME, BIRTHDATE, USER_ROLE, EMAIL) VALUES ('Olga', parsedatetime('25-06-1987', 'dd-MM-yyyy'), 'ADMIN', 'olga_bogu@mail.com');
+INSERT INTO USER (NAME, BIRTHDATE, USER_ROLE, EMAIL) VALUES ('John', parsedatetime('16-02-1978', 'dd-MM-yyyy'), 'CLIENT', 'john_smith@mail.com');
+--create table events
 INSERT INTO EVENT (NAME, RATING, BASEPRICE) VALUES ('movie 1','HIGH', 15.2);
 INSERT INTO EVENT_DATE_MP VALUES ((SELECT ID FROM EVENT WHERE NAME = 'movie 1'), GETDATE());
 INSERT INTO EVENT (NAME, RATING, BASEPRICE) VALUES ('movie 2','MID', 20.0);

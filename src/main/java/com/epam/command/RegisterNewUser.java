@@ -1,6 +1,7 @@
 package com.epam.command;
 
 import com.epam.domain.User;
+import com.epam.exception.MovieException;
 import com.epam.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -68,10 +69,11 @@ public class RegisterNewUser implements Command {
                 case "N":
                     break;
             }
-        } catch (IOException e) {
-            outputStream.println("Register new user produce an error" + e.getMessage());
+        } catch (IOException | MovieException e) {
+            outputStream.println("Register new user produce an error " + e.getMessage());
         } catch (ParseException e) {
-	        e.printStackTrace();
+            outputStream.println("Invalid Date Format " + e.getMessage());
+
         }
     }
 }

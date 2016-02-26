@@ -6,11 +6,14 @@ import com.epam.domain.Discount;
 import com.epam.domain.Ticket;
 import com.epam.domain.User;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 @Service
 public class DiscountService {
+	@Autowired
+	private UserService userService;
 
 	public Discount getDiscount(User user, boolean isTodayUserBirthday) {
 
@@ -18,7 +21,7 @@ public class DiscountService {
 			return new Discount(Discount.DiscountStrategy.BIRTHDAY);
 		}
 
-		List<Ticket> tickets = user.getBookedTickets();
+		List<Ticket> tickets = userService.getBookedTickets(user);
 
 		if (!tickets.isEmpty()) {
 			int ticketsNumber = tickets.size();

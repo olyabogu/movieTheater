@@ -8,23 +8,18 @@
  		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/aop
         http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
-    <import resource="db_config.xml"/>
+    <import resource="database/db_config.xml"/>
 
     <context:component-scan base-package="com.epam"/>
     <context:annotation-config/>
 
     <context:property-placeholder location="classpath:/auditories/auditorium.properties"/>
     <context:property-placeholder location="classpath:/auditories/auditorium2.properties"/>
-    <context:property-placeholder location="classpath:/database.properties"/>
+    <context:property-placeholder location="classpath:/database/database.properties"/>
 
-    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-        <constructor-arg ref="dataSource"/>
-    </bean>
-
-    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" >
-        <property name="driverClassName" value="${jdbc.driverClassName}"/>
-        <property name="url" value="${jdbc.url}"/>
-        <property name="username" value="${jdbc.username}"/>
+    <bean id="dataSource" class="org.h2.jdbcx.JdbcDataSource">
+        <property name="URL" value="${jdbc.url}"/>
+        <property name="user" value="${jdbc.user}"/>
         <property name="password" value="${jdbc.password}"/>
     </bean>
 
