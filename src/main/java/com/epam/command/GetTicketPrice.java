@@ -61,9 +61,9 @@ public class GetTicketPrice implements Command {
 			if ("VIP".equalsIgnoreCase(seats)) {
 				isVipSeats = true;
 			}
-			out.println("Enter event date (\"dd-MM-yy\"):");
+			out.println("Enter event date (\"dd-MM-yyyy\"):");
 			String eventDate = reader.readLine();
-			DateFormat formatter = new SimpleDateFormat("dd-MM-yy");
+			DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 			Date date = formatter.parse(eventDate);
 
 

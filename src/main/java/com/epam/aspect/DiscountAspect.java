@@ -1,11 +1,10 @@
 package com.epam.aspect;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import com.epam.services.DiscountService;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.epam.domain.Discount;
@@ -19,10 +18,8 @@ import com.epam.domain.User;
 @Aspect
 @Component
 public class DiscountAspect {
-
-	private int counterForBirthdayDiscount;
-	private int counterForTicketDiscount;
-	private Map<Integer, Integer> counterForUserDiscount = new HashMap<>();
+	@Autowired
+	private DiscountService discountService;
 
 	@Pointcut("execution(* com.epam.services.DiscountService.getDiscount(..))")
 	private void getDiscount() {
@@ -31,30 +28,19 @@ public class DiscountAspect {
 	@AfterReturning(value = "execution(* getDiscount(..)) && args(user, isTodayUserBirthday)", returning = "discount")
 	public void getDiscountForUser(User user, boolean isTodayUserBirthday, Discount discount) {
 		if (discount != null) {
-			int counter = 0;
-			int id = user.getId();
-			if (counterForUserDiscount.containsKey(id)) {
-				counter = counterForUserDiscount.get(id);
-				counterForUserDiscount.put(id, counter++);
-			} else {
-				counterForUserDiscount.put(id, counter++);
-			}
+			discountService.updateDiscountForUserStatistics(user);
+			int counter = discountService.getStatisticsForUser(user);
 			System.out.println("Discount for user " + user.getName() + " was given " + counter + " times");
 		}
 	}
 
 	@AfterReturning(value = "getDiscount()", returning = "discount")
 	public void getTotalDiscount(Discount discount) {
-
 		if (discount != null) {
-			if (Discount.DiscountStrategy.BIRTHDAY.equals(discount.getDiscountStrategy())) {
-				counterForBirthdayDiscount++;
-				System.out.println(Discount.DiscountStrategy.BIRTHDAY.getName() + "discount was given " + counterForBirthdayDiscount + " times");
-			}
-			if (Discount.DiscountStrategy.TICKET.equals(discount.getDiscountStrategy())) {
-				counterForTicketDiscount++;
-				System.out.println(Discount.DiscountStrategy.TICKET.getName() + " discount was given " + counterForTicketDiscount + " times");
-			}
+			String discountStrategy = discount.getDiscountStrategy().toString();
+			discountService.updateDiscountStatistics(discountStrategy);
+			int counter = discountService.getStatisticsForDiscount(discountStrategy);
+			System.out.println(discountStrategy + "discount was given " + counter + " times");
 		}
 	}
 }

@@ -50,10 +50,10 @@ public class RegisterNewUser implements Command {
             outputStream.println("Enter user email: ");
             reader = new BufferedReader(new InputStreamReader(System.in));
             String email = reader.readLine();
-            outputStream.println("Enter user birth date (dd-MM-yyyy):");
+            outputStream.println("Enter user birth date (dd-MM-yyyyyy):");
 
             String date = reader.readLine();
-            DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+            DateFormat formatter = new SimpleDateFormat("dd-MM-yyyyyy");
 
             Date birthDate = formatter.parse(date);
             User user = new User(name, birthDate, User.UserRole.valueOf(role.toUpperCase()), email);

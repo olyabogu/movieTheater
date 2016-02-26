@@ -50,10 +50,10 @@ public class AddEvent implements Command {
 		try {
 			name = reader.readLine();
 
-			out.println("Enter new event date (dd-MM-yy):");
+			out.println("Enter new event date (dd-MM-yyyy):");
 
 			eventDate = reader.readLine();
-			DateFormat formatter = new SimpleDateFormat("dd-MM-yy");
+			DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 			List<Date> dates = new ArrayList<>();
 
 			Date date = formatter.parse(eventDate);
