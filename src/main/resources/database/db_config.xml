@@ -10,4 +10,9 @@
 		<jdbc:script location="classpath:database/create_tables.sql" />
 		<jdbc:script location="classpath:database/update_tables.sql" />
 	</jdbc:embedded-database>
+
+	<jdbc:initialize-database>
+		<jdbc:script location="classpath:database/create_tables.sql"/>
+		<jdbc:script location="classpath:database/update_tables.sql"/>
+	</jdbc:initialize-database>
 </beans>

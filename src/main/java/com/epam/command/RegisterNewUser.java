@@ -40,40 +40,30 @@ public class RegisterNewUser implements Command {
 
     @Override
     public void apply(BufferedReader reader, PrintStream outputStream) {
-        outputStream.println("Do you want to register new user Y/N? ");
-        String register;
         try {
-            register = reader.readLine();
+            outputStream.println("Enter user name: ");
+            reader = new BufferedReader(new InputStreamReader(System.in));
+            String name = reader.readLine();
+            outputStream.println("Enter user role (ADMIN/CLIENT): ");
+            reader = new BufferedReader(new InputStreamReader(System.in));
+            String role = reader.readLine();
+            outputStream.println("Enter user email: ");
+            reader = new BufferedReader(new InputStreamReader(System.in));
+            String email = reader.readLine();
+            outputStream.println("Enter user birth date (dd-MM-yyyy):");
 
-            switch (register) {
-                case "Y":
-                    outputStream.println("Enter user name: ");
-                    reader = new BufferedReader(new InputStreamReader(System.in));
-                    String name = reader.readLine();
-                    outputStream.println("Enter user role (ADMIN/CLIENT): ");
-                    reader = new BufferedReader(new InputStreamReader(System.in));
-                    String role = reader.readLine();
-                    outputStream.println("Enter user email: ");
-                    reader = new BufferedReader(new InputStreamReader(System.in));
-                    String email = reader.readLine();
-	                outputStream.println("Enter user birth date (dd-MM-yy):");
+            String date = reader.readLine();
+            DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
-	                String date = reader.readLine();
-	                DateFormat formatter = new SimpleDateFormat("dd-MM-yy");
+            Date birthDate = formatter.parse(date);
+            User user = new User(name, birthDate, User.UserRole.valueOf(role.toUpperCase()), email);
+            userService.register(user);
+            outputStream.println("User registered successfully ");
 
-	                Date birthDate = formatter.parse(date);
-                    User user = new User(name, birthDate, User.UserRole.valueOf(role), email);
-                    userService.register(user);
-                    outputStream.println("User registered successfully ");
-                    break;
-                case "N":
-                    break;
-            }
         } catch (IOException | MovieException e) {
             outputStream.println("Register new user produce an error " + e.getMessage());
         } catch (ParseException e) {
             outputStream.println("Invalid Date Format " + e.getMessage());
-
         }
     }
 }

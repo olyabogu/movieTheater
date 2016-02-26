@@ -1,5 +1,6 @@
 package com.epam.services;
 
+import com.epam.dao.impl.BookingDao;
 import com.epam.domain.Discount;
 import com.epam.domain.Event;
 import com.epam.domain.Ticket;
@@ -18,6 +19,8 @@ import java.util.List;
 public class BookingService {
 	@Autowired
 	private DiscountService discountService;
+	@Autowired
+	private BookingDao bookingDao;
 
 	/**
 	 * @return Price for ticket for specified event
@@ -40,7 +43,7 @@ public class BookingService {
 	}
 
 	public boolean bookTicket(User user, Ticket ticket) {
-		user.getBookedTickets().add(ticket);
+		bookingDao.bookTicket(user, ticket);
 		return true;
 	}
 

@@ -42,6 +42,9 @@ public class UserService {
         if(user == null) {
             throw new MovieException("User didn't defined");
         }
+        if(getUserByName(user.getName()) != null) {
+            throw new MovieException("User with name " + user.getName() + " already defined");
+        }
         userDao.create(user);
     }
 

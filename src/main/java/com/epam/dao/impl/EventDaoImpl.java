@@ -48,10 +48,9 @@ public class EventDaoImpl implements EventDao, Dao<Event> {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public List<Event> getAll() {
         String sql = "SELECT * FROM EVENT";
-        return (List<Event>) jdbcTemplate.queryForObject(sql, new EventMapper());
+        return jdbcTemplate.query(sql, new EventMapper());
     }
 
     @Override
