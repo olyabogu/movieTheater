@@ -25,7 +25,7 @@ public class EventDaoImpl implements EventDao, Dao<Event> {
 
     @Autowired
     public void setJdbcTemplate(DataSource dataSource) {
-        this.jdbcTemplate = new JdbcTemplate(dataSource);;
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class EventDaoImpl implements EventDao, Dao<Event> {
 
     }
 
-    private class EventMapper implements RowMapper<Event> {
+    private static class EventMapper implements RowMapper<Event> {
         @Override
         public Event mapRow(ResultSet rs, int rowNum) throws SQLException {
             Event event = new Event();

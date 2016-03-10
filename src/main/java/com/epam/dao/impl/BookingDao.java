@@ -17,7 +17,7 @@ public class BookingDao {
 
     @Autowired
     public void setJdbcTemplate(DataSource dataSource) {
-        this.jdbcTemplate = new JdbcTemplate(dataSource);;
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
     public void bookTicket(User user, Ticket ticket) {
