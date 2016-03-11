@@ -2,7 +2,7 @@ package com.epam.command;
 
 import com.epam.domain.User;
 import com.epam.exception.MovieException;
-import com.epam.services.UserService;
+import com.epam.services.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +21,7 @@ import java.util.Date;
 @Component
 public class RegisterNewUser implements Command {
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @Override
     public String getName() {

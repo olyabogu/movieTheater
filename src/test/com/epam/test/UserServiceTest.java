@@ -11,6 +11,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
+import java.util.Date;
 
 /**
  * Created by Olga Bogutska on 26.02.2016.
@@ -20,10 +23,12 @@ import static org.junit.Assert.assertNotNull;
 public class UserServiceTest {
     @Autowired
     private UserService service;
+	private User user;
 
     @Test
     public void testContext() {
         assertNotNull(service);
+	    user = new User("Test", new Date(), User.UserRole.CLIENT, "test@email.com");
     }
 
     @Test
@@ -61,4 +66,26 @@ public class UserServiceTest {
         String email = "";
         service.getUserByEmail(email);
     }
+
+	@Test
+	public void testRegister() throws MovieException {
+		service.register(user);
+		assertNotNull(user.getId());
+	}
+
+	@Test
+	public void testUpdate() throws MovieException {
+		String newName = "Test 1";
+		user.setName(newName);
+		service.update(user);
+		assertEquals(user.getName(), newName);
+	}
+
+	@Test
+	public void testRemove() throws MovieException {
+		int id = user.getId();
+		service.remove(user);
+
+		assertNull(service.getById(id));
+	}
 }

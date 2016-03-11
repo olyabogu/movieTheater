@@ -44,7 +44,7 @@ public class EventServiceTest {
     }
 
     @Test
-    public void testGetAll(){
+    public void testGetAll() {
         List<Event> events = service.getAll();
         assertNotNull(events);
         assertNotEquals(events.size(), 0);

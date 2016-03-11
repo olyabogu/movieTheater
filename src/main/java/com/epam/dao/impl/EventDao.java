@@ -1,7 +1,5 @@
 package com.epam.dao.impl;
 
-import com.epam.dao.Dao;
-import com.epam.dao.EventDao;
 import com.epam.domain.Auditorium;
 import com.epam.domain.Event;
 
@@ -20,7 +18,7 @@ import java.util.List;
  * Created by Olga Bogutska on 08.02.2016.
  */
 @Repository
-public class EventDaoImpl implements EventDao, Dao<Event> {
+public class EventDao {
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -28,32 +26,32 @@ public class EventDaoImpl implements EventDao, Dao<Event> {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    @Override
     public void create(Event event) {
-        String sql = "INSERT INTO EVENT (NAME, RATING, BASEPRICE) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO EVENT (NAME, RATING, BASE_PRICE) VALUES (?, ?, ?)";
         jdbcTemplate.update(sql, event.getName(), event.getRating().toString(), event.getBasePrice());
     }
 
-    @Override
+	public void update(Event event) {
+		String sql = "UPDATE EVENT SET NAME=?, RATING=?, BASE_PRICE=? WHERE ID = ?";
+		jdbcTemplate.update(sql, event.getName(), event.getRating().toString(), event.getBasePrice(), event.getId());
+	}
+
     public void remove(Event event) {
         int id = event.getId();
         String sql  = "DELETE FROM EVENT WHERE ID=?";
         jdbcTemplate.update(sql, id);
     }
 
-    @Override
     public Event getByName(String name) {
         String sql = "SELECT * FROM EVENT WHERE NAME = ?";
-        return jdbcTemplate.queryForObject(sql, new Object[]{name}, new EventMapper());
+        return jdbcTemplate.queryForObject(sql, new EventMapper(), name);
     }
 
-    @Override
     public List<Event> getAll() {
         String sql = "SELECT * FROM EVENT";
         return jdbcTemplate.query(sql, new EventMapper());
     }
 
-    @Override
     public void assignAuditorium(Event event, Auditorium auditorium, Date date) {
 
     }
@@ -65,7 +63,7 @@ public class EventDaoImpl implements EventDao, Dao<Event> {
             event.setId(rs.getInt("ID"));
             event.setName(rs.getString("NAME"));
             event.setRating(Event.Rating.valueOf(rs.getString("RATING")));
-            event.setBasePrice(rs.getDouble("BASEPRICE"));
+            event.setBasePrice(rs.getDouble("BASE_PRICE"));
             return event;
         }
     }

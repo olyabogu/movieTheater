@@ -1,8 +1,5 @@
 package com.epam.domain;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
 /**
  * Created by Olga Bogutska on 08.02.2016.
  */

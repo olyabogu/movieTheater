@@ -16,7 +16,7 @@ public class DiscountDao {
 
     @Autowired
     public void setJdbcTemplate(DataSource dataSource) {
-        this.jdbcTemplate = new JdbcTemplate(dataSource);;
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
     public void updateDiscountForUserStatistics(User user){
