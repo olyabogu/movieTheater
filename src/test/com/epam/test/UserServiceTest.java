@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
 
@@ -21,14 +21,13 @@ import java.util.Date;
 @ContextConfiguration(locations = {"classpath:spring.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
 public class UserServiceTest {
+	private static final String NAME = "Carl";
     @Autowired
     private UserService service;
-	private User user;
 
     @Test
     public void testContext() {
         assertNotNull(service);
-	    user = new User("Test", new Date(), User.UserRole.CLIENT, "test@email.com");
     }
 
     @Test
@@ -69,23 +68,20 @@ public class UserServiceTest {
 
 	@Test
 	public void testRegister() throws MovieException {
+		User user = new User(NAME, new Date(), User.UserRole.CLIENT, NAME + "@email.com");
 		service.register(user);
-		assertNotNull(user.getId());
+		user = service.getUserByName(NAME);
+		assertTrue(user.getId() > 0);
 	}
 
 	@Test
 	public void testUpdate() throws MovieException {
-		String newName = "Test 1";
+		User user = service.getUserByName(NAME);
+		String newName = NAME + " 1";
 		user.setName(newName);
 		service.update(user);
+		user = service.getUserByName(newName);
+
 		assertEquals(user.getName(), newName);
-	}
-
-	@Test
-	public void testRemove() throws MovieException {
-		int id = user.getId();
-		service.remove(user);
-
-		assertNull(service.getById(id));
 	}
 }

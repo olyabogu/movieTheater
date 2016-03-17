@@ -1,19 +1,24 @@
 package com.epam.test;
 
+import com.epam.domain.Auditorium;
 import com.epam.domain.Event;
 import com.epam.exception.MovieException;
+import com.epam.services.AuditoriumService;
 import com.epam.services.EventService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Olga Bogutska on 26.02.2016.
@@ -21,8 +26,12 @@ import static org.junit.Assert.assertNotNull;
 @ContextConfiguration(locations = {"classpath:spring.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
 public class EventServiceTest {
-    @Autowired
+	private static final String NAME = "Event";
+
+	@Autowired
     private EventService service;
+	@Autowired
+	private AuditoriumService auditoriumService;
 
     @Test
     public void testContext() {
@@ -43,10 +52,45 @@ public class EventServiceTest {
         service.getEventByName(name);
     }
 
+	@Test
+	public void testCreate() throws MovieException {
+		List<Date> dates = new ArrayList<>();
+		dates.add(new Date());
+
+		Event event = new Event(dates, 14.30D, NAME, Event.Rating.valueOf("HIGH"));
+
+		service.createEvent(event);
+		event = service.getEventByName(NAME);
+
+		assertTrue(event.getId() > 0);
+	}
+
+	@Test
+	public void testUpdate() throws MovieException {
+		Event event = service.getEventByName(NAME);
+		Double newPrice = 15.0D;
+		event.setBasePrice(newPrice);
+		service.update(event);
+		event = service.getEventByName(NAME);
+
+		assertEquals(event.getBasePrice(), newPrice);
+	}
+
+	@Test
+	public void testAssignAuditorium() throws MovieException {
+		Event event = service.getEventByName("movie 1");
+		Auditorium auditorium = auditoriumService.getAuditoriums().get(0);
+
+		Date date = new Date();
+		service.assignAuditorium(event, auditorium, date);
+		String name = service.getAuditoriumForEvent(event, date);
+		assertEquals(auditorium.getName(), name);
+	}
+
     @Test
     public void testGetAll() {
         List<Event> events = service.getAll();
         assertNotNull(events);
-        assertNotEquals(events.size(), 0);
+        assertTrue(!CollectionUtils.isEmpty(events));
     }
 }
