@@ -36,7 +36,7 @@ public class MovieManager {
 
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         String commandName;
-        while (!(commandName = bufferedReader.readLine()).equals("q")) {
+        while (!(commandName = bufferedReader.readLine()).equalsIgnoreCase("q")) {
             if ("help".equals(commandName.trim())) {
                 printHelp();
                 continue;

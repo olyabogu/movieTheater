@@ -1,5 +1,6 @@
 package com.epam.services.impl;
 
+import com.epam.dao.BookingDao;
 import com.epam.domain.Discount;
 import com.epam.domain.Event;
 import com.epam.domain.Ticket;
@@ -21,7 +22,7 @@ public class BookingServiceImpl implements BookingService {
 	@Autowired
 	private DiscountService discountService;
 	@Autowired
-	private BookingService bookingDao;
+	private BookingDao bookingDao;
 
 	/**
 	 * @return Price for ticket for specified event

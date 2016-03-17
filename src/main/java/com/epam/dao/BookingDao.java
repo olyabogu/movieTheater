@@ -1,4 +1,4 @@
-package com.epam.dao.impl;
+package com.epam.dao;
 
 import com.epam.domain.Ticket;
 import com.epam.domain.User;

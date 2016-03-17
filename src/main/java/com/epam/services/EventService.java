@@ -23,4 +23,6 @@ public interface EventService {
     List<Event> getAll();
 
     void assignAuditorium(Event event, Auditorium auditorium, Date date);
+
+	String getAuditoriumForEvent(Event event, Date date);
 }

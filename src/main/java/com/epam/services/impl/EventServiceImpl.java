@@ -1,6 +1,6 @@
 package com.epam.services.impl;
 
-import com.epam.dao.impl.EventDao;
+import com.epam.dao.EventDao;
 import com.epam.domain.Auditorium;
 import com.epam.domain.Event;
 import com.epam.exception.MovieException;
@@ -53,4 +53,8 @@ public class EventServiceImpl implements EventService {
     public void assignAuditorium(Event event, Auditorium auditorium, Date date) {
         dao.assignAuditorium(event, auditorium, date);
     }
+
+	public String getAuditoriumForEvent(Event event, Date date) {
+		return dao.getAuditoriumForEvent(event, date);
+	}
 }

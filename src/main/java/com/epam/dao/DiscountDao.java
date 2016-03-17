@@ -1,4 +1,4 @@
-package com.epam.dao.impl;
+package com.epam.dao;
 
 import com.epam.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +18,11 @@ public class DiscountDao {
     public void setJdbcTemplate(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
+
+	public void createDiscountForUserStatistics(User user){
+		String sql = "INSERT INTO USER_DISCOUNT(USER_ID, COUNTER) VALUES (?,?)";
+		jdbcTemplate.update(sql, user.getId(), 0);
+	}
 
     public void updateDiscountForUserStatistics(User user){
         String sql = "UPDATE USER_DISCOUNT SET COUNTER = COUNTER + 1 WHERE USER_ID=?";

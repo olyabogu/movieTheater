@@ -1,6 +1,6 @@
 package com.epam.services.impl;
 
-import com.epam.dao.impl.UserDao;
+import com.epam.dao.UserDao;
 import com.epam.domain.Ticket;
 import com.epam.domain.User;
 import com.epam.exception.MovieException;

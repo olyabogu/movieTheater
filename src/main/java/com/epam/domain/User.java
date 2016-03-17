@@ -28,7 +28,7 @@ public class User {
         this.name = name;
         this.role = role;
         this.email = email;
-	    bookedTickets = new LinkedList<>();
+	    this.bookedTickets = new LinkedList<>();
     }
 
     public int getId() {

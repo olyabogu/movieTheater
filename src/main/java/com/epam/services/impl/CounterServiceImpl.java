@@ -1,6 +1,6 @@
 package com.epam.services.impl;
 
-import com.epam.dao.impl.CounterDao;
+import com.epam.dao.CounterDao;
 import com.epam.domain.Event;
 import com.epam.services.CounterService;
 
@@ -17,17 +17,17 @@ public class CounterServiceImpl implements CounterService {
 
     public void updateCountForEventByName(Event event) {
         if (checkIfRecordByNameExist(event)) {
-            dao.updateByName(event);
+            dao.updateCounterByName(event);
         } else {
-            dao.saveByName(event);
+            dao.createCounterByName(event);
         }
     }
 
     public void updateCountForEventByPrice(Event event) {
         if (checkIfRecordByPriceExist(event)) {
-            dao.updateByPrice(event);
+            dao.updateCounterByPrice(event);
         } else {
-            dao.saveByPrice(event);
+            dao.createCounterByPrice(event);
         }
     }
 

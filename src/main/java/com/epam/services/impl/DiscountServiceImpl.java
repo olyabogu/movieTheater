@@ -2,11 +2,12 @@ package com.epam.services.impl;
 
 import java.util.List;
 
+import com.epam.dao.DiscountDao;
 import com.epam.domain.Discount;
 import com.epam.domain.Ticket;
 import com.epam.domain.User;
-import com.epam.services.DiscountDao;
 import com.epam.services.DiscountService;
+import com.epam.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class DiscountServiceImpl implements DiscountService {
 	@Autowired
-	private UserServiceImpl userService;
+	private UserService userService;
     @Autowired
     private DiscountDao discountDao;
 
