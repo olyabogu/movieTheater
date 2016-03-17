@@ -1,9 +1,10 @@
-package com.epam.dao.impl;
+package com.epam.dao;
 
 import com.epam.domain.Auditorium;
 import com.epam.domain.Event;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -20,6 +21,8 @@ import java.util.List;
 @Repository
 public class EventDao {
     private JdbcTemplate jdbcTemplate;
+	@Autowired
+	private CounterDao counterDao;
 
     @Autowired
     public void setJdbcTemplate(DataSource dataSource) {
@@ -43,8 +46,12 @@ public class EventDao {
     }
 
     public Event getByName(String name) {
-        String sql = "SELECT * FROM EVENT WHERE NAME = ?";
-        return jdbcTemplate.queryForObject(sql, new EventMapper(), name);
+	    try {
+		    String sql = "SELECT * FROM EVENT WHERE NAME = ?";
+		    return jdbcTemplate.queryForObject(sql, new EventMapper(), name);
+	    } catch (EmptyResultDataAccessException e) {
+		    return null;
+	    }
     }
 
     public List<Event> getAll() {
@@ -53,8 +60,18 @@ public class EventDao {
     }
 
     public void assignAuditorium(Event event, Auditorium auditorium, Date date) {
-
+	    String sql = "INSERT INTO ASSIGNED_AUDITORIUM (EVENT_ID, AUDITORIUM, DATE) VALUES (?, ?, ?)";
+	    jdbcTemplate.update(sql, event.getId(), auditorium.getName(), date);
     }
+
+	public String getAuditoriumForEvent(Event event, Date date) {
+		try {
+			String sql = "SELECT AUDITORIUM FROM ASSIGNED_AUDITORIUM WHERE EVENT_ID = ? AND DATE = ?";
+			return jdbcTemplate.queryForObject(sql, String.class, event.getId(), date);
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+		}
+	}
 
     private static class EventMapper implements RowMapper<Event> {
         @Override

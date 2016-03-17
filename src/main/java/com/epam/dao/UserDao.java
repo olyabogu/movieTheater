@@ -1,9 +1,10 @@
-package com.epam.dao.impl;
+package com.epam.dao;
 
 import com.epam.domain.Ticket;
 import com.epam.domain.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -26,18 +27,30 @@ public class UserDao {
     }
 
     public User getById(int id) {
-        String sql = "SELECT * FROM USER WHERE ID = ?";
-        return jdbcTemplate.queryForObject(sql, new UserMapper(), id);
+	    try {
+		    String sql = "SELECT * FROM USER WHERE ID = ?";
+		    return jdbcTemplate.queryForObject(sql, new UserMapper(), id);
+	    } catch (EmptyResultDataAccessException e) {
+		    return null;
+	    }
     }
 
     public User getUserByEmail(String email) {
-        String sql = "SELECT * FROM USER WHERE EMAIL = ?";
-        return jdbcTemplate.queryForObject(sql, new UserMapper(), email);
+	    try {
+		    String sql = "SELECT * FROM USER WHERE EMAIL = ?";
+		    return jdbcTemplate.queryForObject(sql, new UserMapper(), email);
+	    } catch (EmptyResultDataAccessException e) {
+		    return null;
+	    }
     }
 
     public User getByName(String name) {
-        String sql = "SELECT * FROM USER WHERE NAME = ?";
-        return jdbcTemplate.queryForObject(sql, new UserMapper(), name);
+	    try {
+		    String sql = "SELECT * FROM USER WHERE NAME = ?";
+		    return jdbcTemplate.queryForObject(sql, new UserMapper(), name);
+	    } catch (EmptyResultDataAccessException e) {
+		    return null;
+	    }
     }
 
     @SuppressWarnings("unchecked")
