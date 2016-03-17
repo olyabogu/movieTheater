@@ -17,11 +17,11 @@ import java.util.Properties;
 @Service
 public class AuditoriumServiceImpl implements AuditoriumService {
 
-    private List<Auditorium> auditorias = new ArrayList<>();
+    private List<Auditorium> auditoriums = new ArrayList<>();
 
     @PostConstruct
     private void init() throws IOException, URISyntaxException {
-        File[] auditories = new File(AuditoriumServiceImpl.class.getClassLoader().getResource("auditories").toURI()).listFiles();
+        File[] auditories = new File(AuditoriumServiceImpl.class.getClassLoader().getResource("auditoriums").toURI()).listFiles();
         for (File auditoryFile : auditories) {
             Properties properties = new Properties();
             properties.load(new FileInputStream(auditoryFile));
@@ -31,19 +31,19 @@ public class AuditoriumServiceImpl implements AuditoriumService {
             auditorium.setSeats(Integer.valueOf(properties.getProperty("auditorium.seats")));
             auditorium.setVipSeats(Integer.valueOf(properties.getProperty("auditorium.vipSeats")));
 
-            auditorias.add(auditorium);
+	        auditoriums.add(auditorium);
         }
     }
 
     @Override
     public List<Auditorium> getAuditoriums() {
-        return auditorias;
+        return auditoriums;
     }
 
     @Override
     public int getSeatsNumber() {
         int seats = 0;
-        for (Auditorium auditorium : auditorias) {
+        for (Auditorium auditorium : auditoriums) {
             seats = +auditorium.getSeats();
         }
         return seats;
@@ -52,7 +52,7 @@ public class AuditoriumServiceImpl implements AuditoriumService {
     @Override
     public int getVipSeats() {
         int vipSeats = 0;
-        for (Auditorium auditorium : auditorias) {
+        for (Auditorium auditorium : auditoriums) {
             vipSeats = +auditorium.getVipSeats();
         }
         return vipSeats;
