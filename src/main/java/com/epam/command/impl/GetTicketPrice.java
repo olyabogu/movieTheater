@@ -1,4 +1,4 @@
-package com.epam.command;
+package com.epam.command.impl;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.epam.SecurityContext;
+import com.epam.command.Command;
 import com.epam.domain.Event;
 import com.epam.domain.User;
 import com.epam.exception.MovieException;

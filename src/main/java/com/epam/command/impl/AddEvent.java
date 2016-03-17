@@ -1,4 +1,4 @@
-package com.epam.command;
+package com.epam.command.impl;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.epam.command.Command;
 import com.epam.exception.MovieException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

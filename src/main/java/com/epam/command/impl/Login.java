@@ -1,6 +1,7 @@
-package com.epam.command;
+package com.epam.command.impl;
 
 import com.epam.SecurityContext;
+import com.epam.command.Command;
 import com.epam.domain.User;
 import com.epam.exception.MovieException;
 import com.epam.services.impl.UserServiceImpl;

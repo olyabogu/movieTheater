@@ -1,5 +1,6 @@
-package com.epam.command;
+package com.epam.command.impl;
 
+import com.epam.command.Command;
 import com.epam.domain.Event;
 import com.epam.domain.User;
 import com.epam.services.EventService;
