@@ -12,7 +12,13 @@ import javax.sql.DataSource;
  */
 @Repository
 public class DiscountDao {
-    private JdbcTemplate jdbcTemplate;
+	private static final String CREATE_USER_DISCOUNT_STATISTICS = "INSERT INTO USER_DISCOUNT(USER_ID, COUNTER) VALUES (?,?)";
+	private static final String UPDATE_USER_DISCOUNT_STATISTICS = "UPDATE USER_DISCOUNT SET COUNTER = COUNTER + 1 WHERE USER_ID=?";
+	private static final String UPDATE_DISCOUNT_STATISTICS = "UPDATE DISCOUNT_STATISTICS SET COUNTER = COUNTER + 1 WHERE DISCOUNT=?";
+	private static final String GET_USER_DISCOUNT_STATISTICS = "SELECT COUNTER FROM DISCOUNT_STATISTICS WHERE DISCOUNT=?";
+	private static final String GET_DISCOUNT_STATISTICS = "SELECT COUNTER FROM USER_DISCOUNT WHERE USER_ID=?";
+
+	private JdbcTemplate jdbcTemplate;
 
     @Autowired
     public void setJdbcTemplate(DataSource dataSource) {
@@ -20,27 +26,22 @@ public class DiscountDao {
     }
 
 	public void createDiscountForUserStatistics(User user){
-		String sql = "INSERT INTO USER_DISCOUNT(USER_ID, COUNTER) VALUES (?,?)";
-		jdbcTemplate.update(sql, user.getId(), 0);
+		jdbcTemplate.update(CREATE_USER_DISCOUNT_STATISTICS, user.getId(), 0);
 	}
 
     public void updateDiscountForUserStatistics(User user){
-        String sql = "UPDATE USER_DISCOUNT SET COUNTER = COUNTER + 1 WHERE USER_ID=?";
-        jdbcTemplate.update(sql, user.getId());
+        jdbcTemplate.update(UPDATE_USER_DISCOUNT_STATISTICS, user.getId());
     }
 
     public void updateDiscountStatistics(String discount) {
-        String sql = "UPDATE DISCOUNT_STATISTICS SET COUNTER = COUNTER + 1 WHERE DISCOUNT=?";
-        jdbcTemplate.update(sql, discount);
+        jdbcTemplate.update(UPDATE_DISCOUNT_STATISTICS, discount);
     }
 
     public Integer getStatisticsForDiscount(String discount) {
-        String sql = "SELECT COUNTER FROM DISCOUNT_STATISTICS WHERE DISCOUNT=?";
-        return jdbcTemplate.queryForObject(sql, new Object[] { discount }, Integer.class);
+        return jdbcTemplate.queryForObject(GET_DISCOUNT_STATISTICS, new Object[] { discount }, Integer.class);
     }
 
     public Integer getStatisticsForUser(User user) {
-        String sql = "SELECT COUNTER FROM USER_DISCOUNT WHERE USER_ID=?";
-        return jdbcTemplate.queryForObject(sql, new Object[] { user.getId() }, Integer.class);
+        return jdbcTemplate.queryForObject(GET_USER_DISCOUNT_STATISTICS, new Object[] { user.getId() }, Integer.class);
     }
 }

@@ -13,7 +13,17 @@ import javax.sql.DataSource;
  */
 @Repository
 public class CounterDao {
-    private JdbcTemplate jdbcTemplate;
+
+	private static final String CREATE_COUNTER_BY_NAME = "INSERT INTO EVENT_BY_NAME (EVENT_ID, COUNTER) VALUES (?, ?)";
+	private static final String UPDATE_COUNTER_BY_NAME = "UPDATE EVENT_BY_NAME SET COUNTER = COUNTER + 1 WHERE EVENT_ID=?";
+	private static final String GET_COUNTER_BY_NAME = "SELECT COUNTER FROM EVENT_BY_NAME WHERE EVENT_ID=?";
+	private static final String CREATE_COUNTER_BY_PRICE = "INSERT INTO EVENT_BY_PRICE (EVENT_ID, COUNTER) VALUES (?, ?)";
+	private static final String UPDATE_COUNTER_BY_PRICE = "UPDATE EVENT_BY_PRICE SET COUNTER = COUNTER + 1 WHERE EVENT_ID=?";
+	private static final String GET_COUNTER_BY_PRICE = "SELECT COUNTER FROM EVENT_BY_PRICE WHERE EVENT_ID=?";
+	private static final String COUNT_BY_NAME = "SELECT COUNT(*) FROM EVENT_BY_NAME WHERE EVENT_ID=?";
+	private static final String COUNT_BY_PRICE = "SELECT COUNT(*) FROM EVENT_BY_NAME WHERE EVENT_ID=?";
+
+	private JdbcTemplate jdbcTemplate;
 
     @Autowired
     public void setJdbcTemplate(DataSource dataSource) {
@@ -21,50 +31,42 @@ public class CounterDao {
     }
 
     public void createCounterByName(Event event) {
-        String sql = "INSERT INTO EVENT_BY_NAME (EVENT_ID, COUNTER) VALUES (?, ?)";
-        jdbcTemplate.update(sql, event.getId(), 0);
+        jdbcTemplate.update(CREATE_COUNTER_BY_NAME, event.getId(), 0);
     }
 
     public void updateCounterByName(Event event) {
-        String sql = "UPDATE EVENT_BY_NAME SET COUNTER = COUNTER + 1 WHERE EVENT_ID=?";
-        jdbcTemplate.update(sql, event.getId());
+        jdbcTemplate.update(UPDATE_COUNTER_BY_NAME, event.getId());
     }
 
     public int getCounterByName(Event event) {
 	    try {
-		    String sql = "SELECT COUNTER FROM EVENT_BY_NAME WHERE EVENT_ID=?";
-		    return jdbcTemplate.queryForObject(sql, new Object[]{event.getId()}, Integer.class);
+		    return jdbcTemplate.queryForObject(GET_COUNTER_BY_NAME, new Object[]{event.getId()}, Integer.class);
 	    } catch (EmptyResultDataAccessException e) {
 		    return 0;
 	    }
     }
 
     public void createCounterByPrice(Event event) {
-        String sql = "INSERT INTO EVENT_BY_PRICE (EVENT_ID, COUNTER) VALUES (?, ?)";
-        jdbcTemplate.update(sql, event.getId(), 0);
+        jdbcTemplate.update(CREATE_COUNTER_BY_PRICE, event.getId(), 0);
     }
 
     public void updateCounterByPrice(Event event) {
-        String sql = "UPDATE EVENT_BY_PRICE SET COUNTER = COUNTER + 1 WHERE EVENT_ID=?";
-        jdbcTemplate.update(sql, event.getId());
+        jdbcTemplate.update(UPDATE_COUNTER_BY_PRICE, event.getId());
     }
 
     public int getCounterByPrice(Event event) {
 	    try {
-		    String sql = "SELECT COUNTER FROM EVENT_BY_PRICE WHERE EVENT_ID=?";
-		    return jdbcTemplate.queryForObject(sql, new Object[]{event.getId()}, Integer.class);
+		    return jdbcTemplate.queryForObject(GET_COUNTER_BY_PRICE, new Object[]{event.getId()}, Integer.class);
 	    } catch (EmptyResultDataAccessException e) {
 		    return 0;
 	    }
     }
 
 	public Integer selectCountByName(Event event) {
-		String sql = "SELECT COUNT(*) FROM EVENT_BY_NAME WHERE EVENT_ID=?";
-		return jdbcTemplate.queryForObject(sql, new Object[] { event.getId() }, Integer.class);
+		return jdbcTemplate.queryForObject(COUNT_BY_NAME, new Object[] { event.getId() }, Integer.class);
 	}
 
 	public Integer selectCountByPrice(Event event) {
-		String sql = "SELECT COUNT(*) FROM EVENT_BY_NAME WHERE EVENT_ID=?";
-		return jdbcTemplate.queryForObject(sql, new Object[] { event.getId() }, Integer.class);
+		return jdbcTemplate.queryForObject(COUNT_BY_PRICE, new Object[] { event.getId() }, Integer.class);
 	}
 }

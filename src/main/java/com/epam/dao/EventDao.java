@@ -20,9 +20,20 @@ import java.util.List;
  */
 @Repository
 public class EventDao {
-    private JdbcTemplate jdbcTemplate;
-	@Autowired
-	private CounterDao counterDao;
+	private static final String ID = "ID";
+	private static final String NAME = "NAME";
+	private static final String RATING = "RATING";
+	private static final String BASE_PRICE = "BASE_PRICE";
+
+	private static final String CREATE_EVENT = "INSERT INTO EVENT (NAME, RATING, BASE_PRICE) VALUES (?, ?, ?)";
+	private static final String UPDATE_EVENT = "UPDATE EVENT SET NAME=?, RATING=?, BASE_PRICE=? WHERE ID = ?";
+	private static final String DELETE_EVENT = "DELETE FROM EVENT WHERE ID=?";
+	private static final String GET_BY_NAME = "SELECT * FROM EVENT WHERE NAME = ?";
+	private static final String GET_ALL_EVENTS = "SELECT * FROM EVENT";
+	private static final String ASSIGN_AUDITORIUM = "INSERT INTO ASSIGNED_AUDITORIUM (EVENT_ID, AUDITORIUM, DATE) VALUES (?, ?, ?)";
+	private static final String GET_AUDITORIUM_FOR_EVENT = "SELECT AUDITORIUM FROM ASSIGNED_AUDITORIUM WHERE EVENT_ID = ? AND DATE = ?";
+
+	private JdbcTemplate jdbcTemplate;
 
     @Autowired
     public void setJdbcTemplate(DataSource dataSource) {
@@ -30,44 +41,37 @@ public class EventDao {
     }
 
     public void create(Event event) {
-        String sql = "INSERT INTO EVENT (NAME, RATING, BASE_PRICE) VALUES (?, ?, ?)";
-        jdbcTemplate.update(sql, event.getName(), event.getRating().toString(), event.getBasePrice());
+        jdbcTemplate.update(CREATE_EVENT, event.getName(), event.getRating().toString(), event.getBasePrice());
     }
 
 	public void update(Event event) {
-		String sql = "UPDATE EVENT SET NAME=?, RATING=?, BASE_PRICE=? WHERE ID = ?";
-		jdbcTemplate.update(sql, event.getName(), event.getRating().toString(), event.getBasePrice(), event.getId());
+		jdbcTemplate.update(UPDATE_EVENT, event.getName(), event.getRating().toString(), event.getBasePrice(), event.getId());
 	}
 
     public void remove(Event event) {
         int id = event.getId();
-        String sql  = "DELETE FROM EVENT WHERE ID=?";
-        jdbcTemplate.update(sql, id);
+        jdbcTemplate.update(DELETE_EVENT, id);
     }
 
     public Event getByName(String name) {
 	    try {
-		    String sql = "SELECT * FROM EVENT WHERE NAME = ?";
-		    return jdbcTemplate.queryForObject(sql, new EventMapper(), name);
+		    return jdbcTemplate.queryForObject(GET_BY_NAME, new EventMapper(), name);
 	    } catch (EmptyResultDataAccessException e) {
 		    return null;
 	    }
     }
 
     public List<Event> getAll() {
-        String sql = "SELECT * FROM EVENT";
-        return jdbcTemplate.query(sql, new EventMapper());
+        return jdbcTemplate.query(GET_ALL_EVENTS, new EventMapper());
     }
 
     public void assignAuditorium(Event event, Auditorium auditorium, Date date) {
-	    String sql = "INSERT INTO ASSIGNED_AUDITORIUM (EVENT_ID, AUDITORIUM, DATE) VALUES (?, ?, ?)";
-	    jdbcTemplate.update(sql, event.getId(), auditorium.getName(), date);
+	    jdbcTemplate.update(ASSIGN_AUDITORIUM, event.getId(), auditorium.getName(), date);
     }
 
 	public String getAuditoriumForEvent(Event event, Date date) {
 		try {
-			String sql = "SELECT AUDITORIUM FROM ASSIGNED_AUDITORIUM WHERE EVENT_ID = ? AND DATE = ?";
-			return jdbcTemplate.queryForObject(sql, String.class, event.getId(), date);
+			return jdbcTemplate.queryForObject(GET_AUDITORIUM_FOR_EVENT, String.class, event.getId(), date);
 		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}
@@ -77,10 +81,10 @@ public class EventDao {
         @Override
         public Event mapRow(ResultSet rs, int rowNum) throws SQLException {
             Event event = new Event();
-            event.setId(rs.getInt("ID"));
-            event.setName(rs.getString("NAME"));
-            event.setRating(Event.Rating.valueOf(rs.getString("RATING")));
-            event.setBasePrice(rs.getDouble("BASE_PRICE"));
+            event.setId(rs.getInt(ID));
+            event.setName(rs.getString(NAME));
+            event.setRating(Event.Rating.valueOf(rs.getString(RATING)));
+            event.setBasePrice(rs.getDouble(BASE_PRICE));
             return event;
         }
     }

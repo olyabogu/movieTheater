@@ -13,7 +13,9 @@ import javax.sql.DataSource;
  */
 @Repository
 public class BookingDao {
-    private JdbcTemplate jdbcTemplate;
+	private static final String BOOK_TICKET = "INSERT INTO USER_TICKET_MP (USER_ID, TICKET_ID) VALUES (?, ?)";
+
+	private JdbcTemplate jdbcTemplate;
 
     @Autowired
     public void setJdbcTemplate(DataSource dataSource) {
@@ -21,7 +23,6 @@ public class BookingDao {
     }
 
     public void bookTicket(User user, Ticket ticket) {
-        String sql = "INSERT INTO USER_TICKET_MP (USER_ID, TICKET_ID) VALUES (?, ?)";
-        jdbcTemplate.update(sql, user.getId(), ticket.getId());
+        jdbcTemplate.update(BOOK_TICKET, user.getId(), ticket.getId());
     }
 }
