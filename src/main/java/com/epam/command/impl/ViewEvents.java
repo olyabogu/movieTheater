@@ -26,7 +26,7 @@ public class ViewEvents implements Command {
 
     @Override
     public String getDescription() {
-        return "view events with air dates and time";
+        return "View events with air dates and time";
     }
 
     @Override

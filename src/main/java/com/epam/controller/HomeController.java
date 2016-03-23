@@ -21,7 +21,7 @@ public class HomeController {
         return modelAndView;
     }
 
-    @RequestMapping("/error.page")
+    @RequestMapping(Mappings.ERROR_PAGE)
     public String error() {
         return "error";
     }

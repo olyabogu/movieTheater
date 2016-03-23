@@ -6,5 +6,6 @@ package com.epam.controller;
 public interface Mappings {
     String REGISTER_USER = "/register-user";
     String INDEX_PAGE = "/index";
+    String ERROR_PAGE = "/error";
 
 }
