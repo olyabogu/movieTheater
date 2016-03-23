@@ -1,5 +1,7 @@
 package com.epam.test;
 
+import com.epam.config.ApplicationConfiguration;
+import com.epam.config.MvcConfiguration;
 import com.epam.domain.Auditorium;
 import com.epam.domain.Event;
 import com.epam.exception.MovieException;
@@ -25,7 +27,7 @@ import static org.junit.Assert.assertTrue;
  * Created by Olga Bogutska on 26.02.2016.
  */
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:spring.xml"})
+@ContextConfiguration(classes={ApplicationConfiguration.class, MvcConfiguration.class})
 @RunWith(SpringJUnit4ClassRunner.class)
 public class EventServiceTest {
 	private static final String NAME = "Event";

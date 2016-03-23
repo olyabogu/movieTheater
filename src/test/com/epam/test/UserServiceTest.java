@@ -1,5 +1,7 @@
 package com.epam.test;
 
+import com.epam.config.ApplicationConfiguration;
+import com.epam.config.MvcConfiguration;
 import com.epam.domain.User;
 import com.epam.exception.MovieException;
 import com.epam.services.UserService;
@@ -20,7 +22,7 @@ import java.util.Date;
  * Created by Olga Bogutska on 26.02.2016.
  */
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:spring.xml"})
+@ContextConfiguration(classes={ApplicationConfiguration.class, MvcConfiguration.class})
 @RunWith(SpringJUnit4ClassRunner.class)
 public class UserServiceTest {
 	private static final String NAME = "Carl";
