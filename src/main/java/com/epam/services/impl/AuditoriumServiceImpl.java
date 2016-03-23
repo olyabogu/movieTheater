@@ -21,7 +21,7 @@ public class AuditoriumServiceImpl implements AuditoriumService {
 
     @PostConstruct
     private void init() throws IOException, URISyntaxException {
-        File[] auditories = new File(AuditoriumServiceImpl.class.getClassLoader().getResource("auditoriums").toURI()).listFiles();
+        File[] auditories = new File(AuditoriumServiceImpl.class.getClassLoader().getResource("auditories").toURI()).listFiles();
         for (File auditoryFile : auditories) {
             Properties properties = new Properties();
             properties.load(new FileInputStream(auditoryFile));
