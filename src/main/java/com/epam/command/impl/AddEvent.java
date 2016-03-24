@@ -30,12 +30,12 @@ public class AddEvent implements Command {
 
 	@Override
 	public String getName() {
-		return "enter-event";
+		return "add-event";
 	}
 
 	@Override
 	public String getDescription() {
-		return "Add new events";
+		return "Add new event";
 	}
 
 	@Override
