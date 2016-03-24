@@ -1,5 +1,8 @@
 package com.epam.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.epam.domain.Event;
 import com.epam.exception.MovieException;
 import com.epam.services.EventService;
@@ -20,15 +23,20 @@ public class AddEventController {
     private EventService eventService;
 
     @RequestMapping(value = Mappings.ADD_EVENT, method = RequestMethod.GET)
-    public String addEvent(ModelAndView mv) {
-        mv.addObject("ratings", Event.Rating.values());
-        return "addEvent";
+    public ModelAndView addEvent(ModelAndView mv) {
+	    List<String> names = new ArrayList<>();
+	    for (Event.Rating rating : Event.Rating.values()) {
+		    names.add(rating.getName());
+	    }
+	    mv.addObject("options", names);
+	    mv.setViewName("addEvent");
+	    return mv;
     }
 
     /**
      * Add a new event
      * @param event
-     * @return Redirect to /view-events page to display events list
+     * @return Redirect to /events page to display events list
      */
     @RequestMapping(value = Mappings.ADD_EVENT, method = RequestMethod.POST)
     public String add(@ModelAttribute("event") Event event) throws MovieException {

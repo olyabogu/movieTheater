@@ -30,7 +30,7 @@ public class AddEvent implements Command {
 
 	@Override
 	public String getName() {
-		return "add-event";
+		return "addEvent";
 	}
 
 	@Override

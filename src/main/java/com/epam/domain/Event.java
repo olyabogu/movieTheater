@@ -17,7 +17,19 @@ public class Event {
 	private Rating rating;
 
 	public enum Rating {
-		HIGH, MID, LOW
+		HIGH("High"),
+		MID("Middle"),
+		LOW("Low");
+
+		public String getName() {
+			return name;
+		}
+
+		private String name;
+
+		private Rating(String s) {
+			name = s;
+		}
 	}
 
 	public Event() {
