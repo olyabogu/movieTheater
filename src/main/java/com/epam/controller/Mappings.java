@@ -9,4 +9,5 @@ public interface Mappings {
     String ADD_EVENT = "/addEvent";
     String VIEW_EVENTS = "/viewEvents";
     String VIEW_TICKETS = "/viewTickets";
+	String ERROR_PAGE = "/error/error";
 }
