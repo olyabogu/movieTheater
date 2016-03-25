@@ -35,7 +35,8 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
 		resolver.setCache(true);
 		resolver.setPrefix("/WEB-INF/views/");
 		resolver.setSuffix(".ftl");
-		resolver.setContentType("text/html; charset=UTF-8");
+        resolver.setCache(false);   //Set to true during production
+        resolver.setContentType("text/html; charset=UTF-8");
 		return resolver;
 	}
 
@@ -46,6 +47,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
         Map<String, Object> map = new HashMap<>();
         map.put("xml_escape", new XmlEscape());
         configurer.setFreemarkerVariables(map);
+        configurer.setDefaultEncoding("UTF-8");
         return configurer;
     }
 

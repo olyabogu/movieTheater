@@ -3,6 +3,8 @@ package com.epam.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.epam.controller.model.EventModel;
+import com.epam.converter.EventConverter;
 import com.epam.domain.Event;
 import com.epam.exception.MovieException;
 import com.epam.services.EventService;
@@ -20,6 +22,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class AddEventController {
 
     @Autowired
+    private EventConverter eventConverter;
+    @Autowired
     private EventService eventService;
 
     @RequestMapping(value = Mappings.ADD_EVENT, method = RequestMethod.GET)
@@ -35,11 +39,12 @@ public class AddEventController {
 
     /**
      * Add a new event
-     * @param event
+     * @param eventModel
      * @return Redirect to /events page to display events list
      */
     @RequestMapping(value = Mappings.ADD_EVENT, method = RequestMethod.POST)
-    public String add(@ModelAttribute("event") Event event) throws MovieException {
+    public String add(@ModelAttribute("eventModel") EventModel eventModel) throws MovieException {
+        Event event = eventConverter.toEvent(eventModel);
         eventService.createEvent(event);
         return "redirect:events";
     }

@@ -1,6 +1,10 @@
 <#import "/spring.ftl" as spring/>
-<html>
-<head><title>Add new event</title>
+<#import "ratings.ftl" as ratings />
+<html xmlns:form="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Add new event</title>
+</head>
 <body>
 <div id="header">
     <H2>
@@ -14,10 +18,9 @@
         <form name="event" action="addEvent" method="post">
             Name: <input type="text" name="name"/> <br/>
             Date: <input type="date" name="date"/> <br/>
-            Price: <input type="number" min="0" name="basePrice"/> <br/>
+            Price: <input type="number" min="1" name="basePrice"/> <br/>
             Rating: <input type="text" name="rating"/> <br/>
-        <#--<@spring.bind "options" />-->
-            <#--<@spring.formSingleSelect "rating", options, " " /><br/>-->
+        <#--<@spring.formSingleSelect path="event.rating" options = { "A": "Option A", "B": "Option B", "C": "Option C" } /><br/>-->
             <input type="submit" value="   Save   "/>
         </form>
     </fieldset>
