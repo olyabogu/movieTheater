@@ -9,6 +9,7 @@ public class EventModel {
     private String date;
     private String rating;
     private String basePrice;
+    private int tickets;
 
     public String getName() {
         return name;
@@ -41,4 +42,12 @@ public class EventModel {
     public void setBasePrice(String basePrice) {
         this.basePrice = basePrice;
     }
+
+	public int getTickets() {
+		return tickets;
+	}
+
+	public void setTickets(int tickets) {
+		this.tickets = tickets;
+	}
 }

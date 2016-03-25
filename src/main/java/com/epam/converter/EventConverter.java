@@ -5,6 +5,7 @@ import com.epam.domain.Event;
 import com.epam.domain.Rating;
 import com.epam.exception.MovieException;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -45,7 +46,16 @@ public class EventConverter {
 		eventModel.setName(event.getName());
 		eventModel.setBasePrice(event.getBasePrice().toString());
 		eventModel.setRating(event.getRating().getDescription());
+		eventModel.setTickets(CollectionUtils.isEmpty(event.getTickets()) ? 0 : event.getTickets().size());
 		return eventModel;
+	}
+
+	public List<EventModel> toListEventModel(List<Event> events) {
+		List<EventModel> models = new ArrayList<>();
+		for (Event event : events) {
+			models.add(toEventModel(event));
+		}
+		return models;
 	}
 
 	private Rating findRating(String modelRating) {

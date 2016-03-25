@@ -19,6 +19,8 @@
     <#list events as event>
         <tr>
             <td>${event.name}</td>
+            <td>${event.date}</td>
+            <td>${event.basePrice}</td>
             <td>${event.rating}</td>
         </tr>
     </#list>
