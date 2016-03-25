@@ -15,6 +15,7 @@ import com.epam.SecurityContext;
 import com.epam.command.Command;
 import com.epam.domain.Event;
 import com.epam.domain.User;
+import com.epam.domain.UserRole;
 import com.epam.exception.MovieException;
 import com.epam.services.BookingService;
 import com.epam.services.EventService;
@@ -43,8 +44,8 @@ public class GetTicketPrice implements Command {
 	}
 
 	@Override
-	public User.UserRole getAllowedRole() {
-		return User.UserRole.CLIENT;
+	public UserRole getAllowedRole() {
+		return UserRole.CLIENT;
 	}
 
 	@Override

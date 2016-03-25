@@ -11,6 +11,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.epam.command.Command;
+import com.epam.domain.Rating;
+import com.epam.domain.UserRole;
 import com.epam.exception.MovieException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -39,8 +41,8 @@ public class AddEvent implements Command {
 	}
 
 	@Override
-	public User.UserRole getAllowedRole() {
-		return User.UserRole.ADMIN;
+	public UserRole getAllowedRole() {
+		return UserRole.ADMIN;
 	}
 
 	@Override
@@ -67,7 +69,7 @@ public class AddEvent implements Command {
 			out.println("Enter event rating : HIGH, MID, LOW");
 			rating = reader.readLine();
 
-			Event event = new Event(dates, Double.valueOf(price), name, Event.Rating.valueOf(rating));
+			Event event = new Event(dates, Double.valueOf(price), name, Rating.valueOf(rating));
 
 			eventService.createEvent(event);
 			out.println("Event " + name + " added successfully!");

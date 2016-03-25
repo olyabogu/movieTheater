@@ -16,22 +16,6 @@ public class Event {
 	private List<Ticket> tickets;
 	private Rating rating;
 
-	public enum Rating {
-		HIGH("High"),
-		MID("Middle"),
-		LOW("Low");
-
-		public String getName() {
-			return name;
-		}
-
-		private String name;
-
-		private Rating(String s) {
-			name = s;
-		}
-	}
-
 	public Event() {
 		this.dates = new LinkedList<>();
 		this.tickets = new LinkedList<>();

@@ -4,6 +4,7 @@ import com.epam.config.ApplicationConfiguration;
 import com.epam.config.MvcConfiguration;
 import com.epam.domain.Auditorium;
 import com.epam.domain.Event;
+import com.epam.domain.Rating;
 import com.epam.exception.MovieException;
 import com.epam.services.AuditoriumService;
 import com.epam.services.EventService;
@@ -61,7 +62,7 @@ public class EventServiceTest {
 		List<Date> dates = new ArrayList<>();
 		dates.add(new Date());
 
-		Event event = new Event(dates, 14.30D, NAME, Event.Rating.valueOf("HIGH"));
+		Event event = new Event(dates, 14.30D, NAME, Rating.valueOf("HIGH"));
 
 		service.createEvent(event);
 		event = service.getEventByName(NAME);

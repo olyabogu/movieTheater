@@ -3,6 +3,7 @@ package com.epam.test;
 import com.epam.config.ApplicationConfiguration;
 import com.epam.config.MvcConfiguration;
 import com.epam.domain.User;
+import com.epam.domain.UserRole;
 import com.epam.exception.MovieException;
 import com.epam.services.UserService;
 import org.junit.Test;
@@ -72,7 +73,7 @@ public class UserServiceTest {
 
 	@Test
 	public void testRegister() throws MovieException {
-		User user = new User(NAME, new Date(), User.UserRole.CLIENT, NAME + "@email.com");
+		User user = new User(NAME, new Date(), UserRole.CLIENT, NAME + "@email.com");
 		service.register(user);
 		user = service.getUserByName(NAME);
 		assertTrue(user.getId() > 0);

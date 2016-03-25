@@ -1,6 +1,7 @@
 package com.epam;
 
 import com.epam.domain.User;
+import com.epam.domain.UserRole;
 
 import org.springframework.stereotype.Component;
 
@@ -24,7 +25,7 @@ public class SecurityContext {
     }
 
 	public boolean isAdmin() {
-		return user != null && User.UserRole.ADMIN.equals(user.getRole());
+		return user != null && UserRole.ADMIN.equals(user.getRole());
 	}
 
 	public User getCurrentUser() {

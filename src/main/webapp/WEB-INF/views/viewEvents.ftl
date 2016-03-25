@@ -1,5 +1,8 @@
 <html>
-<head><title>Events list</title>
+<head>
+    <meta charset="UTF-8">
+    <title>Events list</title>
+</head>
 <body>
 <div id="header">
     <H2>

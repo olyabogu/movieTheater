@@ -3,6 +3,7 @@ package com.epam.command.impl;
 import com.epam.SecurityContext;
 import com.epam.command.Command;
 import com.epam.domain.User;
+import com.epam.domain.UserRole;
 import com.epam.exception.MovieException;
 import com.epam.services.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,8 @@ public class Login implements Command {
     }
 
     @Override
-    public User.UserRole getAllowedRole() {
-        return User.UserRole.ANONYM;
+    public UserRole getAllowedRole() {
+        return UserRole.ANONYM;
     }
 
     @Override

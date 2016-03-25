@@ -1,6 +1,6 @@
 package com.epam.command;
 
-import com.epam.domain.User;
+import com.epam.domain.UserRole;
 
 import java.io.BufferedReader;
 import java.io.PrintStream;
@@ -14,7 +14,7 @@ public interface Command {
 
     String getDescription();
 
-    User.UserRole getAllowedRole();
+    UserRole getAllowedRole();
 
     void apply(BufferedReader reader, PrintStream out);
 }

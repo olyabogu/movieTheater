@@ -2,7 +2,7 @@ package com.epam.command.impl;
 
 import com.epam.command.Command;
 import com.epam.domain.Event;
-import com.epam.domain.User;
+import com.epam.domain.UserRole;
 import com.epam.services.BookingService;
 import com.epam.services.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +37,8 @@ public class ViewTickets implements Command {
     }
 
     @Override
-    public User.UserRole getAllowedRole() {
-        return User.UserRole.ADMIN;
+    public UserRole getAllowedRole() {
+        return UserRole.ADMIN;
     }
 
     @Override

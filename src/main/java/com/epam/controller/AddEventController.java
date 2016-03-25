@@ -1,11 +1,9 @@
 package com.epam.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.epam.controller.model.EventModel;
 import com.epam.converter.EventConverter;
 import com.epam.domain.Event;
+import com.epam.domain.Rating;
 import com.epam.exception.MovieException;
 import com.epam.services.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +26,7 @@ public class AddEventController {
 
     @RequestMapping(value = Mappings.ADD_EVENT, method = RequestMethod.GET)
     public ModelAndView addEvent(ModelAndView mv) {
-	    List<String> names = new ArrayList<>();
-	    for (Event.Rating rating : Event.Rating.values()) {
-		    names.add(rating.getName());
-	    }
-	    mv.addObject("options", names);
+	    mv.addObject("ratings", Rating.values());
 	    mv.setViewName("addEvent");
 	    return mv;
     }
@@ -46,7 +40,6 @@ public class AddEventController {
     public String add(@ModelAttribute("eventModel") EventModel eventModel) throws MovieException {
         Event event = eventConverter.toEvent(eventModel);
         eventService.createEvent(event);
-        return "redirect:events";
+        return "redirect:viewEvents";
     }
-
 }

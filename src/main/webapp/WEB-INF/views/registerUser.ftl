@@ -12,20 +12,20 @@
 
 <div id="content">
     <fieldset>
-        <legend>Add Event</legend>
-        <form name="event" action="addEvent" method="post">
+        <legend>Register new user</legend>
+        <form name="user" action="registerUser" method="post">
             Name: <input type="text" name="name"/> <br/>
-            Date: <input type="date" name="date"/> <br/>
-            Price: <input type="number" min="1" name="basePrice"/> <br/>
+            Birth Date: <input type="date" name="birthDate"/> <br/>
+            Email: <input type="text" name="email"/> <br/>
             Rating:
-        <#macro enumSelect selectName enumValues>
+		<#macro enumSelect selectName enumValues>
             <select name="${selectName}">
-		        <#list enumValues as enum>
+				<#list enumValues as enum>
                     <option value="${enum}">${enum.description}</option>
-		        </#list>
+				</#list>
             </select>
-        </#macro>
-        <@enumSelect "rating" ratings/><br/>
+		</#macro>
+		<@enumSelect "role" roles/><br/>
             <input type="submit" value="   Save   "/>
         </form>
     </fieldset>

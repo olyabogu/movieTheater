@@ -16,10 +16,6 @@ public class User {
     private String email;
     private List<Ticket> bookedTickets;
 
-	public enum UserRole {
-		ADMIN, CLIENT, ANONYM
-	}
-
     public User() {
     }
 

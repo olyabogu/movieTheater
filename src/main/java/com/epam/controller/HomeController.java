@@ -1,28 +1,22 @@
 package com.epam.controller;
 
-import com.epam.command.Command;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
+import com.epam.domain.Command;
 
 @Controller
 public class HomeController {
 
     @Autowired
-    private List<Command> commands;
+    private Command command;
 
     @RequestMapping(Mappings.INDEX_PAGE)
     public ModelAndView homePage() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("commands", commands);
+        modelAndView.addObject("commands", command.getCommands());
         return modelAndView;
-    }
-
-    @RequestMapping(Mappings.ERROR_PAGE)
-    public String error() {
-        return "error";
     }
 }

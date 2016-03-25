@@ -3,6 +3,7 @@ package com.epam.services.impl;
 import com.epam.dao.BookingDao;
 import com.epam.domain.Discount;
 import com.epam.domain.Event;
+import com.epam.domain.Rating;
 import com.epam.domain.Ticket;
 import com.epam.domain.User;
 import com.epam.services.BookingService;
@@ -34,7 +35,7 @@ public class BookingServiceImpl implements BookingService {
 		if (isVipSeats) {
 			price *= 2;
 		}
-		if (Event.Rating.HIGH.equals(event.getRating())) {
+		if (Rating.HIGH.equals(event.getRating())) {
 			price *= 1.2;
 		}
 		if (discount != null) {

@@ -2,6 +2,7 @@ package com.epam.dao;
 
 import com.epam.domain.Auditorium;
 import com.epam.domain.Event;
+import com.epam.domain.Rating;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -83,7 +84,7 @@ public class EventDao {
             Event event = new Event();
             event.setId(rs.getInt(ID));
             event.setName(rs.getString(NAME));
-            event.setRating(Event.Rating.valueOf(rs.getString(RATING)));
+            event.setRating(Rating.valueOf(rs.getString(RATING)));
             event.setBasePrice(rs.getDouble(BASE_PRICE));
             return event;
         }

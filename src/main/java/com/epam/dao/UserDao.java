@@ -2,6 +2,7 @@ package com.epam.dao;
 
 import com.epam.domain.Ticket;
 import com.epam.domain.User;
+import com.epam.domain.UserRole;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -91,7 +92,7 @@ public class UserDao {
             User user = new User();
             user.setId(rs.getInt(ID));
             user.setName(rs.getString(NAME));
-            user.setRole(User.UserRole.valueOf(rs.getString(USER_ROLE)));
+            user.setRole(UserRole.valueOf(rs.getString(USER_ROLE)));
             user.setBirthDate(rs.getDate(BIRTH_DATE));
             user.setEmail(rs.getString(EMAIL));
             return user;

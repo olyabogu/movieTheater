@@ -2,7 +2,7 @@ package com.epam.command.impl;
 
 import com.epam.command.Command;
 import com.epam.domain.Event;
-import com.epam.domain.User;
+import com.epam.domain.UserRole;
 import com.epam.services.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,7 +21,7 @@ public class ViewEvents implements Command {
 
     @Override
     public String getName() {
-        return "view-events";
+        return "viewEvents";
     }
 
     @Override
@@ -30,8 +30,8 @@ public class ViewEvents implements Command {
     }
 
     @Override
-    public User.UserRole getAllowedRole() {
-        return User.UserRole.CLIENT;
+    public UserRole getAllowedRole() {
+        return UserRole.CLIENT;
     }
 
     @Override

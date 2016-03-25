@@ -2,6 +2,7 @@ package com.epam.converter;
 
 import com.epam.controller.model.EventModel;
 import com.epam.domain.Event;
+import com.epam.domain.Rating;
 import com.epam.exception.MovieException;
 import org.springframework.stereotype.Component;
 
@@ -34,8 +35,25 @@ public class EventConverter {
             throw new MovieException("Adding new event failed! Caused by " + e.getMessage());
         }
         dates.add(date);
-        event.setRating(Event.Rating.valueOf(eventModel.getRating()));
-        event.setDates(dates);
+	    event.setRating(findRating(eventModel.getRating()));
+	    event.setDates(dates);
         return event;
     }
+
+	public EventModel toEventModel(Event event) {
+		EventModel eventModel = new EventModel();
+		eventModel.setName(event.getName());
+		eventModel.setBasePrice(event.getBasePrice().toString());
+		eventModel.setRating(event.getRating().getDescription());
+		return eventModel;
+	}
+
+	private Rating findRating(String modelRating) {
+		for (Rating rating : Rating.values()) {
+			if (rating.getDescription().equals(modelRating)) {
+				return rating;
+			}
+		}
+		return null;
+	}
 }

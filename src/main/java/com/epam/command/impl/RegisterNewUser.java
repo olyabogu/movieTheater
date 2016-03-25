@@ -2,6 +2,7 @@ package com.epam.command.impl;
 
 import com.epam.command.Command;
 import com.epam.domain.User;
+import com.epam.domain.UserRole;
 import com.epam.exception.MovieException;
 import com.epam.services.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class RegisterNewUser implements Command {
 
     @Override
     public String getName() {
-        return "register-user";
+        return "registerUser";
     }
 
     @Override
@@ -35,8 +36,8 @@ public class RegisterNewUser implements Command {
     }
 
     @Override
-    public User.UserRole getAllowedRole() {
-        return User.UserRole.ANONYM;
+    public UserRole getAllowedRole() {
+        return UserRole.ANONYM;
     }
 
     @Override
@@ -57,7 +58,7 @@ public class RegisterNewUser implements Command {
             DateFormat formatter = new SimpleDateFormat("dd-MM-yyyyyy");
 
             Date birthDate = formatter.parse(date);
-            User user = new User(name, birthDate, User.UserRole.valueOf(role.toUpperCase()), email);
+            User user = new User(name, birthDate, UserRole.valueOf(role.toUpperCase()), email);
             userService.register(user);
             outputStream.println("User registered successfully ");
 
