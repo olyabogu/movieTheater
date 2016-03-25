@@ -14,6 +14,8 @@
     <table class="datatable">
         <tr>
             <th>Name</th>
+            <th>Date</th>
+            <th>Price</th>
             <th>Rating</th>
         </tr>
     <#list events as event>

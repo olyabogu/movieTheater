@@ -46,6 +46,7 @@ public class EventConverter {
 		eventModel.setName(event.getName());
 		eventModel.setBasePrice(event.getBasePrice().toString());
 		eventModel.setRating(event.getRating().getDescription());
+		eventModel.setDate(new Date().toString());
 		eventModel.setTickets(CollectionUtils.isEmpty(event.getTickets()) ? 0 : event.getTickets().size());
 		return eventModel;
 	}
