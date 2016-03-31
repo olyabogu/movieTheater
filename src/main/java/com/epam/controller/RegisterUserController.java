@@ -41,6 +41,6 @@ public class RegisterUserController {
 
 	@RequestMapping(value = Mappings.REGISTER_USER, params = "cancel", method = RequestMethod.POST)
 	public String cancelRegisterUser() {
-		return "redirect:/index";
+		return "redirect:login";
 	}
 }
