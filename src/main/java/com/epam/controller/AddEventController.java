@@ -34,7 +34,7 @@ public class AddEventController {
     /**
      * Add a new event
      * @param eventModel
-     * @return Redirect to /events page to display events list
+     * @return Redirect to events page to display events list
      */
     @RequestMapping(value = Mappings.ADD_EVENT, method = RequestMethod.POST)
     public String add(@ModelAttribute("eventModel") EventModel eventModel) throws MovieException {
@@ -42,4 +42,9 @@ public class AddEventController {
         eventService.createEvent(event);
         return "redirect:viewEvents";
     }
+
+	@RequestMapping(value = Mappings.ADD_EVENT, params = "cancel", method = RequestMethod.POST)
+	public String cancelRegisterUser() {
+		return "redirect:index";
+	}
 }

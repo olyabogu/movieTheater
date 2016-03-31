@@ -1,34 +1,57 @@
 <#import "/spring.ftl" as spring/>
+<html>
 <head>
     <meta charset="UTF-8">
     <title>Add new event</title>
+    <link href="static/css/bootstrap.css" rel="stylesheet"/>
 </head>
 <body>
-<div id="header">
-    <H2>
-        Add event form
-    </H2>
-</div>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span12">
+            <fieldset>
+                <legend>Add Event</legend>
+                <form class="form-horizontal" name="event" action="addEvent" method="post" role="form">
+                    <div class="control-group">
+                        <label class="control-label"> Name:</label>
 
-<div id="content">
-    <fieldset>
-        <legend>Add Event</legend>
-        <form name="event" action="addEvent" method="post">
-            Name: <input type="text" name="name"/> <br/>
-            Date: <input type="date" name="date"/> <br/>
-            Price: <input type="number" min="1" name="basePrice"/> <br/>
-            Rating:
-        <#macro enumSelect selectName enumValues>
-            <select name="${selectName}">
-		        <#list enumValues as enum>
-                    <option value="${enum}">${enum.description}</option>
-		        </#list>
-            </select>
-        </#macro>
-        <@enumSelect "rating" ratings/><br/>
-            <input type="submit" value="   Save   "/>
-        </form>
-    </fieldset>
+                        <div class="controls"><input type="text" name="name"/></div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label"> Date: </label>
+
+                        <div class="controls"><input type="date" name="date"/></div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">Price: </label>
+
+                        <div class="controls"><input type="number" min="1" name="basePrice"/></div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">Rating:</label>
+
+                        <div class="controls">
+						<#macro enumSelect selectName enumValues>
+                            <select name="${selectName}">
+								<#list enumValues as enum>
+                                    <option value="${enum}">${enum.description}</option>
+								</#list>
+                            </select>
+						</#macro>
+						<@enumSelect "rating" ratings/>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-success">Submit</button>
+                        <button type="submit" class="btn" name="cancel">Cancel</button>
+                    </div>
+                </form>
+            </fieldset>
+        </div>
+    </div>
 </div>
 </body>
 </html>
