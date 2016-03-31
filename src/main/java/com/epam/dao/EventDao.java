@@ -42,11 +42,11 @@ public class EventDao {
     }
 
     public void create(Event event) {
-        jdbcTemplate.update(CREATE_EVENT, event.getName(), event.getRating().toString(), event.getBasePrice());
+        jdbcTemplate.update(CREATE_EVENT, event.getName(), event.getRating().name(), event.getBasePrice());
     }
 
 	public void update(Event event) {
-		jdbcTemplate.update(UPDATE_EVENT, event.getName(), event.getRating().toString(), event.getBasePrice(), event.getId());
+		jdbcTemplate.update(UPDATE_EVENT, event.getName(), event.getRating().name(), event.getBasePrice(), event.getId());
 	}
 
     public void remove(Event event) {
