@@ -15,18 +15,18 @@
                     <div class="control-group">
                         <label class="control-label"> Name:</label>
 
-                        <div class="controls"><input type="text" name="name"/></div>
+                        <div class="controls"><input type="text" name="name" placeholder="" class="input-xlarge"/></div>
                     </div>
                     <div class="control-group">
                         <label class="control-label"> Date: </label>
 
-                        <div class="controls"><input type="date" name="date"/></div>
+                        <div class="controls"><input type="date" name="date" placeholder="" class="input-xlarge"/></div>
                     </div>
 
                     <div class="control-group">
                         <label class="control-label">Price: </label>
 
-                        <div class="controls"><input type="number" min="1" name="basePrice"/></div>
+                        <div class="controls"><input type="number" min="1" name="basePrice" placeholder="" class="input-xlarge"/></div>
                     </div>
 
                     <div class="control-group">
@@ -34,7 +34,7 @@
 
                         <div class="controls">
 						<#macro enumSelect selectName enumValues>
-                            <select name="${selectName}">
+                            <select name="${selectName}" class="input-xlarge">
 								<#list enumValues as enum>
                                     <option value="${enum}">${enum.description}</option>
 								</#list>

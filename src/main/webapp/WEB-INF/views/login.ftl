@@ -9,37 +9,41 @@
     <!--[if lt IE 9]>
 	<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <link href="css/styles.css" rel="stylesheet">
+    <link href="static/css/styles.css" rel="stylesheet">
 </head>
 <body>
-<!--login modal-->
-<div id="loginModal" class="modal show" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="text-center">Login</h1>
-            </div>
-            <div class="modal-body">
-                <form class="form col-md-12 center-block">
-                    <div class="form-group">
-                        <input type="text" class="form-control input-lg" placeholder="Email">
-                    </div>
-                    <div class="form-group">
-                        <input type="password" class="form-control input-lg" placeholder="Password">
-                    </div>
-                    <div class="form-group">
-                        <button class="btn btn-primary btn-lg btn-block">Sign In</button>
-                        <span class="pull-right"><a href="registerUser">Register</a></span>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer"/>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Please sign in</h3>
+                </div>
+                <div class="panel-body">
+                    <form accept-charset="UTF-8" role="form" action="login" method="POST">
+                        <fieldset>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="E-mail or Name" name="username" type="text">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Password" name="password" type="password" value="">
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input name="remember-me-param" type="checkbox" value="Remember Me"> Remember Me
+                                </label>
+                            </div>
+                            <input class="btn btn-lg btn-success btn-block" type="submit" value="Login">
+                            <span class="pull-right"><a href="registerUser">Register</a></span>
+                        </fieldset>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
 <!-- script references -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
+<script src="static/js/bootstrap.min.js"></script>
 </body>
 </html>
