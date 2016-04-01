@@ -3,7 +3,6 @@ package com.epam.test;
 import com.epam.config.ApplicationConfiguration;
 import com.epam.config.MvcConfiguration;
 import com.epam.domain.User;
-import com.epam.domain.UserRole;
 import com.epam.exception.MovieException;
 import com.epam.services.UserService;
 import org.junit.Test;
@@ -17,7 +16,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Date;
+import java.util.*;
 
 /**
  * Created by Olga Bogutska on 26.02.2016.
@@ -40,7 +39,7 @@ public class UserServiceTest {
         String name = "Olga";
         User user = service.getUserByName(name);
         assertNotNull(user);
-        assertEquals(user.getName(), name);
+        assertEquals(user.getUsername(), name);
     }
 
     @Test(expected = MovieException.class)
@@ -73,7 +72,9 @@ public class UserServiceTest {
 
 	@Test
 	public void testRegister() throws MovieException {
-		User user = new User(NAME, new Date(), UserRole.CLIENT, NAME + "@email.com");
+        Set<String> roles = new HashSet<>();
+        roles.add("REGISTERED_USER");
+		User user = new User(NAME, new Date(), roles, NAME + "@email.com");
 		service.register(user);
 		user = service.getUserByName(NAME);
 		assertTrue(user.getId() > 0);
@@ -87,6 +88,6 @@ public class UserServiceTest {
 		service.update(user);
 		user = service.getUserByName(newName);
 
-		assertEquals(user.getName(), newName);
+		assertEquals(user.getUsername(), newName);
 	}
 }

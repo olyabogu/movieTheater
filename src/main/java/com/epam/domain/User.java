@@ -1,28 +1,46 @@
 package com.epam.domain;
 
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import com.epam.util.SecurityUtils;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.beans.Transient;
+import java.util.*;
 
 /**
  * Created by Olga Bogutska on 08.02.2016.
  */
 
-public class User {
+public class User implements UserDetails {
     private int id;
-    private String name;
-	private Date birthDate;
-    private UserRole role;
+    private String username;
+    private String password;
+    private Date birthDate;
+    private Set<String> roles = new HashSet<>();
     private String email;
     private List<Ticket> bookedTickets;
+    private boolean accountNonExpired = true;
+    private boolean accountNonLocked = true;
+    private boolean credentialsNonExpired = true;
+    private boolean enabled = true;
+
+    private Collection<? extends GrantedAuthority> authorities;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if(authorities == null) {
+            authorities = SecurityUtils.toAuthorities(roles);
+        }
+        return authorities;
+    }
 
     public User() {
     }
 
-    public User(String name, Date birthDate, UserRole role, String email) {
+    public User(String name, Date birthDate, Set<String> roles, String email) {
         this.birthDate = birthDate;
-        this.name = name;
-        this.role = role;
+        this.username = name;
+        this.roles = roles;
         this.email = email;
 	    this.bookedTickets = new LinkedList<>();
     }
@@ -35,20 +53,13 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    @Override
+    public String getUsername() {
+        return username;
     }
 
     public void setName(String name) {
-        this.name = name;
-    }
-
-    public UserRole getRole() {
-        return role;
-    }
-
-    public void setRole(UserRole role) {
-        this.role = role;
+        this.username = name;
     }
 
     public String getEmail() {
@@ -76,11 +87,68 @@ public class User {
 	}
 
     @Override
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setAccountNonExpired(boolean accountNonExpired) {
+        this.accountNonExpired = accountNonExpired;
+    }
+
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        this.accountNonLocked = accountNonLocked;
+    }
+
+    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+        this.credentialsNonExpired = credentialsNonExpired;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
+        this.authorities = authorities;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return accountNonExpired;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return accountNonLocked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return credentialsNonExpired;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public Set<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<String> roles) {
+        this.roles = roles;
+    }
+
+    @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", role=" + role +
+                ", name='" + username + '\'' +
+                ", role=" + roles.toString() +
                 ", email='" + email + '\'' +
                 ", bookedTickets=" + bookedTickets +
                 '}';

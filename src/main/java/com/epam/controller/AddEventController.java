@@ -7,6 +7,7 @@ import com.epam.domain.Rating;
 import com.epam.exception.MovieException;
 import com.epam.services.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
  * Created by Olga Bogutska.
  */
 @Controller
+@PreAuthorize("hasRole('BOOKING_MANAGER')")
 public class AddEventController {
 
     @Autowired

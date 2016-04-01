@@ -30,7 +30,7 @@ public class DiscountAspect {
 		if (discount != null) {
 			discountService.updateDiscountForUserStatistics(user);
 			int counter = discountService.getStatisticsForUser(user);
-			System.out.println("Discount for user " + user.getName() + " was given " + counter + " times");
+			System.out.println("Discount for user " + user.getUsername() + " was given " + counter + " times");
 		}
 	}
 

@@ -12,11 +12,13 @@
     <properties>
         <jdk.version>1.7</jdk.version>
         <spring.version>4.1.6.RELEASE</spring.version>
+        <spring.security.version>4.0.4.RELEASE</spring.security.version>
         <h2.version>1.4.187</h2.version>
         <jsp-api.version>2.1</jsp-api.version>
         <jstl.version>1.2</jstl.version>
         <javax.servlet-api.version>3.0.1</javax.servlet-api.version>
         <junit.version>4.12</junit.version>
+        <log4j.version>1.2.16</log4j.version>
     </properties>
     <build>
         <defaultGoal>install</defaultGoal>
@@ -69,6 +71,21 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
             <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring.security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
+            <version>${spring.security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring.security.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -137,6 +154,11 @@
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>
             <version>2.3.23</version>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${log4j.version}</version>
         </dependency>
     </dependencies>
 </project>

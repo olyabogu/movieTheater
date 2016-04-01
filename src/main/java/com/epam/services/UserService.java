@@ -24,4 +24,6 @@ public interface UserService {
     User getUserByEmail(String email) throws MovieException;
 
     List<Ticket> getBookedTickets(User user);
+
+	boolean isUserExists(String username, String email);
 }

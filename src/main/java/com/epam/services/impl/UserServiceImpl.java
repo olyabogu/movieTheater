@@ -7,6 +7,8 @@ import com.epam.exception.MovieException;
 import com.epam.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.dao.SaltSource;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -16,6 +18,10 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserDao userDao;
+	@Autowired
+	private Md5PasswordEncoder passwordEncoder;
+	@Autowired
+	private SaltSource saltSource;
 
 	public User getById(Integer id) {
 		return userDao.getById(id);
@@ -30,7 +36,7 @@ public class UserServiceImpl implements UserService {
 
 	public User getUserByName(String name) throws MovieException {
 		if (StringUtils.isEmpty(name)) {
-			throw new MovieException("User email didn't defined!");
+			throw new MovieException("User name didn't defined!");
 		}
 		return userDao.getByName(name);
 	}
@@ -39,13 +45,17 @@ public class UserServiceImpl implements UserService {
 		return userDao.getBookedTickets(user);
 	}
 
+	@Override
+	public boolean isUserExists(String username, String email) {
+		return userDao.isUserExists(username, email);
+	}
+
 	public void register(User user) throws MovieException {
 		if (user == null) {
 			throw new MovieException("User didn't defined");
 		}
-		if (getUserByName(user.getName()) != null) {
-			throw new MovieException("User with name " + user.getName() + " already defined");
-		}
+		String encodedPassword = passwordEncoder.encodePassword(user.getPassword(), saltSource.getSalt(user));
+		user.setPassword(encodedPassword);
 		userDao.create(user);
 	}
 
