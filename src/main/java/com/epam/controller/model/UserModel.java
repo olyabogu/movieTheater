@@ -4,6 +4,12 @@ package com.epam.controller.model;
  * @author Olga_Bogutska.
  */
 public class UserModel {
+	private String name;
+	private String birthDate;
+	private String role;
+	private String email;
+	private String password;
+
 	public String getName() {
 		return name;
 	}
@@ -36,8 +42,12 @@ public class UserModel {
 		this.email = email;
 	}
 
-	private String name;
-	private String birthDate;
-	private String role;
-	private String email;
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 }

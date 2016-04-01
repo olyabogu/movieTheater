@@ -1,6 +1,6 @@
 --update table users
-INSERT INTO USER (NAME, BIRTH_DATE, USER_ROLE, EMAIL) VALUES ('Olga', parsedatetime('25-06-1987', 'dd-MM-yyyy'), 'ADMIN', 'olga_bogu@mail.com');
-INSERT INTO USER (NAME, BIRTH_DATE, USER_ROLE, EMAIL) VALUES ('John', parsedatetime('16-02-1978', 'dd-MM-yyyy'), 'CLIENT', 'john_smith@mail.com');
+INSERT INTO USER (NAME, BIRTH_DATE, USER_ROLE, EMAIL, PASSWORD) VALUES ('Olga', parsedatetime('25-06-1987', 'dd-MM-yyyy'), 'REGISTERED_USER, BOOKING_MANAGER', 'olga_bogu@mail.com' , '93b41aec9127ef811093ed64cfcff2b8');
+INSERT INTO USER (NAME, BIRTH_DATE, USER_ROLE, EMAIL, PASSWORD) VALUES ('John', parsedatetime('16-02-1978', 'dd-MM-yyyy'), 'REGISTERED_USER', 'john_smith@mail.com', '49a24f17f6109c9eeea56c3d48b09baf');
 --update table events
 INSERT INTO EVENT (NAME, RATING, BASE_PRICE) VALUES ('movie 1','HIGH', 15.2);
 INSERT INTO EVENT_DATE_MP VALUES ((SELECT ID FROM EVENT WHERE NAME = 'movie 1'), CURRENT_TIMESTAMP());
