@@ -4,23 +4,20 @@ import org.springframework.security.authentication.AuthenticationServiceExceptio
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;
-import org.springframework.security.authentication.dao.SaltSource;
-import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 public class DaoAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
 
     private PasswordEncoder passwordEncoder;
-    private SaltSource saltSource;
     private UserDetailsService userDetailsService;
 
-    public DaoAuthenticationProvider(PasswordEncoder passwordEncoder, SaltSource saltSource, UserDetailsService userDetailsService) {
+    public DaoAuthenticationProvider(PasswordEncoder passwordEncoder, UserDetailsService userDetailsService) {
         this.passwordEncoder = passwordEncoder;
-        this.saltSource = saltSource;
         this.userDetailsService = userDetailsService;
     }
 
@@ -32,11 +29,10 @@ public class DaoAuthenticationProvider extends AbstractUserDetailsAuthentication
 
             throw new BadCredentialsException("Bad credentials!");
         }
-        Object salt = saltSource.getSalt(userDetails);
 
         String presentedPassword = authentication.getCredentials().toString();
 
-        if (!passwordEncoder.isPasswordValid(userDetails.getPassword(), presentedPassword, salt)) {
+        if (!passwordEncoder.matches(presentedPassword, userDetails.getPassword())) {
             logger.debug("Authentication failed: password does not match stored value");
 
             throw new BadCredentialsException("Bad credentials! Authentication failed: password does not match stored value");

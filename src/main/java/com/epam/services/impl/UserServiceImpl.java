@@ -7,8 +7,7 @@ import com.epam.exception.MovieException;
 import com.epam.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.dao.SaltSource;
-import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -19,9 +18,7 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserDao userDao;
 	@Autowired
-	private Md5PasswordEncoder passwordEncoder;
-	@Autowired
-	private SaltSource saltSource;
+	private BCryptPasswordEncoder passwordEncoder;
 
 	public User getById(Integer id) {
 		return userDao.getById(id);
@@ -54,7 +51,7 @@ public class UserServiceImpl implements UserService {
 		if (user == null) {
 			throw new MovieException("User didn't defined");
 		}
-		String encodedPassword = passwordEncoder.encodePassword(user.getPassword(), saltSource.getSalt(user));
+		String encodedPassword = passwordEncoder.encode(user.getPassword());
 		user.setPassword(encodedPassword);
 		userDao.create(user);
 	}
