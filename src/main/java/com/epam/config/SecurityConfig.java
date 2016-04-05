@@ -42,14 +42,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .deleteCookies("JSESSIONID")
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/login")
                         //Configures url based authorization
                 .and()
                 .authorizeRequests()
                         //Anyone can access the urls
                 .antMatchers("/login", "/registerUser").permitAll()
-                .antMatchers("/**").access("isAuthenticated()");
+                .antMatchers("/**").authenticated();
 
         //remember me configuration
         http.rememberMe().
