@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.stereotype.Controller;
@@ -31,4 +32,8 @@ public class ApplicationConfiguration {
         return new JdbcTemplate(dataSource());
     }
 
+    @Bean
+    public DataSourceTransactionManager txManager(){
+        return new DataSourceTransactionManager(dataSource());
+    }
 }
