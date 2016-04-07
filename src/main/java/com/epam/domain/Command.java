@@ -43,6 +43,7 @@ public class Command {
 		List<Command> commands = new LinkedList<>();
 		commands.add(new Command(Mappings.ADD_EVENT, "Add new event"));
 		commands.add(new Command(Mappings.REGISTER_USER, "Register new user"));
+		commands.add(new Command(Mappings.USER_BALANCE, "View user balance"));
 		commands.add(new Command(Mappings.VIEW_EVENTS, "View events with air dates and time"));
 		commands.add(new Command(Mappings.VIEW_TICKETS, "Shows tickets"));
 		return commands;

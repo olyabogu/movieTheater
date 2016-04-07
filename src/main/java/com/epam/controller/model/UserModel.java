@@ -9,6 +9,8 @@ public class UserModel {
 	private String role;
 	private String email;
 	private String password;
+	private String balance;
+	private String currency;
 
 	public String getName() {
 		return name;
@@ -49,5 +51,21 @@ public class UserModel {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getBalance() {
+		return balance;
+	}
+
+	public void setBalance(String balance) {
+		this.balance = balance;
+	}
+
+	public String getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(String currency) {
+		this.currency = currency;
 	}
 }

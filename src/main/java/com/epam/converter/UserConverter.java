@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.epam.controller.model.UserModel;
 import com.epam.domain.User;
+import com.epam.domain.UserAccount;
 import com.epam.exception.MovieException;
 
 /**
@@ -32,6 +33,10 @@ public class UserConverter {
 		}
 		user.setBirthDate(date);
 		user.setEmail(userModel.getEmail());
+		UserAccount account = new UserAccount();
+		account.setAmount(Double.parseDouble(userModel.getBalance()));
+		account.setCurrency(userModel.getCurrency());
+		user.setAccount(account);
 		user.setPassword(userModel.getPassword());
 		Set<String> roles = new HashSet<>();
 		roles.add("REGISTERED_USER");

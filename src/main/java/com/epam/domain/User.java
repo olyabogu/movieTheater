@@ -4,7 +4,6 @@ import com.epam.util.SecurityUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.beans.Transient;
 import java.util.*;
 
 /**
@@ -19,6 +18,8 @@ public class User implements UserDetails {
     private Set<String> roles = new HashSet<>();
     private String email;
     private List<Ticket> bookedTickets;
+	private UserAccount account;
+
     private boolean accountNonExpired = true;
     private boolean accountNonLocked = true;
     private boolean credentialsNonExpired = true;
@@ -142,6 +143,14 @@ public class User implements UserDetails {
     public void setRoles(Set<String> roles) {
         this.roles = roles;
     }
+
+	public UserAccount getAccount() {
+		return account;
+	}
+
+	public void setAccount(UserAccount account) {
+		this.account = account;
+	}
 
     @Override
     public String toString() {

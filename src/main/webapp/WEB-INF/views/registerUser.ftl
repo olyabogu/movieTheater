@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Add new event</title>
+    <title>Register new user</title>
     <link href="static/css/bootstrap.css" rel="stylesheet"/>
 </head>
 <body>
@@ -36,6 +36,28 @@
                         </div>
                     </div>
 
+                    <div class="control-group">
+                        <!-- Balance -->
+                        <label class="control-label" for="email">User balance</label>
+                        <div class="controls">
+                            <input type="number" id="balance" name="balance" placeholder="" class="input-xlarge">
+                            <p class="help-block">Please provide your balance amount</p>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Currency:</label>
+
+                        <div class="controls">
+		                <#macro enumSelect selectName enumValues>
+                            <select name="${selectName}" class="input-xlarge">
+				                <#list enumValues as enum>
+                                    <option value="${enum}">${enum.description}</option>
+				                </#list>
+                            </select>
+		                </#macro>
+		                <@enumSelect "currency" currencyList/>
+                        </div>
+                    </div>
                     <div class="control-group">
                         <!-- Password-->
                         <label class="control-label" for="password">Password</label>

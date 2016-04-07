@@ -1,5 +1,6 @@
 package com.epam.controller;
 
+import com.epam.domain.Currency;
 import com.epam.util.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -32,7 +33,8 @@ public class RegisterUserController {
     @RequestMapping(value = Mappings.REGISTER_USER, method = RequestMethod.GET)
     public ModelAndView addEvent(ModelAndView mv) {
         mv.addObject("roles", UserRole.values());
-        mv.setViewName("registerUser");
+	    mv.addObject("currencyList", Currency.values());
+	    mv.setViewName("registerUser");
         return mv;
     }
 
