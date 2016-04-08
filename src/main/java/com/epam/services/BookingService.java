@@ -14,7 +14,7 @@ public interface BookingService {
 
 	boolean bookTicket(User user, Ticket ticket);
 
-	String getTicketPrice(Event event, Date date, boolean isVipSeats, User user);
+	Double getTicketPrice(Event event, Date date, boolean isVipSeats, User user);
 
 	List<Ticket> getTicketsForEvent(Event event, Date date);
 }

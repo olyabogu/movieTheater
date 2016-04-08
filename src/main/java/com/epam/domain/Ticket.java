@@ -6,6 +6,7 @@ package com.epam.domain;
 public class Ticket {
 	private int id;
     private boolean isPurchased;
+	private Double price;
 
 	public int getId() {
 		return id;
@@ -23,4 +24,11 @@ public class Ticket {
 		this.isPurchased = isPurchased;
 	}
 
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
+	}
 }

@@ -6,11 +6,16 @@ import com.epam.domain.Event;
 import com.epam.domain.Rating;
 import com.epam.domain.Ticket;
 import com.epam.domain.User;
+import com.epam.domain.UserAccount;
+import com.epam.exception.MovieException;
 import com.epam.services.BookingService;
 import com.epam.services.DiscountService;
+import com.epam.services.UserAccountService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.DecimalFormat;
 import java.util.Calendar;
@@ -24,12 +29,14 @@ public class BookingServiceImpl implements BookingService {
 	private DiscountService discountService;
 	@Autowired
 	private BookingDao bookingDao;
+	@Autowired
+	private UserAccountService accountService;
 
 	/**
 	 * @return Price for ticket for specified event
 	 * on specific date and for specified seats.
 	 */
-	public String getTicketPrice(Event event, Date date, boolean isVipSeats, User user) {
+	public Double getTicketPrice(Event event, Date date, boolean isVipSeats, User user) {
 		Double price = event.getBasePrice();
 		Discount discount = calculateDiscount(date, user);
 		if (isVipSeats) {
@@ -41,17 +48,28 @@ public class BookingServiceImpl implements BookingService {
 		if (discount != null) {
 			price *= discount.getDiscountStrategy().getPercent() / 100;
 		}
-		DecimalFormat format = new DecimalFormat("#0.00");
-		return format.format(price);
+		return price;
 	}
 
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public boolean bookTicket(User user, Ticket ticket) {
-		bookingDao.bookTicket(user, ticket);
+		UserAccount account = user.getAccount();
+		Double balance = account.getAmount();
+		if (ticket.getPrice() > balance) {
+			throw new MovieException("Operation could not be completed since not enough money on user balance!");
+		}
+		int ticketId = bookingDao.create(ticket);
+		ticket.setId(ticketId);
+
+		Double newBalance = balance - ticket.getPrice();
+		account.setAmount(newBalance);
+		accountService.update(account);
+
 		return true;
 	}
 
 	/**
-	 * 	Get all purchased tickets for event for specific date
+	 * Get all purchased tickets for event for specific date
 	 */
 	public List<Ticket> getTicketsForEvent(Event event, Date date) {
 		List<Ticket> tickets = event.getTickets();

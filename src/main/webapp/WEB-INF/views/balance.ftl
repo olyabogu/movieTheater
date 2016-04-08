@@ -18,7 +18,7 @@
                         <th>Currency</th>
                     </tr>
                     <tr>
-                        <td>${user.name}</td>
+                        <td>${user.username}</td>
                         <td>${user.account.amount}</td>
                         <td>${user.account.currency}</td>
                     </tr>
@@ -29,7 +29,7 @@
                         <label class="control-label" for="name">Add amount</label>
 
                         <div class="controls">
-                            <input type="number" id="amount" name="amount" placeholder="" class="input-xlarge">
+                            <input type="number" id="amount" name="amount" placeholder="">
                         </div>
                     </div>
                     <div class="form-actions">

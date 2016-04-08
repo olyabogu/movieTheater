@@ -33,6 +33,7 @@ public class EventDao {
 	private static final String GET_ALL_EVENTS = "SELECT * FROM EVENT";
 	private static final String ASSIGN_AUDITORIUM = "INSERT INTO ASSIGNED_AUDITORIUM (EVENT_ID, AUDITORIUM, DATE) VALUES (?, ?, ?)";
 	private static final String GET_AUDITORIUM_FOR_EVENT = "SELECT AUDITORIUM FROM ASSIGNED_AUDITORIUM WHERE EVENT_ID = ? AND DATE = ?";
+	private static final String EVENT_BY_ID = "SELECT * FROM EVENT WHERE ID = ?";
 
 	private JdbcTemplate jdbcTemplate;
 
@@ -73,6 +74,14 @@ public class EventDao {
 	public String getAuditoriumForEvent(Event event, Date date) {
 		try {
 			return jdbcTemplate.queryForObject(GET_AUDITORIUM_FOR_EVENT, String.class, event.getId(), date);
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+		}
+	}
+
+	public Event getById(int id) {
+		try {
+			return jdbcTemplate.queryForObject(EVENT_BY_ID, new EventMapper(), id);
 		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}

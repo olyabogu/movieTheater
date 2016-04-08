@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.epam.domain.User;
-import com.epam.services.UserService;
+import com.epam.domain.UserAccount;
+import com.epam.services.UserAccountService;
 import com.epam.util.SecurityUtils;
 
 /**
@@ -19,7 +20,7 @@ import com.epam.util.SecurityUtils;
 public class ViewBalanceController {
 
 	@Autowired
-	private UserService userService;
+	private UserAccountService accountService;
 
 	@RequestMapping(value = Mappings.USER_BALANCE, method = RequestMethod.GET)
 	public ModelAndView viewBalance(ModelAndView mv) {
@@ -31,7 +32,13 @@ public class ViewBalanceController {
 	@RequestMapping(value = Mappings.USER_BALANCE, method = RequestMethod.POST)
 	public String refillBalance(@RequestParam("amount") String amount) {
 		if(!StringUtils.isEmpty(amount)) {
-
+			User user = SecurityUtils.getLoggedUser();
+			UserAccount account = user.getAccount();
+			Double balance = account.getAmount();
+			Double increaseBalance = Double.parseDouble(amount);
+			Double newBalance = balance + increaseBalance;
+			account.setAmount(newBalance);
+			accountService.update(account);
 		}
 		return "redirect:balance";
 	}

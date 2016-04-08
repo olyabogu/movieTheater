@@ -43,6 +43,7 @@ public class EventConverter {
 
 	public EventModel toEventModel(Event event) {
 		EventModel eventModel = new EventModel();
+		eventModel.setId(event.getId());
 		eventModel.setName(event.getName());
 		eventModel.setBasePrice(event.getBasePrice().toString());
 		eventModel.setRating(event.getRating().getDescription());

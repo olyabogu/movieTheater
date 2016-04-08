@@ -18,6 +18,8 @@ public interface EventService {
 
 	void remove(Event event) throws MovieException;
 
+	Event getById(int id);
+
 	Event getEventByName(String name) throws MovieException;
 
     List<Event> getAll();

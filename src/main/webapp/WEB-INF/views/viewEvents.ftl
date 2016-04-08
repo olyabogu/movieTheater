@@ -16,6 +16,7 @@
                         <th>Date</th>
                         <th>Price</th>
                         <th>Rating</th>
+                        <th>Booking</th>
                     </tr>
 				<#list events as event>
                     <tr>
@@ -23,12 +24,15 @@
                         <td>${event.date}</td>
                         <td>${event.basePrice}</td>
                         <td>${event.rating}</td>
+                        <td>
+                            <a href="/bookTicket?id=${event.id}" class="btn btn-default" role="button">Book ticket</a>
+                        </td>
                     </tr>
 				</#list>
                 </table>
-                <form action="index" method="post" role="form">
+                <form action="viewEvents" method="post" role="form">
                     <div class="form-actions">
-                        <button type="submit" class="btn">Back</button>
+                        <button type="submit" class="btn" name="back">Back</button>
                     </div>
                 </form>
             </fieldset>

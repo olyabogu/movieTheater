@@ -13,6 +13,7 @@ import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -35,7 +36,7 @@ public class UserDao {
     private static final String USER_BY_EMAIL = "SELECT * FROM USER WHERE EMAIL = ?";
     private static final String USER_BY_NAME = "SELECT * FROM USER WHERE NAME = ?";
     private static final String TICKET_FOR_USER = "SELECT * FROM TICKET INNER JOIN USER_TICKET_MP WHERE USER_TICKET_MP.USER_ID = ?";
-    private static final String CREATE_USER = "INSERT INTO USER (NAME, BIRTH_DATE, USER_ROLE, EMAIL,PASSWORD) VALUES (?, ?, ?, ?,?)";
+    private static final String CREATE_USER = "INSERT INTO USER (NAME, BIRTH_DATE, USER_ROLE, EMAIL,PASSWORD, USER_ACCOUNT_ID) VALUES (?, ?, ?, ?,?,?)";
     private static final String UPDATE_USER = "UPDATE USER SET NAME=?, BIRTH_DATE=?, USER_ROLE=?, EMAIL=? WHERE ID = ?";
     private static final String DELETE_USER = "DELETE FROM USER WHERE ID=?";
     private static final String CHECK_IF_USER_EXIST = "SELECT COUNT(*) FROM USER WHERE NAME = ? OR EMAIL =?";
@@ -74,11 +75,15 @@ public class UserDao {
     @SuppressWarnings("unchecked")
     public List<Ticket> getBookedTickets(User user) {
         int id = user.getId();
-        return (List<Ticket>) jdbcTemplate.queryForObject(TICKET_FOR_USER, new TicketMapper(), id);
+	    try {
+		    return (List<Ticket>) jdbcTemplate.queryForObject(TICKET_FOR_USER, new TicketMapper(), id);
+	    } catch (EmptyResultDataAccessException e) {
+		    return Collections.<Ticket>emptyList();
+	    }
     }
 
     public void create(User user) {
-        jdbcTemplate.update(CREATE_USER, user.getUsername(), user.getBirthDate(), Arrays.toString(user.getRoles().toArray()), user.getEmail(), user.getPassword());
+        jdbcTemplate.update(CREATE_USER, user.getUsername(), user.getBirthDate(), Arrays.toString(user.getRoles().toArray()), user.getEmail(), user.getPassword(), user.getAccount().getId());
     }
 
     public void update(User user) {

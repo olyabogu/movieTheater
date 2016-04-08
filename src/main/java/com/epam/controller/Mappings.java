@@ -9,6 +9,7 @@ public interface Mappings {
     String INDEX_PAGE = "/index";
     String ADD_EVENT = "/addEvent";
     String VIEW_EVENTS = "/viewEvents";
+    String BOOK_TICKET = "/bookTicket";
     String VIEW_TICKETS = "/viewTickets";
 	String ERROR_PAGE = "/error/error";
 }

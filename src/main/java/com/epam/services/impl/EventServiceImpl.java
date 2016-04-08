@@ -46,6 +46,10 @@ public class EventServiceImpl implements EventService {
         return dao.getByName(name);
     }
 
+	public Event getById(int id) {
+		return dao.getById(id);
+	}
+
     public List<Event> getAll() {
         return dao.getAll();
     }

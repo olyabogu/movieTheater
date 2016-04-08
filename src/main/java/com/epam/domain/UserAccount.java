@@ -12,7 +12,15 @@ public class UserAccount {
 	private Double amount;
 	private String currency;
 
-    public Double getAmount() {
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public Double getAmount() {
         return amount;
     }
 

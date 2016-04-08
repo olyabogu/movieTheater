@@ -5,11 +5,20 @@ package com.epam.controller.model;
  */
 public class EventModel {
 
+	private int id;
     private String name;
     private String date;
     private String rating;
     private String basePrice;
     private int tickets;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
     public String getName() {
         return name;
