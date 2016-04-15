@@ -1,5 +1,6 @@
 package com.epam.domain;
 
+import javax.xml.bind.annotation.*;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -7,13 +8,19 @@ import java.util.List;
 /**
  * Created by Olga Bogutska on 08.02.2016.
  */
+@XmlRootElement(name = "event")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Event {
 
-	private int id;
+    @XmlElement(required=true)
+    private int id;
+    @XmlElement(required=true)
 	private String name;
+    @XmlElement(required=true)
 	private Double basePrice;
 	private List<Date> dates;
 	private List<Ticket> tickets;
+    @XmlElement(required=true)
 	private Rating rating;
 
 	public Event() {

@@ -4,18 +4,24 @@ import com.epam.util.SecurityUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.xml.bind.annotation.*;
 import java.util.*;
 
 /**
  * Created by Olga Bogutska on 08.02.2016.
  */
-
+@XmlRootElement(name = "user")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class User implements UserDetails {
+    @XmlElement(required=true)
     private int id;
+    @XmlElement(required=true)
     private String username;
     private String password;
+    @XmlElement(required=true)
     private Date birthDate;
     private Set<String> roles = new HashSet<>();
+    @XmlElement(required=true)
     private String email;
     private List<Ticket> bookedTickets;
 	private UserAccount account;
