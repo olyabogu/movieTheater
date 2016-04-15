@@ -12,15 +12,18 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Event {
 
-    @XmlElement(required=true)
-    private int id;
-    @XmlElement(required=true)
+	@XmlAttribute(required = true)
+	private int id;
+	@XmlAttribute(required = true)
 	private String name;
-    @XmlElement(required=true)
+	@XmlAttribute(required = true)
 	private Double basePrice;
+	@XmlElement(name = "dates")
 	private List<Date> dates;
+	@XmlElementWrapper(name = "tickets")
+	@XmlElement(name = "ticket")
 	private List<Ticket> tickets;
-    @XmlElement(required=true)
+	@XmlAttribute(required = true)
 	private Rating rating;
 
 	public Event() {

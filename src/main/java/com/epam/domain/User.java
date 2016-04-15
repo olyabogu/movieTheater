@@ -1,10 +1,13 @@
 package com.epam.domain;
 
+import com.epam.domain.adapter.DateAdapter;
 import com.epam.util.SecurityUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 import java.util.*;
 
 /**
@@ -13,25 +16,36 @@ import java.util.*;
 @XmlRootElement(name = "user")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class User implements UserDetails {
-    @XmlElement(required=true)
+    @XmlAttribute(required=true)
     private int id;
-    @XmlElement(required=true)
+    @XmlAttribute(required=true)
     private String username;
-    private String password;
-    @XmlElement(required=true)
+	@XmlAttribute(required = true)
+	private String password;
+    @XmlAttribute(required=true)
+    @XmlJavaTypeAdapter(DateAdapter.class)
     private Date birthDate;
-    private Set<String> roles = new HashSet<>();
-    @XmlElement(required=true)
+	@XmlElement(name = "roles")
+	private Set<String> roles = new HashSet<>();
+    @XmlAttribute(required=true)
     private String email;
-    private List<Ticket> bookedTickets;
+	@XmlElementWrapper(name = "bookedTickets")
+	@XmlElement(name = "bookedTicket")
+	private List<Ticket> bookedTickets;
+	@XmlTransient
 	private UserAccount account;
 
-    private boolean accountNonExpired = true;
+	@XmlTransient
+	private boolean accountNonExpired = true;
+	@XmlTransient
     private boolean accountNonLocked = true;
+	@XmlTransient
     private boolean credentialsNonExpired = true;
+	@XmlTransient
     private boolean enabled = true;
 
-    private Collection<? extends GrantedAuthority> authorities;
+	@XmlTransient
+	private Collection<? extends GrantedAuthority> authorities;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
