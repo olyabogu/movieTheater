@@ -20,10 +20,14 @@ public class Initializer implements WebApplicationInitializer {
 		AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
 		ctx.register(ApplicationConfiguration.class);
 		ctx.setServletContext(servletContext);
-		MessageDispatcherServlet servlet = new MessageDispatcherServlet();
-		servlet.setApplicationContext(ctx);
-		servlet.setTransformWsdlLocations(true);
-		Dynamic dynamic = servletContext.addServlet("dispatcher", servlet);
+		MessageDispatcherServlet messageDispatcherServlet = new MessageDispatcherServlet();
+		messageDispatcherServlet.setApplicationContext(ctx);
+		messageDispatcherServlet.setTransformWsdlLocations(true);
+		Dynamic dynamic = servletContext.addServlet("messageDispatcherServlet", messageDispatcherServlet);
+		dynamic.addMapping("/ws/*");
+		dynamic.setLoadOnStartup(1);
+
+		dynamic = servletContext.addServlet("dispatcher", new DispatcherServlet(ctx));
 		dynamic.addMapping("/");
 		dynamic.setLoadOnStartup(1);
 		registerCharacterEncodingFilter(servletContext);
