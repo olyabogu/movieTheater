@@ -24,7 +24,7 @@ public class WebServiceConfig extends WsConfigurerAdapter {
 	}
 
 	@Bean(name = "users")
-	public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema usersSchema) {
+	public DefaultWsdl11Definition defaultWsdl11DefinitionUser(XsdSchema usersSchema) {
 		DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
 		wsdl11Definition.setPortTypeName("UsersPort");
 		wsdl11Definition.setLocationUri("/ws");
@@ -37,4 +37,20 @@ public class WebServiceConfig extends WsConfigurerAdapter {
 	public XsdSchema usersSchema() {
 		return new SimpleXsdSchema(new ClassPathResource("/xsd/users.xsd"));
 	}
+
+
+    @Bean(name = "events")
+    public DefaultWsdl11Definition defaultWsdl11DefinitionEvent(XsdSchema eventsSchema) {
+        DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
+        wsdl11Definition.setPortTypeName("EventsPort");
+        wsdl11Definition.setLocationUri("/ws");
+        wsdl11Definition.setTargetNamespace("http://epam.com/web/ws/event");
+        wsdl11Definition.setSchema(eventsSchema);
+        return wsdl11Definition;
+    }
+
+    @Bean
+    public XsdSchema eventsSchema() {
+        return new SimpleXsdSchema(new ClassPathResource("/xsd/events.xsd"));
+    }
 }
