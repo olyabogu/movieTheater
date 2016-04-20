@@ -1,4 +1,4 @@
-package com.epam.web;
+package com.epam.web.ws.event;
 
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 

@@ -1,4 +1,4 @@
-package com.epam.web;
+package com.epam.web.ws.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
@@ -8,8 +8,6 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import com.epam.converter.UserGetRequestConverter;
 import com.epam.services.UserService;
-import com.epam.web.ws.user.GetUserRequest;
-import com.epam.web.ws.user.GetUserResponse;
 
 /**
  * @author Olga_Bogutska.
