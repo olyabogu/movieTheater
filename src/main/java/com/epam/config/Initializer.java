@@ -9,6 +9,7 @@ import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.ws.transport.http.MessageDispatcherServlet;
 
 /**
  * @author Olga_Bogutska.
@@ -19,7 +20,10 @@ public class Initializer implements WebApplicationInitializer {
 		AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
 		ctx.register(ApplicationConfiguration.class);
 		ctx.setServletContext(servletContext);
-		Dynamic dynamic = servletContext.addServlet("dispatcher", new DispatcherServlet(ctx));
+		MessageDispatcherServlet servlet = new MessageDispatcherServlet();
+		servlet.setApplicationContext(ctx);
+		servlet.setTransformWsdlLocations(true);
+		Dynamic dynamic = servletContext.addServlet("dispatcher", servlet);
 		dynamic.addMapping("/");
 		dynamic.setLoadOnStartup(1);
 		registerCharacterEncodingFilter(servletContext);

@@ -12,7 +12,7 @@ public class UserClient extends WebServiceGatewaySupport {
 		GetUserRequest request = new GetUserRequest();
 		request.setUserId(userId);
 		GetUserResponse response = (GetUserResponse) getWebServiceTemplate().marshalSendAndReceive(
-				request, new SoapActionCallback("http://localhost:8080/epam.com/web/ws/user/getUserResponse"));
+				request, new SoapActionCallback("http://localhost:8080/ws/user/getUserResponse"));
 		return response;
 	}
 }

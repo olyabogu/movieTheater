@@ -20,6 +20,6 @@ public class EventGetRequestConverter {
     }
 
     private Rating convertRating(com.epam.domain.Rating rating) {
-        return Rating.valueOf(rating.getDescription());
+        return Rating.valueOf(rating.getDescription().toUpperCase());
     }
 }
