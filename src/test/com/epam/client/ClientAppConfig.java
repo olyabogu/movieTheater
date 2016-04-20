@@ -4,9 +4,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
-import com.epam.client.EventClient;
-import com.epam.client.UserClient;
-
 @Configuration
 public class ClientAppConfig {
 	@Bean

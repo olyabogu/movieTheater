@@ -2,8 +2,6 @@ package com.epam.client;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import com.epam.client.EventClient;
-import com.epam.client.UserClient;
 import com.epam.web.ws.event.GetEventResponse;
 import com.epam.web.ws.user.GetUserResponse;
 
