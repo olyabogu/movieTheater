@@ -46,7 +46,7 @@ public class AddEventController {
     }
 
 	@RequestMapping(value = Mappings.ADD_EVENT, params = "cancel", method = RequestMethod.POST)
-	public String cancelRegisterUser() {
+	public String cancelAddEvent() {
 		return "redirect:index";
 	}
 }
