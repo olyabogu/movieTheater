@@ -6,6 +6,7 @@ package com.epam.controller;
 public interface Mappings {
     String REGISTER_USER = "/registerUser";
     String USER_BALANCE = "/balance";
+    String USER = "/rest/user";
     String INDEX_PAGE = "/index";
     String ADD_EVENT = "/addEvent";
     String VIEW_EVENTS = "/viewEvents";

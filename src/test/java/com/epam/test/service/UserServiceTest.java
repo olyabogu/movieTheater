@@ -1,10 +1,14 @@
-package com.epam.test;
+package com.epam.test.service;
 
 import com.epam.config.ApplicationConfiguration;
 import com.epam.config.MvcConfiguration;
+import com.epam.config.SecurityConfig;
 import com.epam.domain.User;
 import com.epam.exception.MovieException;
+import com.epam.services.UserAccountService;
 import com.epam.services.UserService;
+import com.epam.test.TestUtils;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +26,14 @@ import java.util.*;
  * Created by Olga Bogutska on 26.02.2016.
  */
 @WebAppConfiguration
-@ContextConfiguration(classes={ApplicationConfiguration.class, MvcConfiguration.class})
+@ContextConfiguration(classes={ApplicationConfiguration.class, MvcConfiguration.class, SecurityConfig.class})
 @RunWith(SpringJUnit4ClassRunner.class)
 public class UserServiceTest {
-	private static final String NAME = "Carl";
+	private static final String NAME = "Carl Robinson";
     @Autowired
     private UserService service;
+	@Autowired
+	private UserAccountService accountService;
 
     @Test
     public void testContext() {
@@ -72,9 +78,9 @@ public class UserServiceTest {
 
 	@Test
 	public void testRegister() throws MovieException {
-        Set<String> roles = new HashSet<>();
-        roles.add("REGISTERED_USER");
-		User user = new User(NAME, new Date(), roles, NAME + "@email.com");
+		User user = TestUtils.createTestUser(NAME, "pass123", new Date(), NAME + "@email.com");
+		int accountId = accountService.create(user.getAccount());
+		user.getAccount().setId(accountId);
 		service.register(user);
 		user = service.getUserByName(NAME);
 		assertTrue(user.getId() > 0);

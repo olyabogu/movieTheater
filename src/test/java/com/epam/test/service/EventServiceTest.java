@@ -1,7 +1,8 @@
-package com.epam.test;
+package com.epam.test.service;
 
 import com.epam.config.ApplicationConfiguration;
 import com.epam.config.MvcConfiguration;
+import com.epam.config.SecurityConfig;
 import com.epam.domain.Auditorium;
 import com.epam.domain.Event;
 import com.epam.domain.Rating;
@@ -28,7 +29,7 @@ import static org.junit.Assert.assertTrue;
  * Created by Olga Bogutska on 26.02.2016.
  */
 @WebAppConfiguration
-@ContextConfiguration(classes={ApplicationConfiguration.class, MvcConfiguration.class})
+@ContextConfiguration(classes={ApplicationConfiguration.class, MvcConfiguration.class, SecurityConfig.class})
 @RunWith(SpringJUnit4ClassRunner.class)
 public class EventServiceTest {
 	private static final String NAME = "Event";

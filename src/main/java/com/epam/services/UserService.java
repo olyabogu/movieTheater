@@ -15,7 +15,7 @@ public interface UserService {
 
 	void update(User user) throws MovieException;
 
-	void remove(User user) throws MovieException;
+	void remove(int id) throws MovieException;
 
 	User getUserByName(String name) throws MovieException;
 

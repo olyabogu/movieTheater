@@ -8,6 +8,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -22,6 +23,7 @@ import java.util.Set;
  * Created by Olga Bogutska on 08.02.2016.
  */
 @Repository("userDao")
+@Transactional
 public class UserDao {
 
     private static final String ID = "ID";
@@ -90,8 +92,7 @@ public class UserDao {
         jdbcTemplate.update(UPDATE_USER, user.getUsername(), user.getBirthDate(), user.getRoles().toString(), user.getEmail(), user.getId());
     }
 
-    public void remove(User user) {
-        int id = user.getId();
+    public void remove(int id) {
         jdbcTemplate.update(DELETE_USER, id);
     }
 

@@ -4,6 +4,7 @@ package com.epam.controller.model;
  * @author Olga_Bogutska.
  */
 public class UserModel {
+	private int id;
 	private String name;
 	private String birthDate;
 	private String role;
@@ -11,6 +12,14 @@ public class UserModel {
 	private String password;
 	private String balance;
 	private String currency;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public String getName() {
 		return name;
@@ -68,4 +77,5 @@ public class UserModel {
 	public void setCurrency(String currency) {
 		this.currency = currency;
 	}
+
 }

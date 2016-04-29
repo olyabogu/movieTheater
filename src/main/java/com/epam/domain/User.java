@@ -2,6 +2,8 @@ package com.epam.domain;
 
 import com.epam.domain.adapter.DateAdapter;
 import com.epam.util.SecurityUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -45,6 +47,7 @@ public class User implements UserDetails {
     private boolean enabled = true;
 
 	@XmlTransient
+	@JsonIgnore
 	private Collection<? extends GrantedAuthority> authorities;
 
     @Override

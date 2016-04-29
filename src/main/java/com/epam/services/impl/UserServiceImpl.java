@@ -63,10 +63,10 @@ public class UserServiceImpl implements UserService {
 		userDao.update(user);
 	}
 
-	public void remove(User user) throws MovieException {
-		if (user == null) {
-			throw new MovieException("User didn't defined");
+	public void remove(int id) throws MovieException {
+		if (id < 1) {
+			throw new MovieException("User id not valid!");
 		}
-		userDao.remove(user);
+		userDao.remove(id);
 	}
 }
