@@ -4,9 +4,12 @@ import com.epam.domain.adapter.DateAdapter;
 import com.epam.util.SecurityUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
@@ -18,22 +21,34 @@ import java.util.*;
 @XmlRootElement(name = "user")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class User implements UserDetails {
+
     @XmlAttribute(required=true)
     private int id;
+
     @XmlAttribute(required=true)
+    @Size(min=3, max=30)
     private String username;
+
+	@NotEmpty
 	@XmlAttribute(required = true)
 	private String password;
+
     @XmlAttribute(required=true)
     @XmlJavaTypeAdapter(DateAdapter.class)
     private Date birthDate;
+
 	@XmlElement(name = "roles")
 	private Set<String> roles = new HashSet<>();
-    @XmlAttribute(required=true)
+
+	@Email
+	@NotEmpty
+	@XmlAttribute(required=true)
     private String email;
+
 	@XmlElementWrapper(name = "bookedTickets")
 	@XmlElement(name = "bookedTicket")
 	private List<Ticket> bookedTickets;
+
 	@XmlTransient
 	private UserAccount account;
 
