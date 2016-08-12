@@ -2,7 +2,6 @@ package com.epam.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.sql.DataSource;
@@ -11,11 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import com.epam.dao.mapper.UserAccountMapper;
 import com.epam.domain.UserAccount;
 
 /**
@@ -24,14 +23,10 @@ import com.epam.domain.UserAccount;
 @Repository
 public class UserAccountDao {
 
-	private static final String ID = "ID";
-	private static final String AMOUNT = "AMOUNT";
-	private static final String CURRENCY = "CURRENCY";
-
 	private static final String CREATE_USER_ACCOUNT = "INSERT INTO USER_ACCOUNT (AMOUNT, CURRENCY) VALUES (?, ?)";
-	private static final String UPDATE_USER_ACCOUNT = "UPDATE USER_ACCOUNT SET AMOUNT=?, CURRENCY=? WHERE ID = ?";
-	private static final String DELETE_USER_ACCOUNT = "DELETE FROM USER_ACCOUNT WHERE ID=?";
-	private static final String USER_ACCOUNT_BY_ID = "SELECT * FROM USER_ACCOUNT WHERE ID = ?";
+	private static final String UPDATE_USER_ACCOUNT = "UPDATE USER_ACCOUNT SET AMOUNT=?, CURRENCY=? WHERE ACCOUNT_ID = ?";
+	private static final String DELETE_USER_ACCOUNT = "DELETE FROM USER_ACCOUNT WHERE ACCOUNT_ID=?";
+	private static final String USER_ACCOUNT_BY_ID = "SELECT * FROM USER_ACCOUNT WHERE ACCOUNT_ID = ?";
 
 	private JdbcTemplate jdbcTemplate;
 
@@ -70,18 +65,6 @@ public class UserAccountDao {
 			return jdbcTemplate.queryForObject(USER_ACCOUNT_BY_ID, new UserAccountMapper(), id);
 		} catch (EmptyResultDataAccessException e) {
 			return null;
-		}
-	}
-
-	private class UserAccountMapper implements RowMapper<UserAccount> {
-
-		@Override
-		public UserAccount mapRow(ResultSet rs, int rowNum) throws SQLException {
-			UserAccount account = new UserAccount();
-			account.setId(rs.getInt(ID));
-			account.setAmount(rs.getDouble(AMOUNT));
-			account.setCurrency(rs.getString(CURRENCY));
-			return account;
 		}
 	}
 }

@@ -21,19 +21,19 @@ import java.util.List;
  */
 @Repository
 public class EventDao {
-	private static final String ID = "ID";
+	private static final String ID = "EVENT_ID";
 	private static final String NAME = "NAME";
 	private static final String RATING = "RATING";
 	private static final String BASE_PRICE = "BASE_PRICE";
 
 	private static final String CREATE_EVENT = "INSERT INTO EVENT (NAME, RATING, BASE_PRICE) VALUES (?, ?, ?)";
-	private static final String UPDATE_EVENT = "UPDATE EVENT SET NAME=?, RATING=?, BASE_PRICE=? WHERE ID = ?";
-	private static final String DELETE_EVENT = "DELETE FROM EVENT WHERE ID=?";
+	private static final String UPDATE_EVENT = "UPDATE EVENT SET NAME=?, RATING=?, BASE_PRICE=? WHERE EVENT_ID = ?";
+	private static final String DELETE_EVENT = "DELETE FROM EVENT WHERE EVENT_ID=?";
 	private static final String GET_BY_NAME = "SELECT * FROM EVENT WHERE NAME = ?";
 	private static final String GET_ALL_EVENTS = "SELECT * FROM EVENT";
 	private static final String ASSIGN_AUDITORIUM = "INSERT INTO ASSIGNED_AUDITORIUM (EVENT_ID, AUDITORIUM, DATE) VALUES (?, ?, ?)";
 	private static final String GET_AUDITORIUM_FOR_EVENT = "SELECT AUDITORIUM FROM ASSIGNED_AUDITORIUM WHERE EVENT_ID = ? AND DATE = ?";
-	private static final String EVENT_BY_ID = "SELECT * FROM EVENT WHERE ID = ?";
+	private static final String EVENT_BY_ID = "SELECT * FROM EVENT WHERE EVENT_ID = ?";
 
 	private JdbcTemplate jdbcTemplate;
 
