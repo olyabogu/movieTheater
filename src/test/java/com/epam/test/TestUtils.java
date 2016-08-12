@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.epam.controller.model.UserModel;
+import com.epam.domain.Currency;
 import com.epam.domain.User;
 import com.epam.domain.UserAccount;
 
@@ -37,8 +38,15 @@ public class TestUtils {
 		user.setRoles(roles);
 		UserAccount account = new UserAccount();
 		account.setAmount(100.00);
-		account.setCurrency("USD");
+		account.setCurrency(Currency.EUR.getDescription());
 		user.setAccount(account);
 		return user;
+	}
+
+	public static UserAccount createTestUserAccount(Double amount, Currency currency) {
+		UserAccount account = new UserAccount();
+		account.setAmount(amount);
+		account.setCurrency(currency.getDescription());
+		return account;
 	}
 }
