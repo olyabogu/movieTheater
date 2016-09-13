@@ -71,6 +71,10 @@ public class Event {
 		this.dates = dates;
 	}
 
+	public void addDate(Date date) {
+		dates.add(date);
+	}
+
 	public List<Ticket> getTickets() {
 		return tickets;
 	}

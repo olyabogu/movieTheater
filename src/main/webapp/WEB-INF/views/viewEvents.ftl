@@ -21,7 +21,11 @@
 				<#list events as event>
                     <tr>
                         <td>${event.name}</td>
-                        <td>${event.date}</td>
+                    <td>
+	                    <#list event.dates as date>
+                           ${date}<br/>
+	                    </#list>
+                    </td>
                         <td>${event.basePrice}</td>
                         <td>${event.rating}</td>
                         <td>

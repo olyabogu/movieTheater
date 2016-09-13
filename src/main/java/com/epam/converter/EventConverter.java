@@ -7,7 +7,6 @@ import com.epam.exception.MovieException;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,23 +20,16 @@ import static java.lang.Double.parseDouble;
  */
 @Component
 public class EventConverter {
+	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
     public Event toEvent(EventModel eventModel) throws MovieException {
         Event event = new Event();
         event.setName(eventModel.getName());
         event.setBasePrice(parseDouble(eventModel.getBasePrice()));
-        DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-        List<Date> dates = new ArrayList<>();
-
-        Date date;
-        try {
-            date = formatter.parse(eventModel.getDate());
-        } catch (ParseException e) {
-            throw new MovieException("Adding new event failed! Caused by " + e.getMessage());
-        }
-        dates.add(date);
+	    List<String> dates = new ArrayList<>();
+	    dates.add(eventModel.getDate());
+        event.setDates(toDates(dates));
 	    event.setRating(findRating(eventModel.getRating()));
-	    event.setDates(dates);
         return event;
     }
 
@@ -47,7 +39,7 @@ public class EventConverter {
 		eventModel.setName(event.getName());
 		eventModel.setBasePrice(event.getBasePrice().toString());
 		eventModel.setRating(event.getRating().getDescription());
-		eventModel.setDate(new Date().toString());
+		eventModel.setDates(toStringDates(event.getDates()));
 		eventModel.setTickets(CollectionUtils.isEmpty(event.getTickets()) ? 0 : event.getTickets().size());
 		return eventModel;
 	}
@@ -67,5 +59,28 @@ public class EventConverter {
 			}
 		}
 		return null;
+	}
+
+	private List<String> toStringDates(List<Date> eventDates) {
+		List<String> listDates = new ArrayList<>();
+		for (Date eventDate : eventDates) {
+			String date = DATE_FORMAT.format(eventDate);
+			listDates.add(date);
+		}
+		return listDates;
+	}
+
+	private List<Date> toDates(List<String> eventDates) {
+		List<Date> listDates = new ArrayList<>();
+		for (String eventDate : eventDates) {
+			Date date;
+			try {
+				date = DATE_FORMAT.parse(eventDate);
+			} catch (ParseException e) {
+				throw new MovieException("Adding new event failed! Caused by " + e.getMessage());
+			}
+			listDates.add(date);
+		}
+		return listDates;
 	}
 }
