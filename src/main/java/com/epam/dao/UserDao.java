@@ -1,20 +1,25 @@
 package com.epam.dao;
 
-import com.epam.dao.mapper.TicketMapper;
-import com.epam.dao.mapper.UserMapper;
 import com.epam.domain.Ticket;
 import com.epam.domain.User;
+import com.epam.domain.UserAccount;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Olga Bogutska on 08.02.2016.
@@ -91,6 +96,48 @@ public class UserDao {
             return jdbcTemplate.queryForObject(CHECK_IF_USER_EXIST, new Object[] { name, email }, Integer.class) > 0;
         } catch (EmptyResultDataAccessException e) {
             return false;
+        }
+    }
+
+    private class UserMapper implements RowMapper<User> {
+
+        private static final String ID = "USER_ID";
+        private static final String NAME = "NAME";
+        private static final String PASSWORD = "PASSWORD";
+        private static final String USER_ROLE = "USER_ROLE";
+        private static final String BIRTH_DATE = "BIRTH_DATE";
+        private static final String EMAIL = "EMAIL";
+
+        @Override
+        public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+            User user = new User();
+            user.setId(rs.getInt(ID));
+            user.setName(rs.getString(NAME));
+            user.setPassword(rs.getString(PASSWORD));
+            String userRoles = rs.getString(USER_ROLE);
+            Set<String> roles = new HashSet<>(Arrays.asList((userRoles.split(" , "))));
+            user.setRoles(roles);
+            user.setBirthDate(rs.getDate(BIRTH_DATE));
+            user.setEmail(rs.getString(EMAIL));
+
+            UserAccountDao.UserAccountMapper mapper = new UserAccountDao.UserAccountMapper();
+            UserAccount account = mapper.mapRow(rs, rowNum);
+            user.setAccount(account);
+            return user;
+        }
+    }
+
+    private class TicketMapper implements RowMapper<Ticket> {
+
+        private static final String TICKET_ID = "TICKET_ID";
+        private static final String IS_PURCHASED = "IS_PURCHASED";
+
+        @Override
+        public Ticket mapRow(ResultSet rs, int i) throws SQLException {
+            Ticket ticket = new Ticket();
+            ticket.setId(rs.getInt(TICKET_ID));
+            ticket.setPurchased(rs.getBoolean(IS_PURCHASED));
+            return ticket;
         }
     }
 }

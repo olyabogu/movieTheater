@@ -2,6 +2,7 @@ package com.epam.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.sql.DataSource;
@@ -10,11 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import com.epam.dao.mapper.UserAccountMapper;
 import com.epam.domain.UserAccount;
 
 /**
@@ -65,6 +66,22 @@ public class UserAccountDao {
 			return jdbcTemplate.queryForObject(USER_ACCOUNT_BY_ID, new UserAccountMapper(), id);
 		} catch (EmptyResultDataAccessException e) {
 			return null;
+		}
+	}
+
+	protected static class UserAccountMapper implements RowMapper<UserAccount> {
+
+		private static final String ID = "ACCOUNT_ID";
+		private static final String AMOUNT = "AMOUNT";
+		private static final String CURRENCY = "CURRENCY";
+
+		@Override
+		public UserAccount mapRow(ResultSet rs, int rowNum) throws SQLException {
+			UserAccount account = new UserAccount();
+			account.setId(rs.getInt(ID));
+			account.setAmount(rs.getDouble(AMOUNT));
+			account.setCurrency(rs.getString(CURRENCY));
+			return account;
 		}
 	}
 }
