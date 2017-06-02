@@ -12,11 +12,11 @@ import java.util.List;
  */
 public interface EventService {
 
-	void createEvent(Event event) throws MovieException;
+	Event createEvent(Event event) throws MovieException;
 
 	void update(Event event) throws MovieException;
 
-	void remove(Event event) throws MovieException;
+	void remove(int id) throws MovieException;
 
 	Event getById(int id);
 

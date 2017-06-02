@@ -1,4 +1,4 @@
-package com.epam.test.service;
+package com.epam.service;
 
 import com.epam.config.ApplicationConfiguration;
 import com.epam.config.MvcConfiguration;
@@ -9,8 +9,11 @@ import com.epam.domain.Rating;
 import com.epam.exception.MovieException;
 import com.epam.services.AuditoriumService;
 import com.epam.services.EventService;
+
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -23,11 +26,13 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Olga Bogutska on 26.02.2016.
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @WebAppConfiguration
 @ContextConfiguration(classes={ApplicationConfiguration.class, MvcConfiguration.class, SecurityConfig.class})
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -44,14 +49,6 @@ public class EventServiceTest {
         assertNotNull(service);
     }
 
-    @Test
-    public void testGetEventByName() throws MovieException {
-        String name = "movie 1";
-        Event event = service.getEventByName(name);
-        assertNotNull(event);
-        assertEquals(event.getName(), name);
-    }
-
     @Test(expected = MovieException.class)
     public void testGetEventByEmptyName() throws MovieException {
         String name = "";
@@ -64,15 +61,20 @@ public class EventServiceTest {
 		dates.add(new Date());
 
 		Event event = new Event(dates, 14.30D, NAME, Rating.valueOf("HIGH"));
-
 		service.createEvent(event);
-		event = service.getEventByName(NAME);
 
 		assertTrue(event.getId() > 0);
 	}
 
 	@Test
-	public void testUpdate() throws MovieException {
+	public void testGetEventByName() throws MovieException {
+		Event event = service.getEventByName(NAME);
+		assertNotNull(event);
+		assertEquals(event.getName(), NAME);
+	}
+
+	@Test
+	public void testEventUpdate() throws MovieException {
 		Event event = service.getEventByName(NAME);
 		Double newPrice = 15.0D;
 		event.setBasePrice(newPrice);
@@ -83,8 +85,8 @@ public class EventServiceTest {
 	}
 
 	@Test
-	public void testAssignAuditorium() throws MovieException {
-		Event event = service.getEventByName("movie 1");
+	public void testCreateAndAssignAuditorium() throws MovieException {
+		Event event = service.getEventByName(NAME);
 		Auditorium auditorium = auditoriumService.getAuditoriums().get(0);
 
 		Date date = new Date();
@@ -99,4 +101,18 @@ public class EventServiceTest {
         assertNotNull(events);
         assertTrue(!CollectionUtils.isEmpty(events));
     }
+
+	@Test
+	public void testRemoveEvent() {
+		Event event = service.getEventByName(NAME);
+		int id = event.getId();
+		service.remove(id);
+		event = service.getById(id);
+		assertNull(event);
+	}
+
+	@Test(expected = MovieException.class)
+	public void testRemoveEventByNullId() {
+		service.remove(0);
+	}
 }

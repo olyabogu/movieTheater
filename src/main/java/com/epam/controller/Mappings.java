@@ -7,6 +7,7 @@ public interface Mappings {
     String REGISTER_USER = "/registerUser";
     String USER_BALANCE = "/balance";
     String USER = "/rest/user";
+    String EVENT = "/rest/event";
     String INDEX_PAGE = "/index";
     String ADD_EVENT = "/addEvent";
     String VIEW_EVENTS = "/viewEvents";

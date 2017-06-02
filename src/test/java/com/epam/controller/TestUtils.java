@@ -1,9 +1,12 @@
-package com.epam.test;
+package com.epam.controller;
+
+import static com.epam.converter.EventConverter.DATE_FORMAT;
 
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.epam.controller.model.EventModel;
 import com.epam.controller.model.UserModel;
 import com.epam.domain.Currency;
 import com.epam.domain.User;
@@ -48,5 +51,16 @@ public class TestUtils {
 		account.setAmount(amount);
 		account.setCurrency(currency.getDescription());
 		return account;
+	}
+
+	public static EventModel createTestEventModel(int id, String name, String basePrice, String rating, Date date, int size) {
+		EventModel eventModel = new EventModel();
+		eventModel.setId(id);
+		eventModel.setName(name);
+		eventModel.setBasePrice(basePrice);
+		eventModel.setRating(rating);
+		eventModel.setDate(DATE_FORMAT.format(date));
+		eventModel.setTickets(size);
+		return eventModel;
 	}
 }

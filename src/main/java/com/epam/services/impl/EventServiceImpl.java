@@ -18,11 +18,11 @@ public class EventServiceImpl implements EventService {
     @Autowired
     private EventDao dao;
 
-    public void createEvent(Event event) throws MovieException {
+    public Event createEvent(Event event) throws MovieException {
         if(event == null){
             throw new MovieException("Event didn't defined!");
         }
-        dao.create(event);
+        return dao.create(event);
     }
 
 	public void update(Event event) throws MovieException {
@@ -32,11 +32,11 @@ public class EventServiceImpl implements EventService {
 		dao.update(event);
 	}
 
-    public void remove(Event event) throws MovieException {
-        if(event == null){
-            throw new MovieException("Event didn't defined!");
-        }
-        dao.remove(event);
+    public void remove(int id) throws MovieException {
+	    if (id < 1) {
+		    throw new MovieException("Event id is invalid!");
+	    }
+        dao.remove(id);
     }
 
     public Event getEventByName(String name) throws MovieException {

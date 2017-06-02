@@ -37,16 +37,18 @@ public class EventDao {
 
 	private static final String CREATE_EVENT = "INSERT INTO EVENT (NAME, RATING, BASE_PRICE) VALUES (?, ?, ?)";
 	private static final String UPDATE_EVENT = "UPDATE EVENT SET NAME=?, RATING=?, BASE_PRICE=? WHERE EVENT_ID = ?";
+	private static final String UPDATE_EVENT_DATE = "UPDATE EVENT_DATES SET EVENT_ID=?, DATE=?";
 	private static final String ADD_EVENT_DATE = "INSERT INTO EVENT_DATES VALUES (?, ?);";
 	private static final String DELETE_EVENT = "DELETE FROM EVENT WHERE EVENT_ID=?";
+	private static final String DELETE_EVENT_DATES = "DELETE FROM EVENT_DATES WHERE EVENT_ID=?";
 	private static final String GET_BY_NAME = "SELECT * FROM EVENT JOIN EVENT_DATES ON EVENT.EVENT_ID=EVENT_DATES.EVENT_ID WHERE EVENT.NAME = ?";
 	private static final String GET_ALL_EVENTS = "SELECT * FROM EVENT JOIN EVENT_DATES ON EVENT.EVENT_ID=EVENT_DATES.EVENT_ID ORDER BY EVENT.EVENT_ID;";
 	private static final String ASSIGN_AUDITORIUM = "INSERT INTO ASSIGNED_AUDITORIUM (EVENT_ID, AUDITORIUM, DATE) VALUES (?, ?, ?)";
 	private static final String GET_AUDITORIUM_FOR_EVENT = "SELECT AUDITORIUM FROM ASSIGNED_AUDITORIUM WHERE EVENT_ID = ? AND DATE = ?";
 	private static final String EVENT_BY_ID = "SELECT * FROM EVENT JOIN EVENT_DATES ON EVENT.EVENT_ID=EVENT_DATES.EVENT_ID WHERE EVENT.EVENT_ID = ?";
 
-	public final static RowMapper<Event> EVENT_ROW_MAPPER = new EventMapper();
-	public final static RowMapper<Date> DATE_ROW_MAPPER = new DateMapper();
+	private static final RowMapper<Event> EVENT_ROW_MAPPER = new EventMapper();
+	private static final RowMapper<Date> DATE_ROW_MAPPER = new DateMapper();
 
 	private JdbcTemplate jdbcTemplate;
 
@@ -55,7 +57,7 @@ public class EventDao {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public void create(final Event event) {
+    public Event create(final Event event) {
 	    KeyHolder keyHolder = new GeneratedKeyHolder();
 	    jdbcTemplate.update(
 			    new PreparedStatementCreator() {
@@ -65,6 +67,8 @@ public class EventDao {
 					    pst.setString(1, event.getName());
 					    pst.setString(2, event.getRating().name());
 					    pst.setDouble(3, event.getBasePrice());
+					    pst.close();
+					    con.close();
 					    return pst;
 				    }
 			    },
@@ -73,14 +77,19 @@ public class EventDao {
 	    for (Date date: event.getDates()){
 		    jdbcTemplate.update(ADD_EVENT_DATE, id, date);
 	    }
+	    event.setId(id);
+	    return event;
     }
 
 	public void update(Event event) {
 		jdbcTemplate.update(UPDATE_EVENT, event.getName(), event.getRating().name(), event.getBasePrice(), event.getId());
+		for (Date date: event.getDates()){
+			jdbcTemplate.update(UPDATE_EVENT_DATE, event.getId(), date);
+		}
 	}
 
-    public void remove(Event event) {
-        int id = event.getId();
+    public void remove(int id) {
+	    jdbcTemplate.update(DELETE_EVENT_DATES, id);
         jdbcTemplate.update(DELETE_EVENT, id);
     }
 

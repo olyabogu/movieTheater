@@ -20,10 +20,11 @@ import static java.lang.Double.parseDouble;
  */
 @Component
 public class EventConverter {
-	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+	public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
     public Event toEvent(EventModel eventModel) throws MovieException {
         Event event = new Event();
+        event.setId(eventModel.getId());
         event.setName(eventModel.getName());
         event.setBasePrice(parseDouble(eventModel.getBasePrice()));
 	    List<String> dates = new ArrayList<>();
