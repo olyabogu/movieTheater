@@ -41,7 +41,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void testGetByName() throws MovieException {
+    public void testGetByName() {
         String name = "Olga";
         User user = service.getUserByName(name);
         assertNotNull(user);
@@ -49,7 +49,7 @@ public class UserServiceTest {
     }
 
     @Test(expected = MovieException.class)
-    public void testGetByEmptyName() throws MovieException {
+    public void testGetByEmptyName() {
         String name = "";
         service.getUserByName(name);
     }
@@ -63,7 +63,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void testGetByEmail() throws MovieException {
+    public void testGetByEmail() {
         String email = "olga_bogu@mail.com";
         User user = service.getUserByEmail(email);
         assertNotNull(user);
@@ -71,13 +71,13 @@ public class UserServiceTest {
     }
 
     @Test(expected = MovieException.class)
-    public void testGetByEmptyEmail() throws MovieException {
+    public void testGetByEmptyEmail() {
         String email = "";
         service.getUserByEmail(email);
     }
 
 	@Test
-	public void testRegister() throws MovieException {
+	public void testRegister() {
 		User user = TestUtils.createTestUser(NAME, "pass123", new Date(), NAME + "@email.com");
 		int accountId = accountService.create(user.getAccount());
 		user.getAccount().setId(accountId);
@@ -87,7 +87,7 @@ public class UserServiceTest {
 	}
 
 	@Test
-	public void testUpdate() throws MovieException {
+	public void testUpdate() {
 		User user = service.getUserByName(NAME);
 		String newName = NAME + " 1";
 		user.setName(newName);

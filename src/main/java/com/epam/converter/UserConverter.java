@@ -20,7 +20,7 @@ import com.epam.exception.MovieException;
 @Component
 public class UserConverter {
 
-	public User toUser(UserModel userModel) throws MovieException {
+	public User toUser(UserModel userModel) {
 		User user = new User();
 		user.setId(userModel.getId());
 		user.setName(userModel.getName());

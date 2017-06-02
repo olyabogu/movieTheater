@@ -4,7 +4,6 @@ import com.epam.controller.model.EventModel;
 import com.epam.converter.EventConverter;
 import com.epam.domain.Event;
 import com.epam.domain.Rating;
-import com.epam.exception.MovieException;
 import com.epam.services.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -39,7 +38,7 @@ public class AddEventController {
      * @return Redirect to events page to display events list
      */
     @RequestMapping(value = Mappings.ADD_EVENT, method = RequestMethod.POST)
-    public String add(@ModelAttribute("eventModel") EventModel eventModel) throws MovieException {
+    public String add(@ModelAttribute("eventModel") EventModel eventModel) {
         Event event = eventConverter.toEvent(eventModel);
         eventService.createEvent(event);
         return "redirect:viewEvents";

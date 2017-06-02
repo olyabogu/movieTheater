@@ -17,7 +17,6 @@ import com.epam.controller.model.UserModel;
 import com.epam.converter.UserConverter;
 import com.epam.domain.User;
 import com.epam.domain.UserRole;
-import com.epam.exception.MovieException;
 import com.epam.services.UserService;
 
 /**
@@ -42,7 +41,7 @@ public class RegisterUserController {
     }
 
     @RequestMapping(value = Mappings.REGISTER_USER, method = RequestMethod.POST)
-    public String add(@ModelAttribute("user") UserModel userModel) throws MovieException {
+    public String add(@ModelAttribute("user") UserModel userModel) {
         if (!userService.isUserExists(userModel.getName(), userModel.getEmail())) {
             User user = userConverter.toUser(userModel);
 	        int accountId = accountService.create(user.getAccount());

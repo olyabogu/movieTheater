@@ -50,13 +50,13 @@ public class EventServiceTest {
     }
 
     @Test(expected = MovieException.class)
-    public void testGetEventByEmptyName() throws MovieException {
+    public void testGetEventByEmptyName() {
         String name = "";
         service.getEventByName(name);
     }
 
 	@Test
-	public void testCreate() throws MovieException {
+	public void testCreate() {
 		List<Date> dates = new ArrayList<>();
 		dates.add(new Date());
 
@@ -67,14 +67,14 @@ public class EventServiceTest {
 	}
 
 	@Test
-	public void testGetEventByName() throws MovieException {
+	public void testGetEventByName() {
 		Event event = service.getEventByName(NAME);
 		assertNotNull(event);
 		assertEquals(event.getName(), NAME);
 	}
 
 	@Test
-	public void testEventUpdate() throws MovieException {
+	public void testEventUpdate() {
 		Event event = service.getEventByName(NAME);
 		Double newPrice = 15.0D;
 		event.setBasePrice(newPrice);
@@ -85,7 +85,7 @@ public class EventServiceTest {
 	}
 
 	@Test
-	public void testCreateAndAssignAuditorium() throws MovieException {
+	public void testCreateAndAssignAuditorium() {
 		Event event = service.getEventByName(NAME);
 		Auditorium auditorium = auditoriumService.getAuditoriums().get(0);
 

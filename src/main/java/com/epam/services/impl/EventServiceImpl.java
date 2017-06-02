@@ -18,28 +18,28 @@ public class EventServiceImpl implements EventService {
     @Autowired
     private EventDao dao;
 
-    public Event createEvent(Event event) throws MovieException {
+    public Event createEvent(Event event) {
         if(event == null){
             throw new MovieException("Event didn't defined!");
         }
         return dao.create(event);
     }
 
-	public void update(Event event) throws MovieException {
+	public void update(Event event) {
 		if(event == null){
 			throw new MovieException("Event didn't defined!");
 		}
 		dao.update(event);
 	}
 
-    public void remove(int id) throws MovieException {
+    public void remove(int id) {
 	    if (id < 1) {
 		    throw new MovieException("Event id is invalid!");
 	    }
         dao.remove(id);
     }
 
-    public Event getEventByName(String name) throws MovieException {
+    public Event getEventByName(String name) {
 	    if (StringUtils.isEmpty(name)) {
 		    throw new MovieException("Event name didn't defined!");
 	    }

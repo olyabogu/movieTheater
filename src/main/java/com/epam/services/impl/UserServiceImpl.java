@@ -24,14 +24,14 @@ public class UserServiceImpl implements UserService {
 		return userDao.getById(id);
 	}
 
-	public User getUserByEmail(String email) throws MovieException {
+	public User getUserByEmail(String email) {
 		if (StringUtils.isEmpty(email)) {
 			throw new MovieException("User email didn't defined!");
 		}
 		return userDao.getUserByEmail(email);
 	}
 
-	public User getUserByName(String name) throws MovieException {
+	public User getUserByName(String name) {
 		if (StringUtils.isEmpty(name)) {
 			throw new MovieException("User name didn't defined!");
 		}
@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
 		return userDao.isUserExists(username, email);
 	}
 
-	public void register(User user) throws MovieException {
+	public void register(User user) {
 		if (user == null) {
 			throw new MovieException("User didn't defined");
 		}
@@ -56,14 +56,14 @@ public class UserServiceImpl implements UserService {
 		userDao.create(user);
 	}
 
-	public void update(User user) throws MovieException {
+	public void update(User user) {
 		if (user == null) {
 			throw new MovieException("User didn't defined");
 		}
 		userDao.update(user);
 	}
 
-	public void remove(int id) throws MovieException {
+	public void remove(int id) {
 		if (id < 1) {
 			throw new MovieException("User id not valid!");
 		}

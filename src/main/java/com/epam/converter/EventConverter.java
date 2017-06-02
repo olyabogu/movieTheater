@@ -22,7 +22,7 @@ import static java.lang.Double.parseDouble;
 public class EventConverter {
 	public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
-    public Event toEvent(EventModel eventModel) throws MovieException {
+    public Event toEvent(EventModel eventModel) {
         Event event = new Event();
         event.setId(eventModel.getId());
         event.setName(eventModel.getName());

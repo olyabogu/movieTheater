@@ -2,7 +2,6 @@ package com.epam.services;
 
 import com.epam.domain.Ticket;
 import com.epam.domain.User;
-import com.epam.exception.MovieException;
 
 import java.util.List;
 
@@ -11,17 +10,17 @@ import java.util.List;
  */
 public interface UserService {
 
-	void register(User user) throws MovieException;
+	void register(User user);
 
-	void update(User user) throws MovieException;
+	void update(User user) ;
 
-	void remove(int id) throws MovieException;
+	void remove(int id) ;
 
-	User getUserByName(String name) throws MovieException;
+	User getUserByName(String name) ;
 
     User getById(Integer id);
 
-    User getUserByEmail(String email) throws MovieException;
+    User getUserByEmail(String email) ;
 
     List<Ticket> getBookedTickets(User user);
 
