@@ -1,4 +1,4 @@
-package com.epam.test.rest;
+package com.epam.controller.rest;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -20,7 +20,7 @@ import com.epam.config.SecurityConfig;
 import com.epam.controller.Mappings;
 import com.epam.controller.model.UserModel;
 import com.epam.domain.User;
-import com.epam.test.TestUtils;
+import com.epam.controller.TestUtils;
 
 /**
  * @author Olga_Bogutska.
@@ -44,9 +44,10 @@ public class UserRestTest {
 
 	@Test
 	public void testGetUser() {
-		User user = restTemplate.getForObject(URI, User.class, 1);
+		int id = 1;
+		User user = restTemplate.getForObject(URI, User.class, id);
 
-		Assert.assertEquals(1, user.getId());
+		Assert.assertEquals(id, user.getId());
 	}
 
 	@Test

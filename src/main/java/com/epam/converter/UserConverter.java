@@ -22,6 +22,7 @@ public class UserConverter {
 
 	public User toUser(UserModel userModel) throws MovieException {
 		User user = new User();
+		user.setId(userModel.getId());
 		user.setName(userModel.getName());
 		DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 

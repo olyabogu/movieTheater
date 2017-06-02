@@ -1,4 +1,4 @@
-package com.epam.test.service;
+package com.epam.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -20,7 +20,7 @@ import com.epam.domain.Currency;
 import com.epam.domain.UserAccount;
 import com.epam.exception.MovieException;
 import com.epam.services.UserAccountService;
-import com.epam.test.TestUtils;
+import com.epam.controller.TestUtils;
 
 /**
  * @author Olga_Bogutska.

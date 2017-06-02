@@ -1,4 +1,4 @@
-package com.epam.test.service;
+package com.epam.service;
 
 import com.epam.config.ApplicationConfiguration;
 import com.epam.config.MvcConfiguration;
@@ -7,7 +7,7 @@ import com.epam.domain.User;
 import com.epam.exception.MovieException;
 import com.epam.services.UserAccountService;
 import com.epam.services.UserService;
-import com.epam.test.TestUtils;
+import com.epam.controller.TestUtils;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
