@@ -21,7 +21,7 @@ import com.epam.controller.model.EventModel;
 import com.epam.converter.EventConverter;
 import com.epam.domain.Event;
 import com.epam.domain.Rating;
-import com.epam.controller.TestUtils;
+import com.epam.TestUtils;
 
 /**
  * @author Olga_Bogutska.

@@ -7,7 +7,7 @@ import com.epam.domain.User;
 import com.epam.exception.MovieException;
 import com.epam.services.UserAccountService;
 import com.epam.services.UserService;
-import com.epam.controller.TestUtils;
+import com.epam.TestUtils;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

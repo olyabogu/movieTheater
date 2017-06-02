@@ -20,7 +20,7 @@ import com.epam.config.SecurityConfig;
 import com.epam.controller.Mappings;
 import com.epam.controller.model.UserModel;
 import com.epam.domain.User;
-import com.epam.controller.TestUtils;
+import com.epam.TestUtils;
 
 /**
  * @author Olga_Bogutska.

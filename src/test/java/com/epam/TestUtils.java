@@ -1,4 +1,4 @@
-package com.epam.controller;
+package com.epam;
 
 import static com.epam.converter.EventConverter.DATE_FORMAT;
 

@@ -20,7 +20,7 @@ import com.epam.domain.Currency;
 import com.epam.domain.UserAccount;
 import com.epam.exception.MovieException;
 import com.epam.services.UserAccountService;
-import com.epam.controller.TestUtils;
+import com.epam.TestUtils;
 
 /**
  * @author Olga_Bogutska.
