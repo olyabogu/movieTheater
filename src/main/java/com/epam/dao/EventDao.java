@@ -67,8 +67,6 @@ public class EventDao {
 					    pst.setString(1, event.getName());
 					    pst.setString(2, event.getRating().name());
 					    pst.setDouble(3, event.getBasePrice());
-					    pst.close();
-					    con.close();
 					    return pst;
 				    }
 			    },
