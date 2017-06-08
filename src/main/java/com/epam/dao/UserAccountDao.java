@@ -49,7 +49,9 @@ public class UserAccountDao {
 					}
 				},
 				keyHolder);
-		return keyHolder.getKey().intValue();
+		int id = keyHolder.getKey().intValue();
+		account.setId(id);
+		return id;
 	}
 
 	public void update(UserAccount account) {

@@ -46,13 +46,6 @@ public class TestUtils {
 		return user;
 	}
 
-	public static UserAccount createTestUserAccount(Double amount, Currency currency) {
-		UserAccount account = new UserAccount();
-		account.setAmount(amount);
-		account.setCurrency(currency.getDescription());
-		return account;
-	}
-
 	public static EventModel createTestEventModel(int id, String name, String basePrice, String rating, Date date, int size) {
 		EventModel eventModel = new EventModel();
 		eventModel.setId(id);

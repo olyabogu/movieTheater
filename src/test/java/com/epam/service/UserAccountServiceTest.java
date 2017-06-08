@@ -3,8 +3,8 @@ package com.epam.service;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,7 +20,6 @@ import com.epam.domain.Currency;
 import com.epam.domain.UserAccount;
 import com.epam.exception.MovieException;
 import com.epam.services.UserAccountService;
-import com.epam.TestUtils;
 
 /**
  * @author Olga_Bogutska.
@@ -30,13 +29,20 @@ import com.epam.TestUtils;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class UserAccountServiceTest {
 	private UserAccount account;
+	private int id;
 
 	@Autowired
 	private UserAccountService accountService;
 
 	@Before
 	public void setUp() {
-		account = TestUtils.createTestUserAccount(1000.0, Currency.USD);
+		account = createTestUserAccount(1000.0, Currency.USD);
+		id = accountService.create(account);
+	}
+
+	@After
+	public void tearDown() {
+		accountService.remove(account);
 	}
 
 	@Test
@@ -46,13 +52,8 @@ public class UserAccountServiceTest {
 
 	@Test
 	public void testCreate() {
-		int id = accountService.create(account);
-		assertTrue(id > 0);
-		account.setId(id);
 		UserAccount userAccount = accountService.getById(id);
-		assertEquals(account.getId(), userAccount.getId());
-		assertEquals(account.getAmount(), userAccount.getAmount());
-		assertEquals(account.getCurrency(), userAccount.getCurrency());
+		assertEquals(account, userAccount);
 	}
 
 	@Test(expected = MovieException.class)
@@ -62,27 +63,18 @@ public class UserAccountServiceTest {
 
 	@Test
 	public void testGetById() {
-		int id = accountService.create(account);
 		UserAccount userAccount = accountService.getById(id);
-		assertEquals(account.getAmount(), userAccount.getAmount());
-		assertEquals(account.getCurrency(), userAccount.getCurrency());
+		assertEquals(account, userAccount);
 	}
 
 	@Test
 	public void testUpdate() {
-
-		int id = accountService.create(account);
-		account.setId(id);
-		Double amount = 2000.0;
-		String currency = Currency.EUR.getDescription();
-		account.setAmount(amount);
-		account.setCurrency(currency);
-
+		account.setAmount(2000.0);
+		account.setCurrency(Currency.EUR.getDescription());
 		accountService.update(account);
 		UserAccount updatedAccount = accountService.getById(id);
 
-		assertEquals(amount, updatedAccount.getAmount());
-		assertEquals(currency, updatedAccount.getCurrency());
+		assertEquals(account, updatedAccount);
 	}
 
 	@Test(expected = MovieException.class)
@@ -92,9 +84,6 @@ public class UserAccountServiceTest {
 
 	@Test
 	public void testRemove() {
-		int id = accountService.create(account);
-		account.setId(id);
-
 		accountService.remove(account);
 		UserAccount updatedAccount = accountService.getById(id);
 
@@ -104,5 +93,12 @@ public class UserAccountServiceTest {
 	@Test(expected = MovieException.class)
 	public void testRemoveNull() {
 		accountService.remove(null);
+	}
+
+	public UserAccount createTestUserAccount(Double amount, Currency currency) {
+		UserAccount account = new UserAccount();
+		account.setAmount(amount);
+		account.setCurrency(currency.getDescription());
+		return account;
 	}
 }
