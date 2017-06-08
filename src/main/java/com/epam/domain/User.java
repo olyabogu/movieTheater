@@ -200,4 +200,34 @@ public class User implements UserDetails {
                 ", bookedTickets=" + bookedTickets +
                 '}';
     }
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof User)) return false;
+
+		User user = (User) o;
+
+		if (id != user.id) return false;
+		if (!username.equals(user.username)) return false;
+		if (!password.equals(user.password)) return false;
+		if (!birthDate.equals(user.birthDate)) return false;
+		if (!roles.equals(user.roles)) return false;
+		if (!email.equals(user.email)) return false;
+		if (bookedTickets != null ? !bookedTickets.equals(user.bookedTickets) : user.bookedTickets != null) return false;
+		return account != null ? account.equals(user.account) : user.account == null;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = id;
+		result = 31 * result + username.hashCode();
+		result = 31 * result + password.hashCode();
+		result = 31 * result + birthDate.hashCode();
+		result = 31 * result + roles.hashCode();
+		result = 31 * result + email.hashCode();
+		result = 31 * result + (bookedTickets != null ? bookedTickets.hashCode() : 0);
+		result = 31 * result + (account != null ? account.hashCode() : 0);
+		return result;
+	}
 }
