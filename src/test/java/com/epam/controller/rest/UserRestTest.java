@@ -20,7 +20,6 @@ import com.epam.config.SecurityConfig;
 import com.epam.controller.Mappings;
 import com.epam.controller.model.UserModel;
 import com.epam.domain.User;
-import com.epam.TestUtils;
 
 /**
  * @author Olga_Bogutska.
@@ -52,7 +51,7 @@ public class UserRestTest {
 
 	@Test
 	public void testAddUser() {
-		UserModel model = TestUtils.createTestUserModel(0, "Steve Newton Day", "pass", "10-12-1987", "name@email.com");
+		UserModel model = createTestUserModel(0, "Steve Newton Day", "pass", "10-12-1987", "name@email.com");
 		HttpEntity<UserModel> entity = new HttpEntity<>(model);
 		ResponseEntity<User> response = restTemplate.postForEntity(BASE_URI + Mappings.USER, entity, User.class);
 		User userResponse = response.getBody();
@@ -66,7 +65,7 @@ public class UserRestTest {
 
 	@Test
 	public void testUpdateUser() {
-		UserModel model = TestUtils.createTestUserModel(ID, "Paul Martin Day", "pass123", "19-12-1987", "name@email.com");
+		UserModel model = createTestUserModel(ID, "Paul Martin Day", "pass123", "19-12-1987", "name@email.com");
 		HttpEntity<UserModel> entity = new HttpEntity<>(model);
 		restTemplate.put(URI, entity, ID);
 		User user = restTemplate.getForObject(URI, User.class, ID);
@@ -83,5 +82,18 @@ public class UserRestTest {
 		restTemplate.delete(URI, ID);
 		User user = restTemplate.getForObject(URI, User.class, ID);
 		Assert.assertNull(user);
+	}
+
+	public static UserModel createTestUserModel(int id, String name, String password, String birthDate, String email) {
+		UserModel model = new UserModel();
+		model.setId(id);
+		model.setName(name);
+		model.setPassword(password);
+		model.setBirthDate(birthDate);
+		model.setEmail(email);
+		model.setRole("REGISTERED_USER");
+		model.setBalance("100.00");
+		model.setCurrency("USD");
+		return model;
 	}
 }

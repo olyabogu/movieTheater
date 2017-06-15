@@ -1,5 +1,7 @@
 package com.epam.controller.rest;
 
+import static com.epam.converter.EventConverter.DATE_FORMAT;
+
 import java.util.Date;
 
 import org.junit.Assert;
@@ -21,7 +23,6 @@ import com.epam.controller.model.EventModel;
 import com.epam.converter.EventConverter;
 import com.epam.domain.Event;
 import com.epam.domain.Rating;
-import com.epam.TestUtils;
 
 /**
  * @author Olga_Bogutska.
@@ -49,7 +50,7 @@ public class EventRestTest {
 
 	@Test
 	public void testAddAndDeleteEvent() {
-		EventModel model = TestUtils.createTestEventModel(0, "movie 12", "15.2", Rating.LOW.getDescription(), new Date(), 0);
+		EventModel model = createTestEventModel(0, "movie 12", "15.2", Rating.LOW.getDescription(), new Date(), 0);
 		HttpEntity<EventModel> entity = new HttpEntity<>(model);
 		ResponseEntity<Event> response = restTemplate.postForEntity(BASE_URI + Mappings.EVENT, entity, Event.class);
 		Event eventResponse = response.getBody();
@@ -67,7 +68,7 @@ public class EventRestTest {
 
 	@Test
 	public void testUpdateEvent() {
-		EventModel model = TestUtils.createTestEventModel(ID, "movie 14", "15.2", Rating.HIGH.getDescription(), new Date(), 0);
+		EventModel model = createTestEventModel(ID, "movie 14", "15.2", Rating.HIGH.getDescription(), new Date(), 0);
 		HttpEntity<EventModel> entity = new HttpEntity<>(model);
 		restTemplate.put(URI, entity, ID);
 		Event event = restTemplate.getForObject(URI, Event.class, ID);
@@ -83,5 +84,16 @@ public class EventRestTest {
 	public void testGetNullEvent() {
 		Event event = restTemplate.getForObject(URI, Event.class, 0);
 		Assert.assertNull(event);
+	}
+
+	public static EventModel createTestEventModel(int id, String name, String basePrice, String rating, Date date, int size) {
+		EventModel eventModel = new EventModel();
+		eventModel.setId(id);
+		eventModel.setName(name);
+		eventModel.setBasePrice(basePrice);
+		eventModel.setRating(rating);
+		eventModel.setDate(DATE_FORMAT.format(date));
+		eventModel.setTickets(size);
+		return eventModel;
 	}
 }

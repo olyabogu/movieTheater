@@ -4,10 +4,10 @@ import com.epam.config.ApplicationConfiguration;
 import com.epam.config.MvcConfiguration;
 import com.epam.config.SecurityConfig;
 import com.epam.domain.User;
+import com.epam.domain.UserAccount;
 import com.epam.exception.MovieException;
 import com.epam.services.UserAccountService;
 import com.epam.services.UserService;
-import com.epam.TestUtils;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -78,7 +78,7 @@ public class UserServiceTest {
 
 	@Test
 	public void testRegister() {
-		User user = TestUtils.createTestUser(NAME, "pass123", new Date(), NAME + "@email.com");
+		User user = createTestUser();
 		int accountId = accountService.create(user.getAccount());
 		user.getAccount().setId(accountId);
 		service.register(user);
@@ -95,5 +95,22 @@ public class UserServiceTest {
 		user = service.getUserByName(newName);
 
 		assertEquals(user.getUsername(), newName);
+	}
+
+	public User createTestUser() {
+		User user = new User();
+		user.setName("Carl Robinson");
+		user.setPassword("pass123");
+		user.setBirthDate(new Date());
+		user.setEmail("carl.rob@email.com");
+		Set<String> roles = new HashSet<>();
+		roles.add("REGISTERED_USER");
+		user.setRoles(roles);
+
+		UserAccount account = new UserAccount();
+		account.setAmount(100.00);
+		account.setCurrency(com.epam.domain.Currency.EUR.getDescription());
+		user.setAccount(account);
+		return user;
 	}
 }
