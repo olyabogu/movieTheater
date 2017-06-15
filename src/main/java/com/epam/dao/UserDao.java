@@ -7,12 +7,17 @@ import com.epam.domain.UserAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -79,8 +84,25 @@ public class UserDao {
 	    }
     }
 
-    public void create(User user) {
-        jdbcTemplate.update(CREATE_USER, user.getUsername(), user.getBirthDate(), Arrays.toString(user.getRoles().toArray()), user.getEmail(), user.getPassword(), user.getAccount().getId());
+    public void create(final User user) {
+      KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(
+                new PreparedStatementCreator() {
+                    public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+                        PreparedStatement pst =
+                                con.prepareStatement(CREATE_USER, new String[]{"id"});
+                        pst.setString(1, user.getUsername());
+                        pst.setDate(2, new java.sql.Date((user.getBirthDate().getTime())));
+                        pst.setString(3, Arrays.toString(user.getRoles().toArray()));
+                        pst.setString(4, user.getEmail());
+                        pst.setString(5, user.getPassword());
+                        pst.setInt(6, user.getAccount().getId());
+                        return pst;
+                    }
+                },
+                keyHolder);
+        int id = keyHolder.getKey().intValue();
+        user.setId(id);
     }
 
     public void update(User user) {
@@ -103,7 +125,7 @@ public class UserDao {
 
         private static final String ID = "USER_ID";
         private static final String NAME = "NAME";
-        private static final String PASSWORD = "PASSWORD";
+        private static final String PASS = "PASSWORD";
         private static final String USER_ROLE = "USER_ROLE";
         private static final String BIRTH_DATE = "BIRTH_DATE";
         private static final String EMAIL = "EMAIL";
@@ -113,7 +135,7 @@ public class UserDao {
             User user = new User();
             user.setId(rs.getInt(ID));
             user.setName(rs.getString(NAME));
-            user.setPassword(rs.getString(PASSWORD));
+            user.setPassword(rs.getString(PASS));
             String userRoles = rs.getString(USER_ROLE);
             Set<String> roles = new HashSet<>(Arrays.asList((userRoles.split(" , "))));
             user.setRoles(roles);
