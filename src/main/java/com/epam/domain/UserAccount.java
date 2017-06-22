@@ -55,4 +55,13 @@ public class UserAccount {
 		result = 31 * result + currency.hashCode();
 		return result;
 	}
+
+	@Override
+	public String toString() {
+		return "UserAccount{" +
+				"id=" + id +
+				", amount=" + amount +
+				", currency='" + currency + '\'' +
+				'}';
+	}
 }

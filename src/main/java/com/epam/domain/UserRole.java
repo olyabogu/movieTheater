@@ -5,7 +5,7 @@ package com.epam.domain;
  */
 
 public enum UserRole {
-	REGISTERED_USER("Registered"),
+	REGISTERED_USER("Registered user"),
 	BOOKING_MANAGER("Booking manager");
 
 	public String getDescription() {

@@ -22,9 +22,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Olga Bogutska on 08.02.2016.
@@ -92,8 +90,8 @@ public class UserDao {
                         PreparedStatement pst =
                                 con.prepareStatement(CREATE_USER, new String[]{"id"});
                         pst.setString(1, user.getUsername());
-                        pst.setDate(2, new java.sql.Date((user.getBirthDate().getTime())));
-                        pst.setString(3, Arrays.toString(user.getRoles().toArray()));
+                        pst.setDate(2, new java.sql.Date(user.getBirthDate().getTime()));
+                        pst.setString(3, String.join(", ", user.getRoles()));
                         pst.setString(4, user.getEmail());
                         pst.setString(5, user.getPassword());
                         pst.setInt(6, user.getAccount().getId());
@@ -106,7 +104,7 @@ public class UserDao {
     }
 
     public void update(User user) {
-        jdbcTemplate.update(UPDATE_USER, user.getUsername(), user.getBirthDate(), user.getRoles().toString(), user.getEmail(), user.getId());
+        jdbcTemplate.update(UPDATE_USER, user.getUsername(), user.getBirthDate(), String.join(", ", user.getRoles()), user.getEmail(), user.getId());
     }
 
     public void remove(int id) {
@@ -137,7 +135,7 @@ public class UserDao {
             user.setName(rs.getString(NAME));
             user.setPassword(rs.getString(PASS));
             String userRoles = rs.getString(USER_ROLE);
-            Set<String> roles = new HashSet<>(Arrays.asList((userRoles.split(" , "))));
+            List<String> roles = Arrays.asList((userRoles.split(", ")));
             user.setRoles(roles);
             user.setBirthDate(rs.getDate(BIRTH_DATE));
             user.setEmail(rs.getString(EMAIL));

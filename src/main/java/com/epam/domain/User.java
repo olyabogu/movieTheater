@@ -13,6 +13,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -22,7 +23,9 @@ import java.util.*;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class User implements UserDetails {
 
-    @XmlAttribute(required=true)
+	private static final SimpleDateFormat FMT = new SimpleDateFormat("dd-MM-yyyy");
+
+	@XmlAttribute(required=true)
     private int id;
 
     @XmlAttribute(required=true)
@@ -38,7 +41,7 @@ public class User implements UserDetails {
     private Date birthDate;
 
 	@XmlElement(name = "roles")
-	private Set<String> roles = new HashSet<>();
+	private List<String> roles = new ArrayList<>();
 
 	@Email
 	@NotEmpty
@@ -76,7 +79,7 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String name, Date birthDate, Set<String> roles, String email) {
+    public User(String name, Date birthDate, List<String> roles, String email) {
         this.birthDate = birthDate;
         this.username = name;
         this.roles = roles;
@@ -174,11 +177,11 @@ public class User implements UserDetails {
         return enabled;
     }
 
-    public Set<String> getRoles() {
+    public List<String> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<String> roles) {
+    public void setRoles(List<String> roles) {
         this.roles = roles;
     }
 
@@ -195,9 +198,11 @@ public class User implements UserDetails {
         return "User{" +
                 "id=" + id +
                 ", name='" + username + '\'' +
+                ", birthDate='" + FMT.format(birthDate) + '\'' +
                 ", role=" + roles.toString() +
                 ", email='" + email + '\'' +
                 ", bookedTickets=" + bookedTickets +
+		        ", " + account.toString() +
                 '}';
     }
 
@@ -210,8 +215,7 @@ public class User implements UserDetails {
 
 		if (id != user.id) return false;
 		if (!username.equals(user.username)) return false;
-		if (!password.equals(user.password)) return false;
-		if (!birthDate.equals(user.birthDate)) return false;
+		if (!FMT.format(birthDate).equals(FMT.format(user.birthDate))) return false;
 		if (!roles.equals(user.roles)) return false;
 		if (!email.equals(user.email)) return false;
 		if (bookedTickets != null ? !bookedTickets.equals(user.bookedTickets) : user.bookedTickets != null) return false;

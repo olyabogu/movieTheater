@@ -20,6 +20,7 @@ import com.epam.config.SecurityConfig;
 import com.epam.controller.Mappings;
 import com.epam.controller.model.UserModel;
 import com.epam.domain.User;
+import com.epam.domain.UserRole;
 
 /**
  * @author Olga_Bogutska.
@@ -91,7 +92,7 @@ public class UserRestTest {
 		model.setPassword(password);
 		model.setBirthDate(birthDate);
 		model.setEmail(email);
-		model.setRole("REGISTERED_USER");
+		model.setRole(UserRole.REGISTERED_USER.name());
 		model.setBalance("100.00");
 		model.setCurrency("USD");
 		return model;

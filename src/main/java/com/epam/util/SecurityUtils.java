@@ -1,21 +1,27 @@
 package com.epam.util;
 
 import com.epam.domain.User;
+import com.epam.domain.UserRole;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-public class SecurityUtils {
+public final class SecurityUtils {
 
-    private static final String DEFAULT_ROLE = "REGISTERED_USER";
+    private static final String DEFAULT_ROLE = UserRole.REGISTERED_USER.name();
 
-    public static Set<? extends GrantedAuthority> toAuthorities(Set<String> roles) {
+    private SecurityUtils() {
+    }
+
+    public static Set<? extends GrantedAuthority> toAuthorities(List<String> roles) {
         Set<SimpleGrantedAuthority> authorities = new HashSet<>();
-        if(roles != null && roles.size() != 0) {
+        if(roles != null && roles.isEmpty()) {
             for(String role : roles) {
                 authorities.add(new SimpleGrantedAuthority(role));
             }

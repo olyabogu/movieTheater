@@ -51,8 +51,7 @@ public class UserServiceImpl implements UserService {
 		if (user == null) {
 			throw new MovieException("User didn't defined");
 		}
-		String encodedPassword = passwordEncoder.encode(user.getPassword());
-		user.setPassword(encodedPassword);
+		setEncodedPassword(user);
 		userDao.create(user);
 	}
 
@@ -60,6 +59,7 @@ public class UserServiceImpl implements UserService {
 		if (user == null) {
 			throw new MovieException("User didn't defined");
 		}
+		setEncodedPassword(user);
 		userDao.update(user);
 	}
 
@@ -68,5 +68,10 @@ public class UserServiceImpl implements UserService {
 			throw new MovieException("User id not valid!");
 		}
 		userDao.remove(id);
+	}
+
+	private void setEncodedPassword(User user) {
+		String encodedPassword = passwordEncoder.encode(user.getPassword());
+		user.setPassword(encodedPassword);
 	}
 }

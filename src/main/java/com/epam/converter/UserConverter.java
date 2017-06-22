@@ -3,15 +3,16 @@ package com.epam.converter;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 
 import com.epam.controller.model.UserModel;
 import com.epam.domain.User;
 import com.epam.domain.UserAccount;
+import com.epam.domain.UserRole;
 import com.epam.exception.MovieException;
 
 /**
@@ -39,8 +40,8 @@ public class UserConverter {
 		account.setCurrency(userModel.getCurrency());
 		user.setAccount(account);
 		user.setPassword(userModel.getPassword());
-		Set<String> roles = new HashSet<>();
-		roles.add("REGISTERED_USER");
+		List<String> roles = new ArrayList<>();
+		roles.add(UserRole.REGISTERED_USER.name());
 		user.setRoles(roles);
 		return user;
 	}
