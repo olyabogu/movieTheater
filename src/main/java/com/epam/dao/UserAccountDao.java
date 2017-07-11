@@ -58,8 +58,7 @@ public class UserAccountDao {
 		jdbcTemplate.update(UPDATE_USER_ACCOUNT, account.getAmount(), account.getCurrency(), account.getId());
 	}
 
-	public void remove(UserAccount account) {
-		int id = account.getId();
+	public void remove(int id) {
 		jdbcTemplate.update(DELETE_USER_ACCOUNT, id);
 	}
 

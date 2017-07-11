@@ -30,11 +30,11 @@ public class UserAccountServiceImpl implements UserAccountService {
 		accountDao.update(account);
 	}
 
-	public void remove(UserAccount account) {
-		if (account == null) {
-			throw new MovieException("UserAccount is not defined!");
+	public void remove(int id) {
+		if (id < 1) {
+			throw new MovieException("Account id not valid!");
 		}
-		accountDao.remove(account);
+		accountDao.remove(id);
 	}
 
 	public UserAccount getById(int id) {

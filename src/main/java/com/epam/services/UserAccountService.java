@@ -11,7 +11,7 @@ public interface UserAccountService {
 
 	void update(UserAccount account);
 
-	void remove(UserAccount account);
+	void remove(int id);
 
 	UserAccount getById(int id);
 }

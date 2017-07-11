@@ -42,7 +42,7 @@ public class UserAccountServiceTest {
 
 	@After
 	public void tearDown() {
-		accountService.remove(account);
+		accountService.remove(id);
 	}
 
 	@Test
@@ -84,7 +84,7 @@ public class UserAccountServiceTest {
 
 	@Test
 	public void testRemove() {
-		accountService.remove(account);
+		accountService.remove(id);
 		UserAccount updatedAccount = accountService.getById(id);
 
 		assertNull(updatedAccount);
@@ -92,7 +92,7 @@ public class UserAccountServiceTest {
 
 	@Test(expected = MovieException.class)
 	public void testRemoveNull() {
-		accountService.remove(null);
+		accountService.remove(0);
 	}
 
 	public UserAccount createTestUserAccount(Double amount, Currency currency) {
