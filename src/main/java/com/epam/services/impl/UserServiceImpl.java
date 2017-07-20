@@ -4,6 +4,7 @@ import com.epam.dao.UserDao;
 import com.epam.domain.Ticket;
 import com.epam.domain.User;
 import com.epam.exception.MovieException;
+import com.epam.services.UserAccountService;
 import com.epam.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ public class UserServiceImpl implements UserService {
 	private UserDao userDao;
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
+	@Autowired
+	private UserAccountService accountService;
 
 	public User getById(Integer id) {
 		return userDao.getById(id);
@@ -52,6 +55,7 @@ public class UserServiceImpl implements UserService {
 			throw new MovieException("User didn't defined");
 		}
 		setEncodedPassword(user);
+		accountService.create(user.getAccount());
 		userDao.create(user);
 	}
 
@@ -60,6 +64,7 @@ public class UserServiceImpl implements UserService {
 			throw new MovieException("User didn't defined");
 		}
 		setEncodedPassword(user);
+		accountService.update(user.getAccount());
 		userDao.update(user);
 	}
 
@@ -67,7 +72,9 @@ public class UserServiceImpl implements UserService {
 		if (id < 1) {
 			throw new MovieException("User id not valid!");
 		}
+		int accountId = userDao.getById(id).getAccount().getId();
 		userDao.remove(id);
+		accountService.remove(accountId);
 	}
 
 	private void setEncodedPassword(User user) {

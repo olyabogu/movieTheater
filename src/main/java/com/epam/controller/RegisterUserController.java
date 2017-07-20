@@ -1,7 +1,6 @@
 package com.epam.controller;
 
 import com.epam.domain.Currency;
-import com.epam.services.UserAccountService;
 import com.epam.util.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -29,11 +28,9 @@ public class RegisterUserController {
     private UserConverter userConverter;
     @Autowired
     private UserService userService;
-	@Autowired
-	private UserAccountService accountService;
 
     @RequestMapping(value = Mappings.REGISTER_USER, method = RequestMethod.GET)
-    public ModelAndView addEvent(ModelAndView mv) {
+    public ModelAndView addUser(ModelAndView mv) {
         mv.addObject("roles", UserRole.values());
 	    mv.addObject("currencyList", Currency.values());
 	    mv.setViewName("registerUser");
@@ -44,8 +41,6 @@ public class RegisterUserController {
     public String add(@ModelAttribute("user") UserModel userModel) {
         if (!userService.isUserExists(userModel.getName(), userModel.getEmail())) {
             User user = userConverter.toUser(userModel);
-	        int accountId = accountService.create(user.getAccount());
-	        user.getAccount().setId(accountId);
             userService.register(user);
             Authentication auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(auth);
