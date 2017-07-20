@@ -42,6 +42,8 @@
                         <contextPath>/</contextPath>
                     </webApp>
                     <scanIntervalSeconds>2</scanIntervalSeconds>
+                    <stopKey>jetty-stop</stopKey>
+                    <stopPort>8787</stopPort>
                 </configuration>
             </plugin>
             <plugin>
